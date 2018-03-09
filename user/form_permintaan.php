@@ -1,13 +1,27 @@
 <!DOCTYPE html>
+<?php 
+$base = "http://localhost/inventorymanagement/";
+include '../config.php';
+// mengaktifkan session
+session_start();
+
+// cek apakah user telah login, jika belum login maka di alihkan ke halaman login
+
+$username = $_SESSION['username'];
+
+if($_SESSION['status'] !="login".$username.""){
+    header("location:". $base."login");
+}
+?>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pemesanan Peralatan K3</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css">
-    <link rel="stylesheet" href="assets/css/form_pesan.css">
+    <title>Form Permintaan APD</title>
+    <link rel="stylesheet" href="<?php echo $base; ?>assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>assets/css/Registration-Form-with-Photo.css">
+    <link rel="stylesheet" href="<?php echo $base; ?>assets/css/form_pesan.css">
 </head>
 
 <body>
@@ -16,8 +30,8 @@
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav left">
-                  <li class="nav-item" role="presentation"><a class="nav-link" href="#">Form Pemesanan</a></li>
-                  <li class="nav-item" role="presentation"><a class="nav-link" href="#">Riwayat Pemesanan</a></li>
+                  <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo $base; ?>user/form_permintaan.php">Form Permintaan</a></li>
+                  <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="#">Riwayat Pemesanan</a></li> -->
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
                   <li class="nav-item" role="presentation"><span class="selamat_datang">Selamat datang, user!</span></li>
@@ -48,7 +62,7 @@
     <div class="register-photo">
         <div class="form-container">
             <form method="post" name="formPesan" onsubmit="return validateForm()">
-                <h2 class="text-center"><strong>Form Pemesanan Peralatan K3</strong></h2>
+                <h2 class="text-center"><strong>Form Permintaan APD</strong></h2>
                 <div class="container">
                   <div class="row">
                     <div class="col-md-6">
@@ -104,8 +118,8 @@
         </div>
     </div>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<?php echo $base; ?>assets/js/jquery.min.js"></script>
+    <script src="<?php echo $base; ?>assets/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 
