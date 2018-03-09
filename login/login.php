@@ -10,25 +10,26 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 
  // cek apakah inputan username password sama dengan yang di database
-$login = mysqli_query($conn, "select * from user where username='$username' and password='$password'");
+$login = mysqli_query($conn, 
+	"SELECT jabatan.nama_jabatan
+	FROM user 
+	JOIN karyawan ON (user.id_karyawan = karyawan.id_karyawan)
+	JOIN jabatan ON (karyawan.id_jabatan = jabatan.id_jabatan)
+	WHERE user.username='$username' and user.password='$password'");
 $cek = mysqli_num_rows($login);
 
 if ($cek > 0) {
 	while($row = mysqli_fetch_assoc($login)){   
-
- //kalo username password sesuai sama yang di database, maka buka halaman home user
-		if($cek > 0 && $row['id_karyawan']=='1'){
+		if($cek > 0 && $row['nama_jabatan']=='admin'){
 			session_start();
 			$_SESSION['username'] = $username;
 			$_SESSION['status'] = "login admin";
 			header("location:../admin");
- //kalo username password tidak sesuai sama yang di database, maka akan kembali ke halaman login	
-		}elseif($cek > 0 && $row['id_karyawan']!='1') {
+		}elseif($cek > 0 && $row['nama_jabatan']!='admin') {
 			session_start();
 			$_SESSION['username'] = $username;
 			$_SESSION['status'] = "login".$username."";
 			header("location:../user");
-	// header("location:../dashboard/index.php");
 		}
 	}
 } else {

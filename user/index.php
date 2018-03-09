@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <?php 
 $base = "http://localhost/inventorymanagement/";
 include '../config.php';
@@ -10,117 +11,140 @@ session_start();
 $username = $_SESSION['username'];
 
 if($_SESSION['status'] !="login".$username.""){
-    header("location:". $base."login");
+  header("location:". $base."login");
 }
-?>
-<html>
 
+$nama_karyawan = mysqli_query($conn, 
+  "SELECT karyawan.nama_karyawan, jabatan.nama_jabatan
+  FROM user 
+  JOIN karyawan ON (user.id_karyawan = karyawan.id_karyawan)
+  JOIN jabatan ON (karyawan.id_jabatan = jabatan.id_jabatan)
+  WHERE user.username='$username'");
+
+while($row = mysqli_fetch_assoc($nama_karyawan)){
+  $nama = $row['nama_karyawan'];
+  $jabatan = $row['nama_jabatan'];
+}
+
+
+
+?>
+
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Permintaan APD</title>
-    <link rel="stylesheet" href="<?php echo $base; ?>assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>assets/css/Registration-Form-with-Photo.css">
-    <link rel="stylesheet" href="<?php echo $base; ?>assets/css/form_pesan.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User - Dashboard</title>
+  <link href="<?php echo $base; ?>assets/admin/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<?php echo $base; ?>assets/admin/css/font-awesome.min.css" rel="stylesheet">
+  <link href="<?php echo $base; ?>assets/admin/css/datepicker3.css" rel="stylesheet">
+  <link href="<?php echo $base; ?>assets/admin/css/styles.css" rel="stylesheet">
+  
+  <!--Custom Font-->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-md">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse"
-                id="navcol-1">
-                <ul class="nav navbar-nav left">
-                  <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo $base; ?>user/form_permintaan.php">Form Permintaan</a></li>
-                  <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="#">Riwayat Pemesanan</a></li> -->
-                </ul>
-                <ul class="nav navbar-nav ml-auto">
-                  <li class="nav-item" role="presentation"><span class="selamat_datang">Selamat datang, user!</span></li>
-                  <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo $base; ?>logout">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <script>
-    function validateForm() {
-      var a = document.forms["formPesan"]["helmet"].value;
-      var b = document.forms["formPesan"]["earplug"].value;
-      var c = document.forms["formPesan"]["baju"].value;
-      var d = document.forms["formPesan"]["masker"].value;
-      var e = document.forms["formPesan"]["gloves"].value;
-      var f = document.forms["formPesan"]["shoes"].value;
-      if (a=="" || a==null, b=="" || b==null, c=="" || c==null,
-      d=="" || d==null, e=="" || e==null, f=="" || f==null) {
-        alert("Isikan jumlah barang yang ingin dipesan.");
-        return false;
-      } else {
-        alert("Pemesanan berhasil!");
-      }
-    }
-    </script>
-
-    <div class="register-photo">
-        <div class="form-container">
-            <form method="post" name="formPesan" onsubmit="return validateForm()">
-                <h2 class="text-center"><strong>Form Permintaan APD</strong></h2>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-6">
-                    <p>Safety Helmet</p>
-                    </div>
-                    <div class="col-md-6">
-                    <input class="jumlah_barang" type="number" name="helmet" min="1" placeholder="Jumlah" autocomplete="off"/>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                    <p>Earplug</p>
-                    </div>
-                    <div class="col-md-6">
-                    <input class="jumlah_barang" type="number" name="earplug" min="1" placeholder="Jumlah" autocomplete="off"/>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                    <p>Baju Kerja</p>
-                    </div>
-                    <div class="col-md-6">
-                    <input class="jumlah_barang" type="number" name="baju" min="1" placeholder="Jumlah" autocomplete="off"/>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                    <p>Masker</p>
-                    </div>
-                    <div class="col-md-6">
-                    <input class="jumlah_barang" type="number" name="masker" min="1" placeholder="Jumlah" autocomplete="off"/>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                    <p>Safety Gloves</p>
-                    </div>
-                    <div class="col-md-6">
-                    <input class="jumlah_barang" type="number" name="gloves" min="1" placeholder="Jumlah" autocomplete="off"/>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                    <p>Safety Shoes</p>
-                    </div>
-                    <div class="col-md-6">
-                    <input class="jumlah_barang" type="number" name="shoes" min="1" placeholder="Jumlah" autocomplete="off"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group"><button class="btn btn-primary btn-block" type="submit">KIRIM</button></div>
-            </form>
-        </div>
+  <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><span>PG Kebon Agung</span></a>
+        <ul class="nav navbar-top-links navbar-right">
+          <li >
+            <a class="navbar-brand" href="<?php echo $base; ?>logout"> 
+              <p onMouseOver="this.style.color='#30a5ff'" onMouseOut="this.style.color='#FFF'" style="font-size: 15px; color: #FFF"><i class="fa fa-sign-out fa-fw"></i> Logout</p>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
+  
+  <div class="col-lg-12">
+    <div class="row">
+      <ol class="breadcrumb">
+        <li><a href="#">
+          <em class="fa fa-home"></em>
+        </a></li>
+        <li class="active">Permintaan APD</li>
+        <p style="float: right;">Welcome <?php echo $nama; ?></p>
+      </ol>
+    </div><!--/.row-->
 
-    <script src="<?php echo $base; ?>assets/js/jquery.min.js"></script>
-    <script src="<?php echo $base; ?>assets/bootstrap/js/bootstrap.min.js"></script>
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 style="text-align: center;" class="page-header">Form Permintaan APD</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel col-lg-6 col-md-offset-3">
+    <div style="height: 300px;" class="row">
+      <?php
+
+      if ($jabatan == 'umum') {
+        $ket = 'umum';
+      } elseif($jabatan == 'pabrik') {
+        $ket = 'pabrik';
+      }
+
+      $result = mysqli_query($conn, "SELECT nama_apd FROM apd WHERE keterangan='$ket'");
+      $storeArray = Array();
+
+      while($row = mysqli_fetch_array($result)){
+        $storeArray[] = $row['nama_apd'];                                          
+      } ?>
+      <div style="padding: 20px;">
+        <form>
+          <h4>Pilih APD</h4>
+          <div class="form-group">
+            <select name="nama_apd" class="form-control" required="">
+              <?php foreach ($storeArray as $key) { ?>
+              <option><?php echo $key; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+          <h4>Jumlah</h4>
+          <div class="form-group">
+            <input class="form-control" type="number" name="" value="1" required="" min="1">
+          </div>
+          <br><br>
+          <input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="" value="KIRIM">
+        </form>
+        
+      </div>
+    </div>
+  </div>
+
+  <script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
+  <script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
+  <script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
+  <script src="<?php echo $base; ?>assets/admin/js/chart-data.js"></script>
+  <script src="<?php echo $base; ?>assets/admin/js/easypiechart.js"></script>
+  <script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
+  <script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
+  <script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
+  <script>
+    window.onload = function () {
+      var chart1 = document.getElementById("line-chart").getContext("2d");
+      window.myLine = new Chart(chart1).Line(lineChartData, {
+        responsive: true,
+        scaleLineColor: "rgba(0,0,0,.2)",
+        scaleGridLineColor: "rgba(0,0,0,.05)",
+        scaleFontColor: "#c5c7cc"
+      });
+    };
+  </script>
 
 </body>
-
 </html>
