@@ -15,18 +15,16 @@ if($_SESSION['status'] !="login".$username.""){
 }
 
 $nama_karyawan = mysqli_query($conn, 
-  "SELECT karyawan.nama_karyawan, jabatan.nama_jabatan
+  "SELECT karyawan.nama_karyawan, hak_akses_karyawan.hak_akses
   FROM user 
   JOIN karyawan ON (user.id_karyawan = karyawan.id_karyawan)
-  JOIN jabatan ON (karyawan.id_jabatan = jabatan.id_jabatan)
+  JOIN hak_akses_karyawan ON (karyawan.id_hak_akses = hak_akses_karyawan.id_hak_akses)
   WHERE user.username='$username'");
 
 while($row = mysqli_fetch_assoc($nama_karyawan)){
   $nama = $row['nama_karyawan'];
-  $jabatan = $row['nama_jabatan'];
+  $hak_akses = $row['hak_akses'];
 }
-
-
 
 ?>
 
@@ -92,9 +90,9 @@ while($row = mysqli_fetch_assoc($nama_karyawan)){
     <div style="height: 300px;" class="row">
       <?php
 
-      if ($jabatan == 'umum') {
+      if ($hak_akses == 'umum') {
         $ket = 'umum';
-      } elseif($jabatan == 'pabrik') {
+      } elseif($hak_akses == 'pabrik') {
         $ket = 'pabrik';
       }
 
