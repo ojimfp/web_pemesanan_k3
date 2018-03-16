@@ -252,15 +252,15 @@ if($_SESSION['status'] !="login admin"){
 			(nama_karyawan, nik, jk_karyawan, tgl_lahir_karyawan, alamat_karyawan, email_karyawan, id_jabatan)
 			VALUES ('$nama', '$nik', '$jk', '$ttl', '$alamat', '$email', '$role')");
 
-			while ($row = mysqli_fetch_assoc($add_data)) {
-				$add_nama = $row['nama_karyawan'];
-				$add_nik = $row['nik'];
-				$add_jk = $row['jk_karyawan'];
-				$add_ttl = $row['tgl_lahir_karyawan'];
-				$add_alamat = $row['alamat_karyawan'];
-				$add_email = $row['email_karyawan'];
-				$add_role = $row['id_jabatan'];
-			}
+			// while ($row = mysqli_fetch_assoc($add_data)) {
+			// 	$add_nama = $row['nama_karyawan'];
+			// 	$add_nik = $row['nik'];
+			// 	$add_jk = $row['jk_karyawan'];
+			// 	$add_ttl = $row['tgl_lahir_karyawan'];
+			// 	$add_alamat = $row['alamat_karyawan'];
+			// 	$add_email = $row['email_karyawan'];
+			// 	$add_role = $row['id_jabatan'];
+			// }
 		}
 		 ?>
 
