@@ -9,6 +9,32 @@ session_start();
 if($_SESSION['status'] !="login admin"){
 	header("location:". $base."login");
 }
+
+//ini supaya data pekerja bisa masuk ke database (belum bisa)
+if (isset($_POST['Submit'])) {
+	$nama = $_POST['nama'];
+	$nik = $_POST['nik'];
+	$jk = $_POST['gender'];
+	$ttl = $_POST['tgllahir'];
+	$alamat = $_POST['alamat'];
+	$email = $_POST['email'];
+	$role = $_POST['jabatan'];
+
+	$add_data = mysqli_query($conn,
+	"INSERT INTO karyawan
+	(nama_karyawan, nik, jk_karyawan, tgl_lahir_karyawan, alamat_karyawan, email_karyawan, id_jabatan)
+	VALUES ('$nama', '$nik', '$jk', '$ttl', '$alamat', '$email', '$role')");
+
+	// while ($row = mysqli_fetch_assoc($add_data)) {
+	// 	$add_nama = $row['nama_karyawan'];
+	// 	$add_nik = $row['nik'];
+	// 	$add_jk = $row['jk_karyawan'];
+	// 	$add_ttl = $row['tgl_lahir_karyawan'];
+	// 	$add_alamat = $row['alamat_karyawan'];
+	// 	$add_email = $row['email_karyawan'];
+	// 	$add_role = $row['id_jabatan'];
+	// }
+	}
 ?>
 
 <!DOCTYPE html>
@@ -116,30 +142,16 @@ if($_SESSION['status'] !="login admin"){
 						</li>
 						<li class="dropdown">
 							<a class="dropdown-toggle count-info" href="<?php echo $base; ?>logout">
-								<p onMouseOver="this.style.color='#30a5ff'" onMouseOut="this.style.color='#FFF'" style="font-size: 15px; color: #FFF"><i class="fa fa-sign-out fa-fw"></i></p>
+								<p onMouseOver="this.style.color='#30a5ff'" onMouseOut="this.style.color='#FFF'"
+								style="font-size: 15px; color: #FFF"><i class="fa fa-sign-out fa-fw"></i></p>
 							</a>
 						</li>
 					</ul>
 				</div>
 			</div><!-- /.container-fluid -->
 		</nav>
+
 		<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<!-- <div class="profile-sidebar">
-			<div class="profile-userpic">
-				<img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
-			</div>
-			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">Username</div>
-				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
-			</div>
-			<div class="clear"></div>
-		</div>
-		<div class="divider"></div> -->
-		<!-- <form role="search">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Search">
-			</div>
-		</form> -->
 		<ul class="nav menu">
 			<li><a href="../../admin"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			<li class="active"><a href="../tambah_pekerja"><em class="fa fa-user-plus">&nbsp;</em> Tambah Pekerja</a></li>
@@ -147,21 +159,6 @@ if($_SESSION['status'] !="login admin"){
 			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Data APD</a></li>
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
-			<!-- <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
-				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span></a>
-				<ul class="children collapse" id="sub-item-1">
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 1
-					</a></li>
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 2
-					</a></li>
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 3
-					</a></li>
-				</ul>
-			</li> -->
-			<!-- <li><a href="login.html"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li> -->
 		</ul>
 	</div>
 
@@ -235,34 +232,6 @@ if($_SESSION['status'] !="login admin"){
 					</div>
 				</div>
 			</div>
-
-		<?php
-
-		if (isset($_POST['Submit'])) {
-			$nama = $_POST['nama'];
-			$nik = $_POST['nik'];
-			$jk = $_POST['gender'];
-			$ttl = $_POST['tgllahir'];
-			$alamat = $_POST['alamat'];
-			$email = $_POST['email'];
-			$role = $_POST['jabatan'];
-
-			$add_data = mysqli_query($conn,
-			"INSERT INTO karyawan
-			(nama_karyawan, nik, jk_karyawan, tgl_lahir_karyawan, alamat_karyawan, email_karyawan, id_jabatan)
-			VALUES ('$nama', '$nik', '$jk', '$ttl', '$alamat', '$email', '$role')");
-
-			// while ($row = mysqli_fetch_assoc($add_data)) {
-			// 	$add_nama = $row['nama_karyawan'];
-			// 	$add_nik = $row['nik'];
-			// 	$add_jk = $row['jk_karyawan'];
-			// 	$add_ttl = $row['tgl_lahir_karyawan'];
-			// 	$add_alamat = $row['alamat_karyawan'];
-			// 	$add_email = $row['email_karyawan'];
-			// 	$add_role = $row['id_jabatan'];
-			// }
-		}
-		 ?>
 
 		<div class="col-sm-12">
 			<p class="back-link">Lumino Theme by <a href="https://www.medialoot.com">Medialoot</a></p>
