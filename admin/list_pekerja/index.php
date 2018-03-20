@@ -208,7 +208,9 @@ if($_SESSION['status'] !="login admin"){
 						<td class="td-read"><?php echo $data['email_karyawan']; ?></td>
 						<td class="td-read"><?php echo $data['id_jabatan']; ?></td>
 						<td>
-							<button class="edit">Edit</button>
+							<a href="edit.php">
+								<button class="edit">Edit</button>
+							</a>
 							<button class="hapus">Hapus</button>
 						</td>
 					</tr>

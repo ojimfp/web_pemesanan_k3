@@ -20,20 +20,10 @@ if (isset($_POST['Submit'])) {
 	$email = $_POST['email'];
 	$role = $_POST['jabatan'];
 
-	$add_data = mysqli_query($conn,
+	mysqli_query($conn,
 	"INSERT INTO karyawan
 	(nama_karyawan, nik, jk_karyawan, tgl_lahir_karyawan, alamat_karyawan, email_karyawan, id_jabatan)
-	VALUES ('$nama', '$nik', '$jk', '$ttl', '$alamat', '$email', '$role')");
-
-	// while ($row = mysqli_fetch_assoc($add_data)) {
-	// 	$add_nama = $row['nama_karyawan'];
-	// 	$add_nik = $row['nik'];
-	// 	$add_jk = $row['jk_karyawan'];
-	// 	$add_ttl = $row['tgl_lahir_karyawan'];
-	// 	$add_alamat = $row['alamat_karyawan'];
-	// 	$add_email = $row['email_karyawan'];
-	// 	$add_role = $row['id_jabatan'];
-	// }
+	VALUES ('','$nama', '$nik', '$jk', '$ttl', '$alamat', '$email', '$role')");
 	}
 ?>
 
@@ -230,8 +220,9 @@ if (isset($_POST['Submit'])) {
 					<div class="button-submit">
 						<button type="submit" name="Submit">SUBMIT</button>
 					</div>
-				</div>
+				</form>
 			</div>
+		</div>
 
 		<div class="col-sm-12">
 			<p class="back-link">Lumino Theme by <a href="https://www.medialoot.com">Medialoot</a></p>
