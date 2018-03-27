@@ -195,7 +195,7 @@ if($_SESSION['status'] !="login admin"){
 						<th>Opsi</th>
 					</tr>
 					<?php
-					$read_data = mysqli_query($conn, "SELECT nik, nama_karyawan, jabatan, email, jenis_kelamin, tgl_lahir, alamat FROM karyawan") or die(mysqli_error());
+					$read_data = mysqli_query($conn, "SELECT nik, nama_karyawan, jabatan, email, jenis_kelamin, tgl_lahir, alamat FROM karyawan WHERE jabatan='karyawan'") or die(mysqli_error());
 					while ($data = mysqli_fetch_array($read_data)) {
 					?>
 					<tr>
@@ -207,9 +207,16 @@ if($_SESSION['status'] !="login admin"){
 						<td class="td-read"><?php echo $data['email']; ?></td>
 						<td class="td-read"><?php echo $data['jabatan']; ?></td>
 						<td>
-							<button style="margin: 7px;" class="btn btn-sm btn-primary">Edit</button>
-							<button style="margin: 7px;" class="btn btn-sm btn-danger">Hapus</button>
+							<form method="POST" action="edit.php">
+								<input type="hidden" name="nik" value="<?php echo $data['nik']; ?>">
+								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Edit</button></a>
+							</form>
+							<form method="POST" action="delete.php">
+								<input type="hidden" name="nik" value="<?php echo $data['nik']; ?>">
+								<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Hapus</button></a>
+							</form>						
 						</td>
+
 					</tr>
 					<?php } ?>
 				</table>

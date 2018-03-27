@@ -182,10 +182,10 @@ if($_SESSION['status'] !="login admin"){
 
 		<div class="row">
 			<div class="col-lg-8">
-				<form method="post" enctype="multipart/form-data">
+				<form method="post" action="tambah.php">
 					<div class="form-group">
 						<label>ID APD</label>
-						<input class="form-control" type="text" name="nama" required="">
+						<input class="form-control" type="text" name="id" required="">
 					</div>
 					<div class="form-group">
 						<label>Nama APD</label>

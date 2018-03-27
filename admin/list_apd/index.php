@@ -190,7 +190,7 @@ if($_SESSION['status'] !="login admin"){
 						<th>Stok</th>
 					</tr>
 					<?php
-					$read_data = mysqli_query($conn, "SELECT apd.id_apd as id_apd, nama_apd, gambar_apd, jumlah_stock FROM apd JOIN stock WHERE apd.id_apd=stock.id_apd") or die(mysqli_error());
+					$read_data = mysqli_query($conn, "SELECT apd.id_apd as id_apd, nama_apd, gambar_apd, jumlah_stock FROM apd LEFT JOIN stock ON apd.id_apd=stock.id_apd") or die(mysqli_error());
 					while ($data = mysqli_fetch_array($read_data)) {
 					?>
 					<tr>
