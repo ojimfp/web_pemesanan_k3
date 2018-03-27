@@ -8,22 +8,12 @@ session_start();
 
 // cek apakah user telah login, jika belum login maka di alihkan ke halaman login
 
-$username = $_SESSION['username'];
+$nik = $_SESSION['nik'];
+$hak_akses = $_SESSION['hak_akses'];
+$nama_karyawan = $_SESSION['nama_karyawan'];
 
-if($_SESSION['status'] !="login".$username.""){
+if($_SESSION['status'] !="login".$nik.""){
   header("location:". $base."login");
-}
-
-$nama_karyawan = mysqli_query($conn, 
-  "SELECT karyawan.nama_karyawan, hak_akses_karyawan.hak_akses
-  FROM user 
-  JOIN karyawan ON (user.id_karyawan = karyawan.id_karyawan)
-  JOIN hak_akses_karyawan ON (karyawan.id_hak_akses = hak_akses_karyawan.id_hak_akses)
-  WHERE user.username='$username'");
-
-while($row = mysqli_fetch_assoc($nama_karyawan)){
-  $nama = $row['nama_karyawan'];
-  $hak_akses = $row['hak_akses'];
 }
 
 ?>
@@ -75,7 +65,7 @@ while($row = mysqli_fetch_assoc($nama_karyawan)){
           <em class="fa fa-home"></em>
         </a></li>
         <li class="active">Permintaan APD</li>
-        <p style="float: right;">Welcome <?php echo $nama; ?></p>
+        <p style="float: right;">Welcome <?php echo $nama_karyawan; ?></p>
       </ol>
     </div><!--/.row-->
 
@@ -88,28 +78,21 @@ while($row = mysqli_fetch_assoc($nama_karyawan)){
 
   <div class="panel col-lg-6 col-md-offset-3">
     <div style="height: 300px;" class="row">
-      <?php
-
-      if ($hak_akses == 'umum') {
-        $ket = 'umum';
-      } elseif($hak_akses == 'pabrik') {
-        $ket = 'pabrik';
-      }
-
-      $result = mysqli_query($conn, "SELECT nama_apd FROM apd WHERE keterangan='$ket'");
-      $storeArray = Array();
-
-      while($row = mysqli_fetch_array($result)){
-        $storeArray[] = $row['nama_apd'];                                          
-      } ?>
       <div style="padding: 20px;">
         <form>
           <h4>Pilih APD</h4>
           <div class="form-group">
             <select name="nama_apd" class="form-control" required="">
-              <?php foreach ($storeArray as $key) { ?>
-              <option><?php echo $key; ?></option>
-              <?php } ?>
+              <?php if($hak_akses == "umum") { ?>
+              <option>Safety Shoes</option>
+              <option>Safety Helmet</option>
+              <?php } elseif($hak_akses == "pabrik") { ?>
+              <?php
+              $read_data = mysqli_query($conn, "SELECT id_apd, nama_apd FROM apd") or die(mysqli_error());
+              while ($data = mysqli_fetch_array($read_data)) {
+              ?>
+              <option><?php echo $data['nama_apd'] . " --- " . $data['id_apd']; ?></option>
+              <?php } } ?>
             </select>
           </div>
           <h4>Jumlah</h4>

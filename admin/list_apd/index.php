@@ -145,6 +145,7 @@ if($_SESSION['status'] !="login admin"){
 			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Data APD</a></li>
 			<li class="active"><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
+			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
 			<!-- <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span></a>
 				<ul class="children collapse" id="sub-item-1">
@@ -175,7 +176,7 @@ if($_SESSION['status'] !="login admin"){
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Dashboard</h1>
+				<h1 class="page-header">Data Alat Pelindung Diri</h1>
 			</div>
 		</div><!--/.row-->
 
@@ -186,35 +187,23 @@ if($_SESSION['status'] !="login admin"){
 						<th>ID</th>
 						<th>Nama</th>
 						<th>Gambar</th>
-						<th>Ukuran</th>
 						<th>Stok</th>
-						<th>Keterangan</th>
-						<th>Opsi</th>
 					</tr>
 					<?php
-					$read_data = mysqli_query($conn, "SELECT * FROM apd") or die(mysqli_error());
+					$read_data = mysqli_query($conn, "SELECT apd.id_apd as id_apd, nama_apd, gambar_apd, jumlah_stock FROM apd JOIN stock WHERE apd.id_apd=stock.id_apd") or die(mysqli_error());
 					while ($data = mysqli_fetch_array($read_data)) {
 					?>
 					<tr>
 						<td class="td-read"><?php echo $data['id_apd']; ?></td>
 						<td class="td-read"><?php echo $data['nama_apd']; ?></td>
 						<td class="td-read"><?php echo $data['gambar_apd']; ?></td>
-						<td class="td-read"><?php echo $data['size_apd']; ?></td>
-						<td class="td-read"><?php echo $data['stock_apd']; ?></td>
-						<td class="td-read"><?php echo $data['keterangan']; ?></td>
-						<td>
-							<button class="edit">Edit</button>
-							<button class="hapus">Hapus</button>
-						</td>
+						<td class="td-read"><?php echo $data['jumlah_stock']; ?></td>
 					</tr>
 					<?php } ?>
 				</table>
 			</div>
 		</div>
 
-		<div class="col-sm-12">
-			<p class="back-link">Lumino Theme by <a href="https://www.medialoot.com">Medialoot</a></p>
-		</div>
 	</div><!--/.row-->
 
 <script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>

@@ -146,6 +146,7 @@ if($_SESSION['status'] !="login admin"){
 			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Data APD</a></li>
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
+			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
 			<!-- <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span></a>
 				<ul class="children collapse" id="sub-item-1">
@@ -184,9 +185,8 @@ if($_SESSION['status'] !="login admin"){
 			<div class="col-lg-12">
 				<table class="table-read" border="2">
 					<tr>
-						<th>ID</th>
-						<th>Nama</th>
 						<th>NIK</th>
+						<th>Nama</th>
 						<th>Jenis Kelamin</th>
 						<th>Tanggal Lahir</th>
 						<th>Alamat</th>
@@ -195,32 +195,25 @@ if($_SESSION['status'] !="login admin"){
 						<th>Opsi</th>
 					</tr>
 					<?php
-					$read_data = mysqli_query($conn, "SELECT * FROM karyawan") or die(mysqli_error());
+					$read_data = mysqli_query($conn, "SELECT nik, nama_karyawan, jabatan, email, jenis_kelamin, tgl_lahir, alamat FROM karyawan") or die(mysqli_error());
 					while ($data = mysqli_fetch_array($read_data)) {
 					?>
 					<tr>
-						<td class="td-read"><?php echo $data['id_karyawan']; ?></td>
-						<td class="td-read"><?php echo $data['nama_karyawan']; ?></td>
 						<td class="td-read"><?php echo $data['nik']; ?></td>
-						<td class="td-read"><?php echo $data['jk_karyawan']; ?></td>
-						<td class="td-read"><?php echo $data['tgl_lahir_karyawan']; ?></td>
-						<td class="td-read"><?php echo $data['alamat_karyawan']; ?></td>
-						<td class="td-read"><?php echo $data['email_karyawan']; ?></td>
-						<td class="td-read"><?php echo $data['id_jabatan']; ?></td>
+						<td class="td-read"><?php echo $data['nama_karyawan']; ?></td>
+						<td class="td-read"><?php echo $data['jenis_kelamin']; ?></td>
+						<td class="td-read"><?php echo $data['tgl_lahir']; ?></td>
+						<td class="td-read"><?php echo $data['alamat']; ?></td>
+						<td class="td-read"><?php echo $data['email']; ?></td>
+						<td class="td-read"><?php echo $data['jabatan']; ?></td>
 						<td>
-							<a href="edit.php">
-								<button class="edit">Edit</button>
-							</a>
-							<button class="hapus">Hapus</button>
+							<button style="margin: 7px;" class="btn btn-sm btn-primary">Edit</button>
+							<button style="margin: 7px;" class="btn btn-sm btn-danger">Hapus</button>
 						</td>
 					</tr>
 					<?php } ?>
 				</table>
 			</div>
-		</div>
-
-		<div class="col-sm-12">
-			<p class="back-link">Lumino Theme by <a href="https://www.medialoot.com">Medialoot</a></p>
 		</div>
 	</div><!--/.row-->
 

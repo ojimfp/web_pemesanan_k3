@@ -3,12 +3,12 @@ $base = "http://localhost/inventorymanagement/";
 
 include '../../config.php';
 
-session_start();
+// session_start();
 
-// cek apakah user telah login, jika belum login maka di alihkan ke halaman login
-if($_SESSION['status'] !="login admin"){
-	header("location:". $base."login");
-}
+// // cek apakah user telah login, jika belum login maka di alihkan ke halaman login
+// if($_SESSION['status'] !="login admin"){
+// 	header("location:". $base."login");
+// }
 
 //ini supaya data pekerja bisa masuk ke database (belum bisa)
 if (isset($_POST['Submit'])) {
@@ -20,10 +20,20 @@ if (isset($_POST['Submit'])) {
 	$email = $_POST['email'];
 	$role = $_POST['jabatan'];
 
-	mysqli_query($conn,
+	$add_data = mysqli_query($conn,
 	"INSERT INTO karyawan
 	(nama_karyawan, nik, jk_karyawan, tgl_lahir_karyawan, alamat_karyawan, email_karyawan, id_jabatan)
-	VALUES ('','$nama', '$nik', '$jk', '$ttl', '$alamat', '$email', '$role')");
+	VALUES ('$nama', '$nik', '$jk', '$ttl', '$alamat', '$email', '$role')");
+
+	// while ($row = mysqli_fetch_assoc($add_data)) {
+	// 	$add_nama = $row['nama_karyawan'];
+	// 	$add_nik = $row['nik'];
+	// 	$add_jk = $row['jk_karyawan'];
+	// 	$add_ttl = $row['tgl_lahir_karyawan'];
+	// 	$add_alamat = $row['alamat_karyawan'];
+	// 	$add_email = $row['email_karyawan'];
+	// 	$add_role = $row['id_jabatan'];
+	// }
 	}
 ?>
 
@@ -149,6 +159,7 @@ if (isset($_POST['Submit'])) {
 			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Data APD</a></li>
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
+			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
 		</ul>
 	</div>
 
@@ -220,12 +231,10 @@ if (isset($_POST['Submit'])) {
 					<div class="button-submit">
 						<button type="submit" name="Submit">SUBMIT</button>
 					</div>
-				</form>
+				</div>
 			</div>
-		</div>
 
 		<div class="col-sm-12">
-			<p class="back-link">Lumino Theme by <a href="https://www.medialoot.com">Medialoot</a></p>
 		</div>
  </div>	<!--/.main-->
 
@@ -237,7 +246,7 @@ if (isset($_POST['Submit'])) {
 <script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
 <script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
 <script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
-<script>
+<!-- <script>
 	window.onload = function () {
 		var chart1 = document.getElementById("line-chart").getContext("2d");
 		window.myLine = new Chart(chart1).Line(lineChartData, {
@@ -247,7 +256,7 @@ if (isset($_POST['Submit'])) {
 			scaleFontColor: "#c5c7cc"
 		});
 	};
-</script>
+</script> -->
 
 </body>
 </html>

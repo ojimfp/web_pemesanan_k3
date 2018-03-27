@@ -145,6 +145,7 @@ if($_SESSION['status'] !="login admin"){
 			<li class="active"><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Data APD</a></li>
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
+			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
 			<!-- <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span></a>
 				<ul class="children collapse" id="sub-item-1">
@@ -183,6 +184,10 @@ if($_SESSION['status'] !="login admin"){
 			<div class="col-lg-8">
 				<form method="post" enctype="multipart/form-data">
 					<div class="form-group">
+						<label>ID APD</label>
+						<input class="form-control" type="text" name="nama" required="">
+					</div>
+					<div class="form-group">
 						<label>Nama APD</label>
 						<input class="form-control" type="text" name="nama" required="">
 					</div>
@@ -190,27 +195,12 @@ if($_SESSION['status'] !="login admin"){
 						<label>Gambar APD</label>
 						<input type="file" name="gambar" accept="image/*">
 					</div>
-					<div class="form-group">
-						<label>Ukuran</label>
-						<input class="form-control" type="date" name="ukuran" required="">
-					</div>
-					<div class="form-group">
-						<label>Stok</label>
-						<input class="form-control" type="text" name="stok" required="">
-					</div>
-					<div class="form-group">
-						<label>Keterangan</label>
-						<input class="form-control" type="text" name="keterangan" required="">
-					</div>
+					<br><br>
 					<div class="button-submit">
-						<button type="submit" name="Submit">SUBMIT</button>
+						<button class="btn btn-md btn-primary" type="submit" name="Submit">SUBMIT</button>
 					</div>
 				</div>
 			</div>
-
-		<div class="col-sm-12">
-			<p class="back-link">Lumino Theme by <a href="https://www.medialoot.com">Medialoot</a></p>
-		</div>
 	</div><!--/.row-->
 
 <script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>

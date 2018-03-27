@@ -20,12 +20,12 @@
 </hgroup>
 <form action="login.php" method="POST">
   <div class="group">
-    <input name="username" type="text" required=""><span class="highlight"></span><span class="bar"></span>
-    <label>Name</label>
+    <input name="nik" type="text" required=""><span class="highlight"></span><span class="bar"></span>
+    <label>NIK</label>
   </div>
   <div class="group"> 
     <input name="password" type="password" required=""><span class="highlight"></span><span class="bar"></span>
-    <label>Email</label>
+    <label>Password</label>
   </div>
   <input type="submit" name="" class="button buttonBlue" value="Login">
   <!-- <button type="submit" class="button buttonBlue">Login
