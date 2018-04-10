@@ -13,7 +13,7 @@ $password = $_POST['password'];
 $login = mysqli_query($conn, 
 	"SELECT nik, jabatan, nama_karyawan
 	FROM karyawan
-	WHERE nik='$nik' and password_kaeyawan='$password'");
+	WHERE nik='$nik' and password_karyawan='$password'");
 $cek = mysqli_num_rows($login);
 
 if ($cek > 0) {
