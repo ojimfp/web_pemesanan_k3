@@ -6,7 +6,7 @@ $id = $_POST['id'];
 $nama = $_POST['nama'];
 // $gambar = $_POST['gambar'];
 
-// var_dump($nik);
+// var_dump($nip);
 
 $tambah = "INSERT INTO apd (id_apd, nama_apd) VALUES ('$id', '$nama');";
 

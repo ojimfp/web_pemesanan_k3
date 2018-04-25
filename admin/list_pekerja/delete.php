@@ -2,11 +2,11 @@
 
 include '../../config.php';
 
-$nik = $_POST['nik'];
+$nip = $_POST['nip'];
 
-// var_dump($nik);
+// var_dump($nip);
 
-$delete = "DELETE FROM karyawan WHERE nik='$nik'";
+$delete = "DELETE FROM karyawan WHERE nip='$nip'";
 
 if (mysqli_query($conn, $delete)) {
 	echo "<script>alert('Data berhasil dihapus..')</script>";

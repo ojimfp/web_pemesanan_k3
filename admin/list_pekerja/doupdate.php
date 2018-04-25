@@ -2,20 +2,20 @@
 
 include '../../config.php';
 
-$nik = $_POST['nik'];
+$nip = $_POST['nip'];
 $nama = $_POST['nama'];
 $email = $_POST['email'];
 $tgl_lahir = $_POST['tgl_lahir'];
 $alamat = $_POST['alamat'];
 
-// var_dump($nik);
+// var_dump($nip);
 
 $update = "UPDATE karyawan
 	SET nama_karyawan = '$nama',
 	email = '$email',
 	tgl_lahir = '$tgl_lahir',
 	alamat = '$alamat'
-	WHERE nik = '$nik'";
+	WHERE nip = '$nip'";
 
 if (mysqli_query($conn, $update)) {
 	echo "<script>alert('Data berhasil diupdate..')</script>";

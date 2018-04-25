@@ -142,7 +142,7 @@ if($_SESSION['status'] !="login admin"){
 			<li><a href="../../admin"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			<li><a href="../tambah_pekerja"><em class="fa fa-user-plus">&nbsp;</em> Tambah Pekerja</a></li>
 			<li><a href="../list_pekerja"><em class="fa fa-users">&nbsp;</em> List Pekerja</a></li>
-			<li class="active"><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Data APD</a></li>
+			<li class="active"><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Jenis APD</a></li>
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
 			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>

@@ -143,7 +143,7 @@ if($_SESSION['status'] !="login admin"){
 			<li><a href="../../admin"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			<li><a href="../tambah_pekerja"><em class="fa fa-user-plus">&nbsp;</em> Tambah Pekerja</a></li>
 			<li class="active"><a href="../list_pekerja"><em class="fa fa-users">&nbsp;</em> List Pekerja</a></li>
-			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Data APD</a></li>
+			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Jenis APD</a></li>
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
 			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
@@ -185,7 +185,7 @@ if($_SESSION['status'] !="login admin"){
 			<div class="col-lg-12">
 				<table class="table-read" border="2">
 					<tr>
-						<th>NIK</th>
+						<th>NIP</th>
 						<th>Nama</th>
 						<th>Jenis Kelamin</th>
 						<th>Tanggal Lahir</th>
@@ -195,11 +195,11 @@ if($_SESSION['status'] !="login admin"){
 						<th>Opsi</th>
 					</tr>
 					<?php
-					$read_data = mysqli_query($conn, "SELECT nik, nama_karyawan, jabatan, email, jenis_kelamin, tgl_lahir, alamat FROM karyawan WHERE jabatan='karyawan'") or die(mysqli_error());
+					$read_data = mysqli_query($conn, "SELECT nip, nama_karyawan, jabatan, email, jenis_kelamin, tgl_lahir, alamat FROM karyawan WHERE jabatan='karyawan'") or die(mysqli_error());
 					while ($data = mysqli_fetch_array($read_data)) {
 					?>
 					<tr>
-						<td class="td-read"><?php echo $data['nik']; ?></td>
+						<td class="td-read"><?php echo $data['nip']; ?></td>
 						<td class="td-read"><?php echo $data['nama_karyawan']; ?></td>
 						<td class="td-read"><?php echo $data['jenis_kelamin']; ?></td>
 						<td class="td-read"><?php echo $data['tgl_lahir']; ?></td>
@@ -208,11 +208,11 @@ if($_SESSION['status'] !="login admin"){
 						<td class="td-read"><?php echo $data['jabatan']; ?></td>
 						<td>
 							<form method="POST" action="edit.php">
-								<input type="hidden" name="nik" value="<?php echo $data['nik']; ?>">
+								<input type="hidden" name="nip" value="<?php echo $data['nip']; ?>">
 								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Edit</button></a>
 							</form>
 							<form method="POST" action="delete.php">
-								<input type="hidden" name="nik" value="<?php echo $data['nik']; ?>">
+								<input type="hidden" name="nip" value="<?php echo $data['nip']; ?>">
 								<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Hapus</button></a>
 							</form>						
 						</td>

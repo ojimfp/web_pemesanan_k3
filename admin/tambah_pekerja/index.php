@@ -3,38 +3,12 @@ $base = "http://localhost/inventorymanagement/";
 
 include '../../config.php';
 
-// session_start();
+session_start();
 
-// // cek apakah user telah login, jika belum login maka di alihkan ke halaman login
-// if($_SESSION['status'] !="login admin"){
-// 	header("location:". $base."login");
-// }
+if($_SESSION['status'] !="login admin"){
+	header("location:". $base."login");
 
-//ini supaya data pekerja bisa masuk ke database (belum bisa)
-if (isset($_POST['Submit'])) {
-	$nama = $_POST['nama'];
-	$nik = $_POST['nik'];
-	$jk = $_POST['gender'];
-	$ttl = $_POST['tgllahir'];
-	$alamat = $_POST['alamat'];
-	$email = $_POST['email'];
-	$role = $_POST['jabatan'];
-
-	$add_data = mysqli_query($conn,
-	"INSERT INTO karyawan
-	(nama_karyawan, nik, jk_karyawan, tgl_lahir_karyawan, alamat_karyawan, email_karyawan, id_jabatan)
-	VALUES ('$nama', '$nik', '$jk', '$ttl', '$alamat', '$email', '$role')");
-
-	// while ($row = mysqli_fetch_assoc($add_data)) {
-	// 	$add_nama = $row['nama_karyawan'];
-	// 	$add_nik = $row['nik'];
-	// 	$add_jk = $row['jk_karyawan'];
-	// 	$add_ttl = $row['tgl_lahir_karyawan'];
-	// 	$add_alamat = $row['alamat_karyawan'];
-	// 	$add_email = $row['email_karyawan'];
-	// 	$add_role = $row['id_jabatan'];
-	// }
-	}
+}
 ?>
 
 <!DOCTYPE html>
@@ -152,100 +126,86 @@ if (isset($_POST['Submit'])) {
 		</nav>
 
 		<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<ul class="nav menu">
-			<li><a href="../../admin"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li class="active"><a href="../tambah_pekerja"><em class="fa fa-user-plus">&nbsp;</em> Tambah Pekerja</a></li>
-			<li><a href="../list_pekerja"><em class="fa fa-users">&nbsp;</em> List Pekerja</a></li>
-			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Data APD</a></li>
-			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
-			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
-			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
-		</ul>
-	</div>
-
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		<div class="row">
-			<ol class="breadcrumb">
-				<li><a href="#">
-					<em class="fa fa-home"></em>
-				</a></li>
-				<li class="active">Dashboard</li>
-			</ol>
+			<ul class="nav menu">
+				<li><a href="../../admin"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+				<li class="active"><a href="../tambah_pekerja"><em class="fa fa-user-plus">&nbsp;</em> Tambah Pekerja</a></li>
+				<li><a href="../list_pekerja"><em class="fa fa-users">&nbsp;</em> List Pekerja</a></li>
+				<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Jenis APD</a></li>
+				<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
+				<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
+				<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
+			</ul>
 		</div>
 
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">Tambah Pekerja</h1>
+		<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+			<div class="row">
+				<ol class="breadcrumb">
+					<li><a href="#">
+						<em class="fa fa-home"></em>
+					</a></li>
+					<li class="active">Dashboard</li>
+				</ol>
 			</div>
-		</div>
 
-		<div class="row">
-			<div class="col-lg-8">
-				<form method="post" enctype="multipart/form-data">
-					<div class="form-group">
-						<label>Nama Pekerja</label>
-						<input class="form-control" type="text" name="nama" required="">
-					</div>
-					<div class="form-group">
-						<label>NIK</label>
-						<input class="form-control" type="text" name="nik" required="">
-					</div>
-					<div class="form-group">
-						<label>Jenis Kelamin</label></br>
-						<input type="radio" name="gender" value="male"
-						<?php
-						if (isset($gender) && $gender=="male")
-							echo "checked";?>> Laki-laki
-						<input type="radio" name="gender" value="female"
-						<?php
-						if (isset($gender) && $gender=="female")
-							echo "checked";?>> Perempuan
-					</div>
-					<div class="form-group">
-						<label>Tanggal Lahir</label>
-						<input class="form-control" type="date" name="tgllahir" required="">
-					</div>
-					<div class="form-group">
-						<label>Alamat</label>
-						<input class="form-control" type="text" name="alamat" required="">
-					</div>
-					<div class="form-group">
-						<label>E-mail</label>
-						<input class="form-control" type="email" name="email" required="">
-					</div>
-					<div class="form-group">
-						<label>Jabatan</label></br>
-						<input type="radio" name="jabatan" value="admin"
-						<?php
-						if (isset($jabatan) && $jabatan=="admin")
-							echo "checked";?>> Admin
-						<input type="radio" name="jabatan" value="umum"
-						<?php
-						if (isset($jabatan) && $jabatan=="umum")
-							echo "checked";?>> Umum
-						<input type="radio" name="jabatan" value="pabrik"
-						<?php
-						if (isset($jabatan) && $jabatan=="pabrik")
-							echo "checked";?>> Pabrik
-					</div>
-					<div class="button-submit">
-						<button type="submit" name="Submit">SUBMIT</button>
-					</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Tambah Pekerja</h1>
 				</div>
 			</div>
 
-		<div class="col-sm-12">
-		</div>
- </div>	<!--/.main-->
+			<form method="POST" action="tambah.php">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="form-group">
+							<label>Nama Pekerja</label>
+							<input class="form-control" type="text" name="nama" required="">
+						</div>
+						<div class="form-group">
+							<label>Jenis Kelamin</label>
+							<select name="jenis_kelamin" class="form-control" required="">
+								<option>Laki-laki</option>
+								<option>Perempuan</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Tanggal Lahir</label>
+							<input class="form-control" type="date" name="tgllahir" required="">
+						</div>
+						<div class="form-group">
+							<label>Alamat</label>
+							<input class="form-control" type="text" name="alamat" required="">
+						</div>
+						<div class="form-group">
+							<label>E-mail</label>
+							<input class="form-control" type="email" name="email" required="">
+						</div>
+						<div class="form-group">
+							<label>Jabatan</label>
+							<select name="jabatan" class="form-control" required="">
+								<option>Karyawan Umum</option>
+								<option>Karyawan Pabrik</option>
+							</select>
+						</div>
+						<br>
+						<br>
+						<div class="button-submit">
+							<input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="" value="SUBMIT">
+						</div>
+						<br>
+						<br>
+					</div>
+				</div>
+			</div>	
+		</form>
 
-<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/chart-data.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/easypiechart.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
+		<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
+		<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
+		<script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
+		<script src="<?php echo $base; ?>assets/admin/js/chart-data.js"></script>
+		<script src="<?php echo $base; ?>assets/admin/js/easypiechart.js"></script>
+		<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
+		<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
+		<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
 <!-- <script>
 	window.onload = function () {
 		var chart1 = document.getElementById("line-chart").getContext("2d");

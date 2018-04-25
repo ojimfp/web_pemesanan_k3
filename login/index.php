@@ -20,8 +20,8 @@
 </hgroup>
 <form action="login.php" method="POST">
   <div class="group">
-    <input name="nik" type="text" required=""><span class="highlight"></span><span class="bar"></span>
-    <label>NIK</label>
+    <input name="nip" type="text" required=""><span class="highlight"></span><span class="bar"></span>
+    <label>NIP</label>
   </div>
   <div class="group"> 
     <input name="password" type="password" required=""><span class="highlight"></span><span class="bar"></span>

@@ -8,11 +8,11 @@ session_start();
 
 // cek apakah user telah login, jika belum login maka di alihkan ke halaman login
 
-$nik = $_SESSION['nik'];
+$nip = $_SESSION['nip'];
 $hak_akses = $_SESSION['hak_akses'];
 $nama_karyawan = $_SESSION['nama_karyawan'];
 
-if($_SESSION['status'] !="login".$nik.""){
+if($_SESSION['status'] !="login".$nip.""){
   header("location:". $base."login");
 }
 
@@ -84,8 +84,11 @@ if($_SESSION['status'] !="login".$nik.""){
           <div class="form-group">
             <select name="nama_apd" class="form-control" required="">
               <?php if($hak_akses == "umum") { ?>
-              <option>Safety Shoes</option>
-              <option>Safety Helmet</option>
+              <option>Safety Shoes --- S41</option>
+              <option>Safety Shoes --- S42</option>
+              <option>Safety Shoes --- S43</option>
+              <option>Safety Shoes --- S44</option>
+              <option>Safety Helmet --- H001</option>
               <?php } elseif($hak_akses == "pabrik") { ?>
               <?php
               $read_data = mysqli_query($conn, "SELECT id_apd, nama_apd FROM apd") or die(mysqli_error());
