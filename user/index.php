@@ -46,7 +46,7 @@ if($_SESSION['status'] !="login".$nip.""){
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#"><span>PG Kebon Agung</span></a>
+        <a class="navbar-brand" href="../user"><span>PG Kebon Agung</span></a>
         <ul class="nav navbar-top-links navbar-right">
           <li >
             <a class="navbar-brand" href="<?php echo $base; ?>logout"> 
@@ -61,10 +61,11 @@ if($_SESSION['status'] !="login".$nip.""){
   <div class="col-lg-12">
     <div class="row">
       <ol class="breadcrumb">
-        <li><a href="#">
+        <li><a href="../user">
           <em class="fa fa-home"></em>
         </a></li>
-        <li class="active">Permintaan APD</li>
+        <li><a href="#"></a>Permintaan APD</li>
+        <li><a href="#">Peminjaman APD</a></li>
         <p style="float: right;">Welcome <?php echo $nama_karyawan; ?></p>
       </ol>
     </div><!--/.row-->
@@ -79,7 +80,7 @@ if($_SESSION['status'] !="login".$nip.""){
   <div class="panel col-lg-6 col-md-offset-3">
     <div style="height: 300px;" class="row">
       <div style="padding: 20px;">
-        <form>
+        <form method="POST" action="kirim.php">
           <h4>Pilih APD</h4>
           <div class="form-group">
             <select name="nama_apd" class="form-control" required="">
@@ -100,7 +101,7 @@ if($_SESSION['status'] !="login".$nip.""){
           </div>
           <h4>Jumlah</h4>
           <div class="form-group">
-            <input class="form-control" type="number" name="" value="1" required="" min="1">
+            <input class="form-control" type="number" name="jumlah" value="1" required="" min="1">
           </div>
           <br><br>
           <input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="" value="KIRIM">
