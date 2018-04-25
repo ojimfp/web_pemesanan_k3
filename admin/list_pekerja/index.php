@@ -171,7 +171,7 @@ if($_SESSION['status'] !="login admin"){
 				<li><a href="#">
 					<em class="fa fa-home"></em>
 				</a></li>
-				<li class="active">Dashboard</li>
+				<li class="active">List Pekerja</li>
 			</ol>
 		</div><!--/.row-->
 
