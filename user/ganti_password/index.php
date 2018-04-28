@@ -2,7 +2,7 @@
 
 <?php
 $base = "http://localhost/inventorymanagement/";
-include '../config.php';
+include '../../config.php';
 // mengaktifkan session
 session_start();
 
@@ -64,16 +64,16 @@ if($_SESSION['status'] !="login".$nip.""){
         <li><a href="../user">
           <em class="fa fa-home"></em>
         </a></li>
-        <li><a href="#"></a>Permintaan APD</li>
+        <li><a href="../index.php">Permintaan APD</a></li>
         <li><a href="#">Peminjaman APD</a></li>
-        <li><a href="ganti_password/index.php">Ganti Password</a></li>
+        <li><a href="#"></a>Ganti Password</li>
         <p style="float: right;">Welcome <?php echo $nama_karyawan; ?></p>
       </ol>
     </div><!--/.row-->
 
     <div class="row">
       <div class="col-lg-12">
-        <h1 style="text-align: center;" class="page-header">Form Permintaan APD</h1>
+        <h1 style="text-align: center;" class="page-header">Ganti Password</h1>
       </div>
     </div>
   </div>
@@ -81,32 +81,32 @@ if($_SESSION['status'] !="login".$nip.""){
   <div class="panel col-lg-6 col-md-offset-3">
     <div style="height: 300px;" class="row">
       <div style="padding: 20px;">
-        <form method="POST" action="kirim.php">
-          <h4>Pilih APD</h4>
-          <div class="form-group">
-            <select name="nama_apd" class="form-control" required="">
-              <?php if($hak_akses == "umum") { ?>
-              <option>Safety Shoes --- S41</option>
-              <option>Safety Shoes --- S42</option>
-              <option>Safety Shoes --- S43</option>
-              <option>Safety Shoes --- S44</option>
-              <option>Safety Helmet --- H001</option>
-              <?php } elseif($hak_akses == "pabrik") { ?>
-              <?php
-              $read_data = mysqli_query($conn, "SELECT id_apd, nama_apd FROM apd") or die(mysqli_error());
-              while ($data = mysqli_fetch_array($read_data)) {
-              ?>
-              <option><?php echo $data['nama_apd'] . " --- " . $data['id_apd']; ?></option>
-              <?php } } ?>
-            </select>
-          </div>
-          <h4>Jumlah</h4>
-          <div class="form-group">
-            <input class="form-control" type="number" name="jumlah" value="1" required="" min="1">
-          </div>
-          <br><br>
-          <input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="" value="KIRIM">
-        </form>
+        <form method="POST" action="ganti.php">
+  				<div class="row">
+  					<div class="col-lg-8">
+  						<div class="form-group">
+  							<label>Password Lama</label>
+  							<input class="form-control" type="password" name="pass_lama" required="">
+  						</div>
+  						<div class="form-group">
+  							<label>Password Baru</label>
+  							<input class="form-control" type="password" name="pass_baru" required="">
+  						</div>
+  						<div class="form-group">
+  							<label>Konfirmasi Password Baru</label>
+  							<input class="form-control" type="password" name="konf_pass_baru" required="">
+  						</div>
+  						<br>
+  						<br>
+  						<div class="button-submit">
+  							<input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="submit" value="SUBMIT">
+  						</div>
+  						<br>
+  						<br>
+  					</div>
+  				</div>
+  			</div>
+  		</form>
 
       </div>
     </div>
