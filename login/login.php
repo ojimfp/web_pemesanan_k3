@@ -1,5 +1,5 @@
 <!-- ini kode buat fungsi login user -->
-<?php 
+<?php
 include '../config.php';
 
  // waktu input username tadi, inputannya ditangkep disini
@@ -10,17 +10,17 @@ $nip = $_POST['nip'];
 $password = $_POST['password'];
 
  // cek apakah inputan username password sama dengan yang di database
-$login = mysqli_query($conn, 
+$login = mysqli_query($conn,
 	"SELECT nip, jabatan, nama_karyawan
 	FROM karyawan
 	WHERE nip='$nip' and password='$password'");
 $cek = mysqli_num_rows($login);
 
 if ($cek > 0) {
-	while($row = mysqli_fetch_assoc($login)){   
+	while($row = mysqli_fetch_assoc($login)){
 		if($cek > 0 && $row['jabatan']=='Admin'){
 			session_start();
-			$_SESSION['username'] = $username;
+			$_SESSION['nip'] = $nip;
 			$_SESSION['status'] = "login admin";
 			header("location:../admin");
 		}elseif($cek > 0 && $row['jabatan']=='Karyawan') {
@@ -47,10 +47,9 @@ if ($cek > 0) {
 		}
 	}
 } else {
-	 // header("location:index.php");	
+	 // header("location:index.php");
 	echo "<script>alert('Username atau password salah!!')</script>";
-	echo "<script>location.href='../login';</script>";	
+	echo "<script>location.href='../login';</script>";
 }
 
 ?>
-

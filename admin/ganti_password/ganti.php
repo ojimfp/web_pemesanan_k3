@@ -29,6 +29,7 @@ if ($cek) {
   }
 } else {
   echo 'Password lama tidak cocok';
+  echo "<script>location.href='../ganti_password';</script>";
 }
 }
 
