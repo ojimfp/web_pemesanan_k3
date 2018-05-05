@@ -188,16 +188,28 @@ if($_SESSION['status'] !="login admin"){
 						<th>Nama</th>
 						<th>Gambar</th>
 						<th>Stok</th>
+						<th>Opsi</th>
 					</tr>
 					<?php
-					$read_data = mysqli_query($conn, "SELECT apd.id_apd as id_apd, nama_apd, gambar_apd, jumlah_stock FROM apd LEFT JOIN stock ON apd.id_apd=stock.id_apd") or die(mysqli_error());
+					$read_data = mysqli_query($conn, "SELECT apd.id_apd AS id_apd, nama_apd, gambar_apd, jumlah_stock FROM apd LEFT JOIN stock ON apd.id_apd=stock.id_apd") or die(mysqli_error());
 					while ($data = mysqli_fetch_array($read_data)) {
 					?>
 					<tr>
 						<td class="td-read"><?php echo $data['id_apd']; ?></td>
 						<td class="td-read"><?php echo $data['nama_apd']; ?></td>
-						<td class="td-read"><?php echo $data['gambar_apd']; ?></td>
+						<td class="td-read"><?php echo "<img src='../../assets/admin/img/".$data['gambar_apd']."'
+						height='150px' width='150px'>";?></td>
 						<td class="td-read"><?php echo $data['jumlah_stock']; ?></td>
+						<td>
+							<form method="POST" action="edit.php">
+								<input type="hidden" name="nip" value="<?php echo $data['id_apd']; ?>">
+								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Edit</button></a>
+							</form>
+							<form method="POST" action="delete.php">
+								<input type="hidden" name="nip" value="<?php echo $data['id_apd']; ?>">
+								<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Hapus</button></a>
+							</form>
+						</td>
 					</tr>
 					<?php } ?>
 				</table>
