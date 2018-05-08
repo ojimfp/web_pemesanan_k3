@@ -205,10 +205,6 @@ if($_SESSION['status'] !="login admin"){
 								<input type="hidden" name="nip" value="<?php echo $data['id_apd']; ?>">
 								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Edit</button></a>
 							</form>
-							<form method="POST" action="delete.php">
-								<input type="hidden" name="nip" value="<?php echo $data['id_apd']; ?>">
-								<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Hapus</button></a>
-							</form>
 						</td>
 					</tr>
 					<?php } ?>
