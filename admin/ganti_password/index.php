@@ -134,9 +134,8 @@ if($_SESSION['status'] !="login admin"){
 				<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 				<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
 				<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
-        <li><a href="list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
-  			<li class="active"><a href="../../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
-			</ul>
+        		<li class="active"><a href="../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
+        	</ul>
 		</div>
 
 		<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -151,36 +150,48 @@ if($_SESSION['status'] !="login admin"){
 
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Ganti Password</h1>
+					<h1 class="page-header"></h1>
 				</div>
 			</div>
 
-			<form method="POST" action="ganti.php">
-				<div class="row">
-					<div class="col-lg-8">
-						<div class="form-group">
-							<label>Password Lama</label>
-							<input class="form-control" type="password" name="pass_lama" required="">
+			<div class="container col-lg-12">
+				<div class="list-group">
+					<form method="POST" action="ganti.php">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<strong>
+									Ganti Password
+								</strong>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="form-group">
+											<label>Password Lama</label>
+											<input class="form-control" type="password" name="pass_lama" required="">
+										</div>
+										<div class="form-group">
+											<label>Password Baru</label>
+											<input class="form-control" type="password" name="pass_baru" required="">
+										</div>
+										<div class="form-group">
+											<label>Konfirmasi Password Baru</label>
+											<input class="form-control" type="password" name="konf_pass_baru" required="">
+										</div>
+										<br>
+										<br>
+										<div class="button-submit">
+											<input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="submit" value="SUBMIT">
+										</div>
+										<br>
+										<br>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="form-group">
-							<label>Password Baru</label>
-							<input class="form-control" type="password" name="pass_baru" required="">
-						</div>
-						<div class="form-group">
-							<label>Konfirmasi Password Baru</label>
-							<input class="form-control" type="password" name="konf_pass_baru" required="">
-						</div>
-						<br>
-						<br>
-						<div class="button-submit">
-							<input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="submit" value="SUBMIT">
-						</div>
-						<br>
-						<br>
-					</div>
+					</form>
 				</div>
 			</div>
-		</form>
 
 		<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
 		<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>

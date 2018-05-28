@@ -146,6 +146,7 @@ if($_SESSION['status'] !="login admin"){
 			<li class="active"><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
 			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
+			<li><a href="../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
 			<!-- <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span></a>
 				<ul class="children collapse" id="sub-item-1">
@@ -197,7 +198,7 @@ if($_SESSION['status'] !="login admin"){
 					<tr>
 						<td class="td-read"><?php echo $data['id_apd']; ?></td>
 						<td class="td-read"><?php echo $data['nama_apd']; ?></td>
-						<td class="td-read"><?php echo "<img src='../../assets/admin/img/".$data['gambar_apd']."'
+						<td class="td-read"><?php echo "<img src='../../assets/img/".$data['gambar_apd']."'
 						height='150px' width='150px'>";?></td>
 						<td class="td-read"><?php echo $data['jumlah_stock']; ?></td>
 						<td>

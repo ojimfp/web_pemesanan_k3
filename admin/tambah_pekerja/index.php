@@ -134,6 +134,7 @@ if($_SESSION['status'] !="login admin"){
 				<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 				<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
 				<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
+				<li><a href="../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
 			</ul>
 		</div>
 
@@ -149,54 +150,64 @@ if($_SESSION['status'] !="login admin"){
 
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Tambah Pekerja</h1>
+					<h1 class="page-header"></h1>
 				</div>
 			</div>
 
-			<form method="POST" action="tambah.php">
-				<div class="row">
-					<div class="col-lg-8">
-						<div class="form-group">
-							<label>Nama Pekerja</label>
-							<input class="form-control" type="text" name="nama" required="">
+			<div class="container col-lg-12">
+				<div class="list-group">
+					<form method="POST" action="tambah.php">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<strong>
+									Tambah Pekerja
+								</strong>
+							</div>
+							<div class="panel-body">
+								<div class="col-lg-12">
+									<div class="form-group">
+										<label>Nama Pekerja</label>
+										<input class="form-control" type="text" name="nama" required="">
+									</div>
+									<div class="form-group">
+										<label>Jenis Kelamin</label>
+										<select name="jenis_kelamin" class="form-control" required="">
+											<option>Laki-laki</option>
+											<option>Perempuan</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Tanggal Lahir</label>
+										<input class="form-control" type="date" name="tgllahir" required="">
+									</div>
+									<div class="form-group">
+										<label>Alamat</label>
+										<input class="form-control" type="text" name="alamat" required="">
+									</div>
+									<div class="form-group">
+										<label>E-mail</label>
+										<input class="form-control" type="email" name="email" required="">
+									</div>
+									<div class="form-group">
+										<label>Jabatan</label>
+										<select name="jabatan" class="form-control" required="">
+											<option>Karyawan Umum</option>
+											<option>Karyawan Pabrik</option>
+										</select>
+									</div>
+									<br>
+									<br>
+									<div class="button-submit">
+										<input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="" value="SUBMIT">
+									</div>
+									<br>
+									<br>
+								</div>
+							</div>
 						</div>
-						<div class="form-group">
-							<label>Jenis Kelamin</label>
-							<select name="jenis_kelamin" class="form-control" required="">
-								<option>Laki-laki</option>
-								<option>Perempuan</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label>Tanggal Lahir</label>
-							<input class="form-control" type="date" name="tgllahir" required="">
-						</div>
-						<div class="form-group">
-							<label>Alamat</label>
-							<input class="form-control" type="text" name="alamat" required="">
-						</div>
-						<div class="form-group">
-							<label>E-mail</label>
-							<input class="form-control" type="email" name="email" required="">
-						</div>
-						<div class="form-group">
-							<label>Jabatan</label>
-							<select name="jabatan" class="form-control" required="">
-								<option>Karyawan Umum</option>
-								<option>Karyawan Pabrik</option>
-							</select>
-						</div>
-						<br>
-						<br>
-						<div class="button-submit">
-							<input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="" value="SUBMIT">
-						</div>
-						<br>
-						<br>
-					</div>
+					</form>
 				</div>
-			</div>	
-		</form>
+			</div>
 
 		<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
 		<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>

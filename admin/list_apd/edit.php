@@ -134,6 +134,7 @@ if($_SESSION['status'] !="login admin"){
   <li class="active"><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
   <li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
   <li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
+  <li><a href="../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
 </ul>
 </div>
 

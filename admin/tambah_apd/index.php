@@ -146,6 +146,7 @@ if($_SESSION['status'] !="login admin"){
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
 			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
+			<li><a href="../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
 			<!-- <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span></a>
 				<ul class="children collapse" id="sub-item-1">
@@ -176,31 +177,45 @@ if($_SESSION['status'] !="login admin"){
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Tambah Jenis APD</h1>
+				<h1 class="page-header"></h1>
 			</div>
 		</div><!--/.row-->
 
-		<div class="row">
-			<div class="col-lg-8">
-				<form method="post" action="tambah.php" enctype="multipart/form-data">
-					<div class="form-group">
-						<label>ID APD</label>
-						<input class="form-control" type="text" name="id" required="">
-					</div>
-					<div class="form-group">
-						<label>Nama APD</label>
-						<input class="form-control" type="text" name="nama" required="">
-					</div>
-					<div class="form-group">
-						<label>Gambar APD</label>
-						<input type="file" name="gambar" accept="image/*">
-					</div>
-					<br><br>
-					<div class="button-submit">
-						<button class="btn btn-md btn-primary" type="submit" name="submit">SUBMIT</button>
+		<div class="container col-lg-12">
+			<div class="list-group">
+				<div class="row">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<strong>
+								Tambah Jenis APD
+							</strong>
+						</div>
+						<div class="panel-body">
+							<div class="col-lg-12">
+								<form method="post" action="tambah.php" enctype="multipart/form-data">
+									<div class="form-group">
+										<label>ID APD</label>
+										<input class="form-control" type="text" name="id" required="">
+									</div>
+									<div class="form-group">
+										<label>Nama APD</label>
+										<input class="form-control" type="text" name="nama" required="">
+									</div>
+									<div class="form-group">
+										<label>Gambar APD</label>
+										<input type="file" name="gambar" accept="image/*">
+									</div>
+									<br><br>
+									<div class="button-submit">
+										<button class="btn btn-md btn-primary" type="submit" name="submit">SUBMIT</button>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 	</div><!--/.row-->
 
 <script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>

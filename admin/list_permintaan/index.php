@@ -146,6 +146,7 @@ if($_SESSION['status'] !="login admin"){
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li class="active"><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
 			<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
+			<li><a href="../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
 			<!-- <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span></a>
 				<ul class="children collapse" id="sub-item-1">
@@ -191,29 +192,23 @@ if($_SESSION['status'] !="login admin"){
 					</tr>
 
 					<?php
-					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nama_karyawan, permintaan.tanggal_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by permintaan.tanggal_permintaan, permintaan.nip_karyawan desc having count(*) > 1");
+					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, permintaan.tanggal_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by permintaan.tanggal_permintaan desc, permintaan.nip_karyawan");
 
 					$storeArrayTanggal = Array();
 					$storeArrayNama = Array();
 
-					while($row = mysqli_fetch_array($nama_tanggal)){
-
-						$storeArrayTanggal[] = $row['tanggal_permintaan'];
-						$storeArrayNama[] = $row['nama_karyawan'];
-
-					}
-
-					foreach (array_combine($storeArrayNama, $storeArrayTanggal) as $nama => $tanggal) { ?>
+					while($row = mysqli_fetch_array($nama_tanggal)){ ?>					
 
 					<tr>
-						<td class="td-read"><?php echo $tanggal; ?></td>
-						<td class="td-read"><?php echo $nama; ?></td>
-						<td class="td-read">
-							<form method="POST" action="detail.php">
-								<input type="hidden" name="nip" value="<?php echo $data['nip']; ?>">
+						<form method="POST" action="detail.php">
+							<td class="td-read"><?php echo $row['tanggal_permintaan']; ?></td>
+							<td class="td-read"><?php echo $row['nama_karyawan']; ?></td>
+							<td class="td-read">
+								<input type="hidden" name="nip" value="<?php echo $row['nip']; ?>">
 								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Detail</button></a>
-							</form>
-						</td>
+								
+							</td>
+						</form>
 					</tr>
 					<?php } ?>
 				</table>

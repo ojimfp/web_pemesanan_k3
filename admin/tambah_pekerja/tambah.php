@@ -53,8 +53,7 @@ if ($j == "Karyawan Umum") {
 			VALUES ('$nip_password', '$nip_password' ,'$nama', '$jeniskelamin', '$tgllahir', '$alamat', '$email', '$jabatan')")) 
 		{
 			echo "
-			<script>
-				alert('Data berhasil ditambah..')
+			<script>alert('Data berhasil ditambahkan.. \\n\\nNIP : $nip_password \\nPassword : $nip_password')
 			</script>";
 			echo "<script>location.href='../tambah_pekerja';</script>";
 		} else {

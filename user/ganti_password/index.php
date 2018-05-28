@@ -73,64 +73,70 @@ if($_SESSION['status'] !="login".$nip.""){
 
     <div class="row">
       <div class="col-lg-12">
-        <h1 style="text-align: center;" class="page-header">Ganti Password</h1>
+        <h1 style="text-align: center;" class="page-header"></h1>
       </div>
     </div>
   </div>
 
-  <div class="panel col-lg-6 col-md-offset-3">
-    <div style="height: 300px;" class="row">
-      <div style="padding: 20px;">
-        <form method="POST" action="ganti.php">
-  				<div class="row">
-  					<div class="col-lg-8">
-  						<div class="form-group">
-  							<label>Password Lama</label>
-  							<input class="form-control" type="password" name="pass_lama" required="">
-  						</div>
-  						<div class="form-group">
-  							<label>Password Baru</label>
-  							<input class="form-control" type="password" name="pass_baru" required="">
-  						</div>
-  						<div class="form-group">
-  							<label>Konfirmasi Password Baru</label>
-  							<input class="form-control" type="password" name="konf_pass_baru" required="">
-  						</div>
-  						<br>
-  						<br>
-  						<div class="button-submit">
-  							<input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="submit" value="SUBMIT">
-  						</div>
-  						<br>
-  						<br>
-  					</div>
-  				</div>
-  			</div>
-  		</form>
 
-      </div>
+  <div class="container col-lg-6 col-md-offset-3">
+    <div class="list-group">
+      <form method="POST" action="ganti.php">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <strong>
+              Ganti Password
+            </strong>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label>Password Lama</label>
+                  <input class="form-control" type="password" name="pass_lama" required="">
+                </div>
+                <div class="form-group">
+                  <label>Password Baru</label>
+                  <input class="form-control" type="password" name="pass_baru" required="">
+                </div>
+                <div class="form-group">
+                  <label>Konfirmasi Password Baru</label>
+                  <input class="form-control" type="password" name="konf_pass_baru" required="">
+                </div>
+                <br>
+                <br>
+                <div class="button-submit">
+                  <input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="submit" value="SUBMIT">
+                </div>
+                <br>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
-  <script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
-  <script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
-  <script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
-  <script src="<?php echo $base; ?>assets/admin/js/chart-data.js"></script>
-  <script src="<?php echo $base; ?>assets/admin/js/easypiechart.js"></script>
-  <script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
-  <script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
-  <script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
-  <script>
-    window.onload = function () {
-      var chart1 = document.getElementById("line-chart").getContext("2d");
-      window.myLine = new Chart(chart1).Line(lineChartData, {
-        responsive: true,
-        scaleLineColor: "rgba(0,0,0,.2)",
-        scaleGridLineColor: "rgba(0,0,0,.05)",
-        scaleFontColor: "#c5c7cc"
-      });
-    };
-  </script>
+<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
+<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
+<script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
+<script src="<?php echo $base; ?>assets/admin/js/chart-data.js"></script>
+<script src="<?php echo $base; ?>assets/admin/js/easypiechart.js"></script>
+<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
+<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
+<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
+<script>
+  window.onload = function () {
+    var chart1 = document.getElementById("line-chart").getContext("2d");
+    window.myLine = new Chart(chart1).Line(lineChartData, {
+      responsive: true,
+      scaleLineColor: "rgba(0,0,0,.2)",
+      scaleGridLineColor: "rgba(0,0,0,.05)",
+      scaleFontColor: "#c5c7cc"
+    });
+  };
+</script>
 
 </body>
 </html>
