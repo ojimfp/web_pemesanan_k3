@@ -73,12 +73,83 @@ if($_SESSION['status'] !="login".$nip.""){
 
     <div class="row">
       <div class="col-lg-12">
-        <h1 style="text-align: center;" class="page-header">Form Permintaan APD</h1>
+        <h1 style="text-align: center;" class="page-header"></h1>
       </div>
     </div>
   </div>
 
-  <div class="panel col-lg-6 col-md-offset-3">
+  <div class="container col-lg-7">
+    <div class="list-group">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <strong>
+              Permintaan APD
+            </strong>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <form action="kirim.php" method="POST">
+                <table style="margin: 0 auto;" border="0">
+                    <!-- <tr>
+                      <th>a</th>
+                      <th>b</th>
+                      <th>c</th>
+                    </tr> -->
+                  <?php 
+                    $read_data = mysqli_query($conn, "SELECT * FROM apd") or die(mysqli_error()); ?>
+                   
+                      <tr>
+                        <?php 
+                          $i = 0;
+                          while ($data = mysqli_fetch_array($read_data)) { ?>
+                        <td style="text-align: center; vertical-align: middle;">
+                          
+                          <img style="width: 140px; margin: 70px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
+                          <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
+                          <input class="form-control" type="number" name="jumlah" id="jumlah" placeholder="jumlah permintaan">
+                          <input class="form-control" type="hidden" name="id_apd" value="<?php echo $data['id_apd']; ?>">
+                          <input class="form-control" type="checkbox" name="nama_apd" id="id_apd" value="<?php echo $data['nama_apd']; ?>">
+
+                          <?php 
+                          $i++;
+                          if ($i%3 == 0) {
+                            echo '</td></tr></div><div class="row">';
+                          }
+                        } ?>
+                        <!-- </td>
+                        
+                      </tr> -->
+                </table>
+                <div style="text-align: center; vertical-align: middle; margin: 40px auto 30px;">
+                  <input class="btn btn-md btn-primary" type="submit" name="" value="Ajukan Permintaan">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="container col-lg-5">
+    <div class="list-group">
+      <form method="POST" action="ganti.php">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <strong>
+              SOP
+            </strong>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+             
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- <div class="panel col-lg-6 col-md-offset-3">
     <div style="height: 300px;" class="row">
       <div style="padding: 20px;">
         <form method="POST" action="kirim.php">
@@ -91,8 +162,8 @@ if($_SESSION['status'] !="login".$nip.""){
               <option>Safety Shoes --- S43</option>
               <option>Safety Shoes --- S44</option>
               <option>Safety Helmet --- H001</option>
-              <?php } elseif($hak_akses == "pabrik") { ?>
-              <?php
+              <?php } elseif($hak_akses == "pabrik") {
+              
               $read_data = mysqli_query($conn, "SELECT id_apd, nama_apd FROM apd") or die(mysqli_error());
               while ($data = mysqli_fetch_array($read_data)) {
               ?>
@@ -110,7 +181,7 @@ if($_SESSION['status'] !="login".$nip.""){
 
       </div>
     </div>
-  </div>
+  </div> -->
 
   <script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
   <script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>

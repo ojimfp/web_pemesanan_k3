@@ -105,7 +105,7 @@ if($_SESSION['status'] !="login".$nip.""){
                 </div>
                 <br>
                 <br>
-                <div class="button-submit">
+                <div>
                   <input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="submit" value="SUBMIT">
                 </div>
                 <br>
