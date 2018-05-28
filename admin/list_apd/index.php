@@ -189,7 +189,7 @@ if($_SESSION['status'] !="login admin"){
 						<th>Nama</th>
 						<th>Gambar</th>
 						<th>Stok</th>
-						<th>Opsi</th>
+						<!-- <th>Opsi</th> -->
 					</tr>
 					<?php
 					$read_data = mysqli_query($conn, "SELECT apd.id_apd AS id_apd, nama_apd, gambar_apd, jumlah_stock FROM apd LEFT JOIN stock ON apd.id_apd=stock.id_apd") or die(mysqli_error());
@@ -201,12 +201,12 @@ if($_SESSION['status'] !="login admin"){
 						<td class="td-read"><?php echo "<img src='../../assets/img/".$data['gambar_apd']."'
 						height='150px' width='150px'>";?></td>
 						<td class="td-read"><?php echo $data['jumlah_stock']; ?></td>
-						<td>
+						<!-- <td>
 							<form method="POST" action="edit.php">
 								<input type="hidden" name="nip" value="<?php echo $data['id_apd']; ?>">
 								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Edit</button></a>
 							</form>
-						</td>
+						</td> -->
 					</tr>
 					<?php } ?>
 				</table>

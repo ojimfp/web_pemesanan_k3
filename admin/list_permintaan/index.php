@@ -205,6 +205,8 @@ if($_SESSION['status'] !="login admin"){
 							<td class="td-read"><?php echo $row['nama_karyawan']; ?></td>
 							<td class="td-read">
 								<input type="hidden" name="nip" value="<?php echo $row['nip']; ?>">
+								<input type="hidden" name="tanggal" value="<?php echo $row['tanggal_permintaan']; ?>">
+								<input type="hidden" name="nama" value="<?php echo $row['nama_karyawan']; ?>">
 								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Detail</button></a>
 								
 							</td>
