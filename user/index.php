@@ -90,59 +90,83 @@ if($_SESSION['status'] !="login".$nip.""){
           <div class="panel-body">
             <div class="row">
               <form action="index.php" method="POST">
-                <table style="margin: 0 auto;" border="0">
-                    <!-- <tr>
-                      <th>a</th>
-                      <th>b</th>
-                      <th>c</th>
-                    </tr> -->
-                  <?php 
+                <?php if ($hak_akses == "pabrik") { ?>
+                  <table style="margin: 0 auto;" border="0">
+                    <?php 
                     $read_data = mysqli_query($conn, "SELECT * FROM apd") or die(mysqli_error()); ?>
-                   
-                      <tr>
-                        <?php 
-                          $i = 0;
-                          while ($data = mysqli_fetch_array($read_data)) { ?>
-                          <td style="text-align: center; vertical-align: middle;">
-                          <div>
-                            <img style="width: 140px; margin: 70px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
-                            <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
-                            <!-- <input class="form-control" type="hidden" name="id_apd[]" value="<?php echo $data['id_apd']; ?>"> -->
-                            <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah permintaan" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
-                            <input class="form-control" type="checkbox" name="id_apd[]" value="<?php echo $data['id_apd']; ?>" id="<?php echo $data['id_apd'].'id'; ?>" onclick="<?php echo $data['id_apd'].'()'; ?>">
-                            <!-- <p id="<?php echo $data['id_apd'].'text'; ?>" style="display:none">Checkbox is CHECKED!</p> -->
-                          </div> 
-                          <script> 
-                            function <?php echo $data['id_apd'].'()'; ?> {
+                    <tr>
+                    <?php 
+                    $i = 0;
+                    while ($data = mysqli_fetch_array($read_data)) { ?>
+                      <td style="text-align: center; vertical-align: middle;">
+                        <div>
+                          <img style="width: 140px; margin: 70px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
+                          <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
+                          <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah permintaan" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
+                          <input class="form-control" type="checkbox" name="id_apd[]" value="<?php echo $data['id_apd']; ?>" id="<?php echo $data['id_apd'].'id'; ?>" onclick="<?php echo $data['id_apd'].'()'; ?>">
+                        </div> 
+                        <script> 
+                          function <?php echo $data['id_apd'].'()'; ?> {
 
-                              var checkBox = document.getElementById("<?php echo $data['id_apd'].'id'; ?>");
-                              var input = document.getElementById("<?php echo $data['id_apd'].'num'; ?>");
-                              // var text = document.getElementById("<?php echo $data['id_apd'].'text'; ?>");
-                              
+                            var checkBox = document.getElementById("<?php echo $data['id_apd'].'id'; ?>");
+                            var input = document.getElementById("<?php echo $data['id_apd'].'num'; ?>");
 
-                              if (checkBox.checked == true){
-                                // text.style.display = "block";
-                                // input.hide();
-                                input.style.display = "block";
-                              } else {
-                                input.value = "";
-                                input.style.display = "none";
-                                // text.style.display = "none";
-                              }
+                            if (checkBox.checked == true){
+                              input.style.display = "block";
+                            } else {
+                              input.value = "";
+                              input.style.display = "none";
                             }
-
-                          </script>
-
-                          <?php 
-                          $i++;
-                          if ($i%3 == 0) {
-                            echo '</td></tr></div><div class="row">';
                           }
-                        } ?>
-                        <!-- </td>
-                        
-                      </tr> -->
-                </table>
+
+                        </script>
+
+                        <?php 
+                        $i++;
+                        if ($i%3 == 0) {
+                          echo '</td></tr></div><div class="row">';
+                        }
+                      } ?>
+                    </table>
+                  <?php } elseif($hak_akses == "umum") { ?>
+                    <table style="margin: 0 auto;" border="0">
+                      <?php 
+                    $read_data = mysqli_query($conn, "SELECT * FROM `apd` WHERE apd.id_apd = 'S41' or apd.id_apd = 'S42' or apd.id_apd = 'S43' or apd.id_apd = 'S44' or apd.id_apd = 'H001' ") or die(mysqli_error()); ?>
+                    <tr>
+                    <?php 
+                    $i = 0;
+                    while ($data = mysqli_fetch_array($read_data)) { ?>
+                      <td style="text-align: center; vertical-align: middle;">
+                        <div>
+                          <img style="width: 140px; margin: 70px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
+                          <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
+                          <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah permintaan" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
+                          <input class="form-control" type="checkbox" name="id_apd[]" value="<?php echo $data['id_apd']; ?>" id="<?php echo $data['id_apd'].'id'; ?>" onclick="<?php echo $data['id_apd'].'()'; ?>">
+                        </div> 
+                        <script> 
+                          function <?php echo $data['id_apd'].'()'; ?> {
+
+                            var checkBox = document.getElementById("<?php echo $data['id_apd'].'id'; ?>");
+                            var input = document.getElementById("<?php echo $data['id_apd'].'num'; ?>");
+
+                            if (checkBox.checked == true){
+                              input.style.display = "block";
+                            } else {
+                              input.value = "";
+                              input.style.display = "none";
+                            }
+                          }
+
+                        </script>
+
+                        <?php 
+                        $i++;
+                        if ($i%3 == 0) {
+                          echo '</td></tr></div><div class="row">';
+                        }
+                      } ?>
+                    </table>
+                  <?php } ?>
                 <div style="text-align: center; vertical-align: middle; margin: 40px auto 30px;">
                   <input class="btn btn-md btn-primary" type="submit" name="submit" value="Ajukan Permintaan">
                 </div>
@@ -193,10 +217,10 @@ if($_SESSION['status'] !="login".$nip.""){
             <div class="row" style="margin: 10px; ">
              <p>Bagi pekerja PG. Kebon Agung apabila APD yang telah diberikan oleh perusahaan rusak akibat proses produksi, maka pekerja dapat meminta APD baru dengan prosedur sebagai berikut : </p>
 
-                <p>1.  Pekerja PG. Kebon Agung hanya diperbolehkan meminta APD yang sesuai dengan ketentuan yang telah ditetapkan perusahaan.</p><br>
-                <p>2.  Pekerja wajib membawa bukti bahwa APD yang digunakan benar benar rusak dan tidak dapat digunakan sehingga membutuhkan pergantian.</p><br> 
-                <p>3.  Dalam melakukan permintaan APD pekerja wajib mengisi formulir permintaan pada website management inventory.</p><br>
-                <p>4.  Setelah mengisi formulir permintaan pekerja datang ke bagian gudang untuk meminta APD yang telah diisi pada form permintaan.</p>
+                <p>1. Pekerja PG. Kebon Agung hanya diperbolehkan meminta APD yang sesuai dengan ketentuan yang telah ditetapkan perusahaan.</p><br>
+                <p>2. Pekerja wajib membawa bukti bahwa APD yang digunakan benar benar rusak dan tidak dapat digunakan sehingga membutuhkan pergantian.</p><br> 
+                <p>3. Dalam melakukan permintaan APD pekerja wajib mengisi formulir permintaan pada website management inventory.</p><br>
+                <p>4. Setelah mengisi formulir permintaan pekerja datang ke bagian gudang untuk meminta APD yang telah diisi pada form permintaan.</p>
 
             </div>
           </div>
@@ -326,7 +350,7 @@ if (isset($_POST['submit'])) {
   echo $j.'<br>';
   echo $i.'<br>';
 
-  if ($j = $i && $i > 0 && $j > 0) {
+  if ($j == $i && $i > 0 && $j > 0) {
     for ($a=0; $a < $j; $a++) { 
       $jumlah_permintaan = $jumlah[$a];
       $id_apd = $id[$a];
