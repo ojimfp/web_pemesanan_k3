@@ -277,7 +277,7 @@ if($_SESSION['status'] !="login admin"){
 					});
 					</script>";
 			} else {
-				mysqli_query($conn, "UPDATE stock SET jumlah_stock='$stock_update[$i]' WHERE id_apd='$id_apd[$i]'");
+				mysqli_query($conn, "UPDATE stock SET total_stock='$stock_update[$i]' WHERE id_apd='$id_apd[$i]'");
 				mysqli_query($conn, "UPDATE permintaan SET status_permintaan='Disetujui', notif='Disetujui' WHERE nip_karyawan = '$nip' and tanggal_permintaan='$tanggal'");
 				echo "<script>location.href='index.php';</script>";
 			}	

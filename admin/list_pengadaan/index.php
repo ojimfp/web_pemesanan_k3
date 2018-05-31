@@ -5,11 +5,14 @@ include '../../config.php';
 
 session_start();
 
+$tgl = date("d-m-Y");
+
 // cek apakah user telah login, jika belum login maka di alihkan ke halaman login
 if($_SESSION['status'] !="login admin"){
 	header("location:". $base."login");
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +23,7 @@ if($_SESSION['status'] !="login admin"){
 	<link href="<?php echo $base; ?>assets/admin/css/font-awesome.min.css" rel="stylesheet">
 	<link href="<?php echo $base; ?>assets/admin/css/datepicker3.css" rel="stylesheet">
 	<link href="<?php echo $base; ?>assets/admin/css/styles.css" rel="stylesheet">
-	
+
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -36,7 +39,7 @@ if($_SESSION['status'] !="login admin"){
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-					<a class="navbar-brand" href="#"><span>PG Kebon Agung</span></a>
+					<a class="navbar-brand" href="<?php echo $base; ?>admin"><span>PG Kebon Agung</span></a>
 					<ul class="nav navbar-top-links navbar-right">
 						<li class="dropdown">
 							<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -113,7 +116,7 @@ if($_SESSION['status'] !="login admin"){
 							</ul>
 						</li>
 						<li class="dropdown">
-							<a class="dropdown-toggle count-info" href="<?php echo $base; ?>logout"> 
+							<a class="dropdown-toggle count-info" href="<?php echo $base; ?>logout">
 								<p onMouseOver="this.style.color='#30a5ff'" onMouseOut="this.style.color='#FFF'" style="font-size: 15px; color: #FFF"><i class="fa fa-sign-out fa-fw"></i></p>
 							</a>
 						</li>
@@ -171,367 +174,107 @@ if($_SESSION['status'] !="login admin"){
 				<li><a href="#">
 					<em class="fa fa-home"></em>
 				</a></li>
-				<li class="active">Dashboard</li>
+				<li class="active">Pengadaan</li>
 			</ol>
 		</div><!--/.row-->
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Dashboard</h1>
+				<h1 class="page-header"></h1>
 			</div>
 		</div><!--/.row-->
-
-		<div class="panel panel-container">
-			<div class="row">
-				<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-					<div class="panel panel-teal panel-widget border-right">
-						<div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
-							<div class="large">120</div>
-							<div class="text-muted">New Orders</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-					<div class="panel panel-blue panel-widget border-right">
-						<div class="row no-padding"><em class="fa fa-xl fa-comments color-orange"></em>
-							<div class="large">52</div>
-							<div class="text-muted">Comments</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-					<div class="panel panel-orange panel-widget border-right">
-						<div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
-							<div class="large">24</div>
-							<div class="text-muted">New Users</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-					<div class="panel panel-red panel-widget ">
-						<div class="row no-padding"><em class="fa fa-xl fa-search color-red"></em>
-							<div class="large">25.2k</div>
-							<div class="text-muted">Page Views</div>
-						</div>
-					</div>
-				</div>
-			</div><!--/.row-->
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						Site Traffic Overview
-						<ul class="pull-right panel-settings panel-button-tab-right">
-							<li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
-								<em class="fa fa-cogs"></em>
-							</a>
-							<ul class="dropdown-menu dropdown-menu-right">
-								<li>
-									<ul class="dropdown-settings">
-										<li><a href="#">
-											<em class="fa fa-cog"></em> Settings 1
-										</a></li>
-										<li class="divider"></li>
-										<li><a href="#">
-											<em class="fa fa-cog"></em> Settings 2
-										</a></li>
-										<li class="divider"></li>
-										<li><a href="#">
-											<em class="fa fa-cog"></em> Settings 3
-										</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-					</ul>
-					<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
-					<div class="panel-body">
-						<div class="canvas-wrapper">
-							<canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
-
-		<div class="row">
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>New Orders</h4>
-						<div class="easypiechart" id="easypiechart-blue" data-percent="92" ><span class="percent">92%</span></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Comments</h4>
-						<div class="easypiechart" id="easypiechart-orange" data-percent="65" ><span class="percent">65%</span></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>New Users</h4>
-						<div class="easypiechart" id="easypiechart-teal" data-percent="56" ><span class="percent">56%</span></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Visitors</h4>
-						<div class="easypiechart" id="easypiechart-red" data-percent="27" ><span class="percent">27%</span></div>
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
-
-		<div class="row">
-			<div class="col-md-6">
-				<div class="panel panel-default chat">
-					<div class="panel-heading">
-						Chat
-						<ul class="pull-right panel-settings panel-button-tab-right">
-							<li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
-								<em class="fa fa-cogs"></em>
-							</a>
-							<ul class="dropdown-menu dropdown-menu-right">
-								<li>
-									<ul class="dropdown-settings">
-										<li><a href="#">
-											<em class="fa fa-cog"></em> Settings 1
-										</a></li>
-										<li class="divider"></li>
-										<li><a href="#">
-											<em class="fa fa-cog"></em> Settings 2
-										</a></li>
-										<li class="divider"></li>
-										<li><a href="#">
-											<em class="fa fa-cog"></em> Settings 3
-										</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-					</ul>
-					<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
-					<div class="panel-body">
-						<ul>
-							<li class="left clearfix"><span class="chat-img pull-left">
-								<img src="http://placehold.it/60/30a5ff/fff" alt="User Avatar" class="img-circle" />
-							</span>
-							<div class="chat-body clearfix">
-								<div class="header"><strong class="primary-font">John Doe</strong> <small class="text-muted">32 mins ago</small></div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc.</p>
-							</div>
-						</li>
-						<li class="right clearfix"><span class="chat-img pull-right">
-							<img src="http://placehold.it/60/dde0e6/5f6468" alt="User Avatar" class="img-circle" />
-						</span>
-						<div class="chat-body clearfix">
-							<div class="header"><strong class="pull-left primary-font">Jane Doe</strong> <small class="text-muted">6 mins ago</small></div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc.</p>
-						</div>
-					</li>
-					<li class="left clearfix"><span class="chat-img pull-left">
-						<img src="http://placehold.it/60/30a5ff/fff" alt="User Avatar" class="img-circle" />
-					</span>
-					<div class="chat-body clearfix">
-						<div class="header"><strong class="primary-font">John Doe</strong> <small class="text-muted">32 mins ago</small></div>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc.</p>
-					</div>
-				</li>
-			</ul>
-		</div>
-		<div class="panel-footer">
-			<div class="input-group">
-				<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here..." /><span class="input-group-btn">
-					<button class="btn btn-primary btn-md" id="btn-chat">Send</button>
-				</span></div>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				To-do List
-				<ul class="pull-right panel-settings panel-button-tab-right">
-					<li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
-						<em class="fa fa-cogs"></em>
-					</a>
-					<ul class="dropdown-menu dropdown-menu-right">
-						<li>
-							<ul class="dropdown-settings">
-								<li><a href="#">
-									<em class="fa fa-cog"></em> Settings 1
-								</a></li>
-								<li class="divider"></li>
-								<li><a href="#">
-									<em class="fa fa-cog"></em> Settings 2
-								</a></li>
-								<li class="divider"></li>
-								<li><a href="#">
-									<em class="fa fa-cog"></em> Settings 3
-								</a></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-			</ul>
-			<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
-			<div class="panel-body">
-				<ul class="todo-list">
-					<li class="todo-list-item">
-						<div class="checkbox">
-							<input type="checkbox" id="checkbox-1" />
-							<label for="checkbox-1">Make coffee</label>
-						</div>
-						<div class="pull-right action-buttons"><a href="#" class="trash">
-							<em class="fa fa-trash"></em>
-						</a></div>
-					</li>
-					<li class="todo-list-item">
-						<div class="checkbox">
-							<input type="checkbox" id="checkbox-2" />
-							<label for="checkbox-2">Check emails</label>
-						</div>
-						<div class="pull-right action-buttons"><a href="#" class="trash">
-							<em class="fa fa-trash"></em>
-						</a></div>
-					</li>
-					<li class="todo-list-item">
-						<div class="checkbox">
-							<input type="checkbox" id="checkbox-3" />
-							<label for="checkbox-3">Reply to Jane</label>
-						</div>
-						<div class="pull-right action-buttons"><a href="#" class="trash">
-							<em class="fa fa-trash"></em>
-						</a></div>
-					</li>
-					<li class="todo-list-item">
-						<div class="checkbox">
-							<input type="checkbox" id="checkbox-4" />
-							<label for="checkbox-4">Make more coffee</label>
-						</div>
-						<div class="pull-right action-buttons"><a href="#" class="trash">
-							<em class="fa fa-trash"></em>
-						</a></div>
-					</li>
-					<li class="todo-list-item">
-						<div class="checkbox">
-							<input type="checkbox" id="checkbox-5" />
-							<label for="checkbox-5">Work on the new design</label>
-						</div>
-						<div class="pull-right action-buttons"><a href="#" class="trash">
-							<em class="fa fa-trash"></em>
-						</a></div>
-					</li>
-					<li class="todo-list-item">
-						<div class="checkbox">
-							<input type="checkbox" id="checkbox-6" />
-							<label for="checkbox-6">Get feedback on design</label>
-						</div>
-						<div class="pull-right action-buttons"><a href="#" class="trash">
-							<em class="fa fa-trash"></em>
-						</a></div>
-					</li>
-				</ul>
-			</div>
-			<div class="panel-footer">
-				<div class="input-group">
-					<input id="btn-input" type="text" class="form-control input-md" placeholder="Add new task" /><span class="input-group-btn">
-						<button class="btn btn-primary btn-md" id="btn-todo">Add</button>
-					</span></div>
-				</div>
-			</div>
-		</div><!--/.col-->
-
-
-		<div class="col-md-6">
-			<div class="panel panel-default ">
-				<div class="panel-heading">
-					Timeline
-					<ul class="pull-right panel-settings panel-button-tab-right">
-						<li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
-							<em class="fa fa-cogs"></em>
-						</a>
-						<ul class="dropdown-menu dropdown-menu-right">
-							<li>
-								<ul class="dropdown-settings">
-									<li><a href="#">
-										<em class="fa fa-cog"></em> Settings 1
-									</a></li>
-									<li class="divider"></li>
-									<li><a href="#">
-										<em class="fa fa-cog"></em> Settings 2
-									</a></li>
-									<li class="divider"></li>
-									<li><a href="#">
-										<em class="fa fa-cog"></em> Settings 3
-									</a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
-				<div class="panel-body timeline-container">
-					<ul class="timeline">
-						<li>
-							<div class="timeline-badge"><em class="glyphicon glyphicon-pushpin"></em></div>
-							<div class="timeline-panel">
-								<div class="timeline-heading">
-									<h4 class="timeline-title">Lorem ipsum dolor sit amet</h4>
-								</div>
-								<div class="timeline-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at sodales nisl. Donec malesuada orci ornare risus finibus feugiat.</p>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="timeline-badge primary"><em class="glyphicon glyphicon-link"></em></div>
-							<div class="timeline-panel">
-								<div class="timeline-heading">
-									<h4 class="timeline-title">Lorem ipsum dolor sit amet</h4>
-								</div>
-								<div class="timeline-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="timeline-badge"><em class="glyphicon glyphicon-camera"></em></div>
-							<div class="timeline-panel">
-								<div class="timeline-heading">
-									<h4 class="timeline-title">Lorem ipsum dolor sit amet</h4>
-								</div>
-								<div class="timeline-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at sodales nisl. Donec malesuada orci ornare risus finibus feugiat.</p>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="timeline-badge"><em class="glyphicon glyphicon-paperclip"></em></div>
-							<div class="timeline-panel">
-								<div class="timeline-heading">
-									<h4 class="timeline-title">Lorem ipsum dolor sit amet</h4>
-								</div>
-								<div class="timeline-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div><!--/.col-->
-		<div class="col-sm-12">
-			<p class="back-link">Lumino Theme by <a href="https://www.medialoot.com">Medialoot</a></p>
-		</div>
 	</div><!--/.row-->
-</div>	<!--/.main-->
+
+	<div class="container col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
+    <div class="list-group">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <strong>
+              Pengadaan APD
+            </strong>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <form action="index.php" method="POST">
+                  <table style="margin: 0 auto;" border="0">
+                    <?php 
+                    $read_data = mysqli_query($conn, "SELECT * FROM apd") or die(mysqli_error()); ?>
+                    <tr>
+                    <?php 
+                    $i = 0;
+                    while ($data = mysqli_fetch_array($read_data)) { ?>
+                      <td style="text-align: center; vertical-align: middle;">
+                        <div>
+                          <img style="width: 140px; margin: 70px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
+                          <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
+                          <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah pengadaan" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
+                          <input class="form-control" type="checkbox" name="id_apd[]" value="<?php echo $data['id_apd']; ?>" id="<?php echo $data['id_apd'].'id'; ?>" onclick="<?php echo $data['id_apd'].'()'; ?>">
+                        </div> 
+                        <script> 
+                          function <?php echo $data['id_apd'].'()'; ?> {
+
+                            var checkBox = document.getElementById("<?php echo $data['id_apd'].'id'; ?>");
+                            var input = document.getElementById("<?php echo $data['id_apd'].'num'; ?>");
+
+                            if (checkBox.checked == true){
+                              input.style.display = "block";
+                            } else {
+                              input.value = "";
+                              input.style.display = "none";
+                            }
+                          }
+
+                        </script>
+
+                        <?php 
+                        $i++;
+                        if ($i%4 == 0) {
+                          echo '</td></tr></div><div class="row">';
+                        }
+                      } ?>
+                    </table>
+                <div style="text-align: center; vertical-align: middle; margin: 40px auto 30px;">
+                	<input class="btn btn-md btn-primary" type="submit" name="submit" value="Simpan Pengadaan">
+                </div>
+              	</form>
+            </div>
+          </div>
+        </div>
+      </div>
+  	</div>
+
+  	<div class="modal fade" tabindex="-1" role="dialog" id="success">
+  		<div class="modal-dialog" role="document">
+  			<div class="modal-content">
+  				<div class="modal-header">
+  					<h4 class="modal-title alert alert-success">BERHASIL!</h4>
+  				</div>
+  				<div class="modal-body">
+  					<p>Pengadaan APD telah tersimpan..</p>
+  				</div>
+  				<div class="modal-footer">
+  					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  				</div>
+  			</div><!-- /.modal-content -->
+  		</div><!-- /.modal-dialog -->
+  	</div><!-- /.modal -->
+
+  	<div class="modal fade" tabindex="-1" role="dialog" id="failed">
+  		<div class="modal-dialog" role="document">
+  			<div class="modal-content">
+  				<div class="modal-header">
+  					<h4 class="modal-title alert alert-success">GAGAL!</h4>
+  				</div>
+  				<div class="modal-body">
+  					<p>Pengadaan APD gagal disimpan, periksa dan ulangi lagi..</p>
+  				</div>
+  				<div class="modal-footer">
+  					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  				</div>
+  			</div><!-- /.modal-content -->
+  		</div><!-- /.modal-dialog -->
+  	</div><!-- /.modal -->
+
 
 <script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
 <script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
@@ -552,6 +295,77 @@ if($_SESSION['status'] !="login admin"){
 		});
 	};
 </script>
+
+<?php
+if (isset($_POST['submit'])) {
+	if(!empty($_POST['jumlah'])) {
+		foreach ($_POST['jumlah'] as $key => $value2) {
+			if ($value2 !== "") {
+				$jumlah[] = $value2;
+			}
+		}
+	}
+
+	if(!empty($_POST['id_apd'])) {
+		foreach ($_POST['id_apd'] as $key1 => $value3) {
+			$id[] = $value3;
+		}
+	}
+
+	if (isset($jumlah)) {
+		$j = count($jumlah);
+	} else {
+		$j = 0;
+	}
+
+	if (isset($id)) {
+		$i = count($id);
+	} else {
+		$i = 0;
+	}
+
+	$sum_jml = array_sum($jumlah);
+	
+	$insert_pengadaan = mysqli_query($conn, "INSERT INTO pengadaan(jumlah_pengadaan, tanggal_pengadaan) VALUES ('$sum_jml','$tgl')") or die(mysqli_error());
+
+	if ($insert_pengadaan) {
+		$qry_id_pengadaan = mysqli_query($conn, "SELECT id_pengadaan FROM pengadaan ORDER BY id_pengadaan DESC LIMIT 1") or die(mysqli_error());
+		$id_pengadaan = mysqli_fetch_array($qry_id_pengadaan);
+		$id_p = $id_pengadaan['id_pengadaan'];
+
+		$idmin1 = $id_p - 1;
+
+		$qry_total_stock = mysqli_query($conn, "SELECT id_apd,total_stock FROM stock WHERE id_pengadaan = '$idmin1'") or die(mysqli_error());
+			while($row = mysqli_fetch_array($qry_total_stock)){
+				$apd_id[] = $row['id_apd'];
+				$total_stock[] = $row['total_stock'];
+			}
+
+			$merge_id = array_merge($apd_id, $id);
+			$merge_jml = array_merge($total_stock, $jumlah);
+
+		if ($j == $i && $i > 0 && $j > 0) {
+			for ($a=0; $a < count($merge_id); $a++) { 
+				$jumlah_pengadaan = $merge_jml[$a];
+				$id_apd = $merge_id[$a];
+				
+			mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_apd', '$jumlah_pengadaan', '$jumlah_pengadaan', '$id_p')") or die(mysqli_error());
+			}
+			echo "<script type='text/javascript'>
+			$(window).on('load',function(){
+				$('#success').modal('show');
+				});
+				</script>";
+		} else {
+			echo "<script type='text/javascript'>
+			$(window).on('load',function(){
+				$('#failed').modal('show');
+				});
+				</script>";
+		}
+	}	
+}
+?>
 
 </body>
 </html>
