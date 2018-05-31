@@ -192,7 +192,7 @@ if($_SESSION['status'] !="login admin"){
 					</tr>
 
 					<?php
-					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, permintaan.tanggal_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by permintaan.tanggal_permintaan desc, permintaan.nip_karyawan");
+					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, permintaan.tanggal_permintaan, permintaan.status_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by permintaan.tanggal_permintaan asc, permintaan.nip_karyawan ORDER BY permintaan.status_permintaan");
 
 					$storeArrayTanggal = Array();
 					$storeArrayNama = Array();
@@ -207,7 +207,17 @@ if($_SESSION['status'] !="login admin"){
 								<input type="hidden" name="nip" value="<?php echo $row['nip']; ?>">
 								<input type="hidden" name="tanggal" value="<?php echo $row['tanggal_permintaan']; ?>">
 								<input type="hidden" name="nama" value="<?php echo $row['nama_karyawan']; ?>">
-								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Detail</button></a>
+
+								<?php if ($row['status_permintaan'] == 'Belum Disetujui') { ?>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Detail</button></a>
+								<?php }elseif ($row['status_permintaan'] == 'Disetujui') { ?>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-success">Sudah Disetujui</button></a>
+								<?php } elseif ($row['status_permintaan'] == 'Ditolak') { ?>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Ditolak</button></a>
+ 									
+								<?php } ?>
+
+								
 								
 							</td>
 						</form>

@@ -65,7 +65,7 @@ if($_SESSION['status'] !="login".$nip.""){
           <em class="fa fa-home"></em>
         </a></li>
         <li><a href="../index.php">Permintaan APD</a></li>
-        <li><a href="#">Peminjaman APD</a></li>
+        <li><a href="../peminjaman.php">Peminjaman APD</a></li>
         <li><a href="#"></a>Ganti Password</li>
         <p style="float: right;">Welcome <?php echo $nama_karyawan; ?></p>
       </ol>
