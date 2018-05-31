@@ -108,7 +108,7 @@ if($_SESSION['status'] !="login".$nip.""){
                             <img style="width: 140px; margin: 70px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
                             <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
                             <!-- <input class="form-control" type="hidden" name="id_apd[]" value="<?php echo $data['id_apd']; ?>"> -->
-                            <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah permintaan" id="<?php echo $data['id_apd'].'num'; ?>" min="0" style="display:none">
+                            <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah permintaan" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
                             <input class="form-control" type="checkbox" name="id_apd[]" value="<?php echo $data['id_apd']; ?>" id="<?php echo $data['id_apd'].'id'; ?>" onclick="<?php echo $data['id_apd'].'()'; ?>">
                             <!-- <p id="<?php echo $data['id_apd'].'text'; ?>" style="display:none">Checkbox is CHECKED!</p> -->
                           </div> 
@@ -247,6 +247,24 @@ if($_SESSION['status'] !="login".$nip.""){
           <h4 class="modal-title">BERHASIL!</h4>
         </div>
         <div class="modal-body">
+          <p>Permintaan APD telah dikirim..</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="failed">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">GAGAL!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Permintaan APD gagal dikirim, periksa kembali permintaan anda..</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -276,14 +294,13 @@ if($_SESSION['status'] !="login".$nip.""){
   </script>
 
 <?php 
-  if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
   if(!empty($_POST['jumlah'])) {
     foreach ($_POST['jumlah'] as $key => $value2) {
     // echo $value2."<br>";
       if ($value2 !== "") {
         $jumlah[] = $value2;
       }
-
     }
   }
 
@@ -294,24 +311,40 @@ if($_SESSION['status'] !="login".$nip.""){
     }
   }
 
-  $j = count($jumlah);
-  $i = count($id);
+  if (isset($jumlah)) {
+    $j = count($jumlah);
+  } else {
+    $j = 0;
+  }
 
-  if ($j = $i) {
+  if (isset($id)) {
+    $i = count($id);
+  } else {
+    $i = 0;
+  }
+  
+  echo $j.'<br>';
+  echo $i.'<br>';
+
+  if ($j = $i && $i > 0 && $j > 0) {
     for ($a=0; $a < $j; $a++) { 
       $jumlah_permintaan = $jumlah[$a];
       $id_apd = $id[$a];
 
       mysqli_query($conn, "INSERT INTO permintaan(id_permintaan, id_apd, nip_karyawan, tanggal_permintaan, jumlah_permintaan) VALUES ('','$id_apd','$nip','$tgl','$jumlah_permintaan')") or die(mysqli_error());
     }
-  }
-
+    echo "<script type='text/javascript'>
+    $(window).on('load',function(){
+      $('#success').modal('show');
+      });
+      </script>";
+  } else {
   echo "<script type='text/javascript'>
-   $(window).on('load',function(){
-    $('#success').modal('show');
+  $(window).on('load',function(){
+    $('#failed').modal('show');
     });
-    </script>"; 
- 
+    </script>";
+  }
 }
 ?>
 
