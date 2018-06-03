@@ -89,7 +89,7 @@ if($_SESSION['status'] !="login".$nip.""){
           </div>
           <div class="panel-body">
             <div class="row">
-              <form action="index.php" method="POST">
+              <form action="peminjaman.php" method="POST">
                   <table style="margin: 0 auto;" border="0">
                     <?php 
                     $read_data = mysqli_query($conn, "SELECT * FROM apd") or die(mysqli_error()); ?>
@@ -98,8 +98,8 @@ if($_SESSION['status'] !="login".$nip.""){
                     $i = 0;
                     while ($data = mysqli_fetch_array($read_data)) { ?>
                       <td style="text-align: center; vertical-align: middle;">
-                        <div>
-                          <img style="width: 140px; margin: 70px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
+                        <div style="margin: 5px;">
+                          <img style="width: 90px; margin: 20px 40px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
                           <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
                           <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah peminjaman" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
                           <input class="form-control" type="checkbox" name="id_apd[]" value="<?php echo $data['id_apd']; ?>" id="<?php echo $data['id_apd'].'id'; ?>" onclick="<?php echo $data['id_apd'].'()'; ?>">
@@ -122,13 +122,34 @@ if($_SESSION['status'] !="login".$nip.""){
 
                         <?php 
                         $i++;
-                        if ($i%3 == 0) {
+                        if ($i%4 == 0) {
                           echo '</td></tr></div><div class="row">';
                         }
                       } ?>
                     </table>
+
+                    <div class="form-group" style="margin: 40px;">
+                      <label>Tanggal Pengembalian</label>
+                      <input class="form-control" type="date" name="tanggal" required="">
+                    </div>
+
                 <div style="text-align: center; vertical-align: middle; margin: 40px auto 30px;">
-                  <input class="btn btn-md btn-primary" type="submit" name="submit" value="Ajukan Peminjaman">
+
+                  <?php 
+                  $status_belum_disetujui = mysqli_query($conn, "SELECT status_peminjaman FROM peminjaman WHERE nip_karyawan='$nip' and status_peminjaman='Belum Disetujui'") or die(mysqli_error()); 
+                  $status_belum_dikembalikan = mysqli_query($conn, "SELECT status_peminjaman FROM peminjaman WHERE nip_karyawan='$nip' and status_peminjaman='Belum Dikembalikan'") or die(mysqli_error()); 
+                  $notif = mysqli_query($conn, "SELECT notif FROM peminjaman WHERE nip_karyawan='$nip' ORDER BY tgl_pinjam DESC LIMIT 1") or die(mysqli_error()); 
+                  $bs = mysqli_fetch_array($status_belum_disetujui);
+                  $bk = mysqli_fetch_array($status_belum_dikembalikan);
+                  $t = mysqli_fetch_array($notif);
+
+                  if ($bs['status_peminjaman'] == 'Belum Disetujui') { ?>
+                    <input class="btn btn-md btn-primary" type="button" data-toggle="modal" data-target="#waiting" value="Ajukan Peminjaman">
+                  <?php } elseif ($bk['status_peminjaman'] == 'Belum Dikembalikan') { ?>
+                    <input class="btn btn-md btn-primary" type="button" data-toggle="modal" data-target="#kembalikan" value="Ajukan Peminjaman">
+                  <?php } else {?>
+                    <input class="btn btn-md btn-primary" type="submit" name="submit" value="Ajukan Peminjaman">
+                  <?php } ?>
                 </div>
               </form>
             </div>
@@ -136,8 +157,6 @@ if($_SESSION['status'] !="login".$nip.""){
         </div>
     </div>
   </div>
-
-  
 
   <div class="container col-lg-5">
     <div class="list-group">
@@ -203,7 +222,7 @@ if($_SESSION['status'] !="login".$nip.""){
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">BERHASIL!</h4>
+          <h4 class="modal-title alert alert-success">BERHASIL!</h4>
         </div>
         <div class="modal-body">
           <p>Peminjaman APD telah dikirim..</p>
@@ -220,10 +239,74 @@ if($_SESSION['status'] !="login".$nip.""){
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">GAGAL!</h4>
+          <h4 class="modal-title alert alert-danger">GAGAL!</h4>
         </div>
         <div class="modal-body">
           <p>Peminjaman APD gagal dikirim, periksa kembali peminjaman anda..</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="waiting">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title alert alert-info">INFORMASI!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Peminjaman anda sebelumnya belum disetujui, silakan menunggu sampai admin melakukan persetujuan..</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="kembalikan">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title alert alert-info">INFORMASI!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Silakan mengembalikan peminjaman anda sebelumnya kepada Admin untuk dapat melakukan peminjaman selanjutnya..</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="ditolak">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title alert alert-danger">INFORMASI!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Peminjaman anda sebelumnya ditolak..</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="disetujui">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title alert alert-success">INFORMASI!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Peminjaman anda sebelumnya telah disetujui, silakan mengambil APD pinjaman anda kepada Admin.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -282,15 +365,21 @@ if (isset($_POST['submit'])) {
     $i = 0;
   }
   
-  echo $j.'<br>';
-  echo $i.'<br>';
+  // echo $j.'<br>';
+  // echo $i.'<br>';
+  $tgl_k = $_POST['tanggal'];
+  $tgl_kembali = date("d-m-Y", strtotime($tgl_k));
+
+  $qry_nip_admin = mysqli_query($conn, "SELECT nip FROM karyawan WHERE jabatan = 'Admin' ORDER BY nip DESC LIMIT 1") or die(mysqli_error());
+  $nip_a = mysqli_fetch_array($qry_nip_admin);
+  $nip_admin = $nip_a['nip'];
 
   if ($j == $i && $i > 0 && $j > 0) {
     for ($a=0; $a < $j; $a++) { 
-      $jumlah_permintaan = $jumlah[$a];
+      $jumlah_peminjaman = $jumlah[$a];
       $id_apd = $id[$a];
 
-      mysqli_query($conn, "INSERT INTO permintaan(id_permintaan, id_apd, nip_karyawan, tanggal_permintaan, jumlah_permintaan) VALUES ('','$id_apd','$nip','$tgl','$jumlah_permintaan')") or die(mysqli_error());
+      mysqli_query($conn, "INSERT INTO `peminjaman`(`nip_karyawan`, `nip_pj`, `id_apd`, `tgl_pinjam`, `tgl_kembali`, `jumlah`, `status_peminjaman`, `notif`) VALUES ('$nip','$nip_admin','$id_apd','$tgl','$tgl_kembali','$jumlah_peminjaman', 'Belum Disetujui', 'Belum Disetujui')") or die(mysqli_error());
     }
     echo "<script type='text/javascript'>
     $(window).on('load',function(){
@@ -304,6 +393,42 @@ if (isset($_POST['submit'])) {
     });
     </script>";
   }
+}
+
+if ($bs['status_peminjaman'] == 'Belum Disetujui') {
+  echo "<script type='text/javascript'>
+  $(window).on('load',function(){
+    $('#waiting').modal('show');
+    });
+    </script>";
+}
+
+if ($bk['status_peminjaman'] == 'Belum Dikembalikan') {
+  echo "<script type='text/javascript'>
+  $(window).on('load',function(){
+    $('#kembalikan').modal('show');
+    });
+    </script>";
+}
+
+if ($t['notif'] == 'Ditolak') {
+  echo "<script type='text/javascript'>
+  $(window).on('load',function(){
+    $('#ditolak').modal('show');
+    });
+    </script>";
+
+  mysqli_query($conn, "UPDATE peminjaman SET notif= '-' WHERE nip_karyawan='$nip'") or die(mysqli_error());
+}
+
+if ($t['notif'] == 'Belum Dikembalikan') {
+  echo "<script type='text/javascript'>
+  $(window).on('load',function(){
+    $('#disetujui').modal('show');
+    });
+    </script>";
+
+  mysqli_query($conn, "UPDATE peminjaman SET notif= '-' WHERE nip_karyawan='$nip'") or die(mysqli_error());
 }
 ?>
 

@@ -1,6 +1,7 @@
 <?php
 $base = "http://localhost/inventorymanagement/";
 
+include '../../calc_conf.php';
 include '../../config.php';
 
 session_start();
@@ -75,16 +76,16 @@ if($_SESSION['status'] !="login admin"){
 					<?php } ?>
 				</li>
 				<li><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
-        		<li class="active"><a href="../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
-        		<li class="parent ">
+        		<li><a href="../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
+        		<li class="parent active">
         			<a data-toggle="collapse" href="#sub-item-1">
         				<em class="fa fa-navicon">&nbsp;</em> Kalkulator <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
         			</a>
         			<ul class="children collapse" id="sub-item-1">
-        				<li><a class="" href="../kalkulator/hitung.php">
+        				<li><a class="" href="hitung.php">
         					<span class="fa fa-arrow-right">&nbsp;</span> Hitung
         				</a></li>
-        				<li><a class="" href="../kalkulator/hasil.php">
+        				<li><a class="" href="hasil.php">
         					<span class="fa fa-arrow-right">&nbsp;</span> Data
         				</a></li>
         			</ul>
@@ -99,54 +100,47 @@ if($_SESSION['status'] !="login admin"){
 					<li><a href="#">
 						<em class="fa fa-home"></em>
 					</a></li>
-					<li class="active">Ganti Password</li>
+					<li class="active">Perhitungan</li>
 				</ol>
 			</div>
 
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header"></h1>
+					<h1 class="page-header">Riwayat Perhitungan</h1>
 				</div>
-			</div>
+			</div><!--/.row-->
 
-			<div class="container col-lg-12">
-				<div class="list-group">
-					<form method="POST" action="ganti.php">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<strong>
-									Ganti Password
-								</strong>
-							</div>
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="form-group">
-											<label>Password Lama</label>
-											<input class="form-control" type="password" name="pass_lama" required="" autofocus>
-										</div>
-										<div class="form-group">
-											<label>Password Baru</label>
-											<input class="form-control" type="password" name="pass_baru" required="">
-										</div>
-										<div class="form-group">
-											<label>Konfirmasi Password Baru</label>
-											<input class="form-control" type="password" name="konf_pass_baru" required="">
-										</div>
-										<br>
-										<br>
-										<div class="button-submit">
-											<input style="width: 100%; " class="btn btn-sm btn-primary" type="submit" name="submit" value="SUBMIT">
-										</div>
-										<br>
-										<br>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
+			<div class="row">
+				<div class="col-lg-12">
+					<table class="table-read" border="2">
+						<tr>
+							<th>No</th>
+							<th>Jenis APD</th>
+							<th>Tanggal Hitung</th>
+							<th>EOQ</th>
+							<th>Frekuensi</th>
+							<th>Safety Stock</th>
+							<th>ROP</th>
+						</tr>
+						<?php
+						$read_data = mysqli_query($connn, "SELECT * FROM hasil") or die(mysqli_error());
+						$no = 1;
+						while ($data = mysqli_fetch_array($read_data)) { 
+							?>
+							<tr>
+								<td class="td-read"><?php echo $no; ?></td>
+								<td class="td-read"><?php echo $data['jenis_apd']; ?></td>
+								<td class="td-read"><?php echo $data['tgl_hitung']; ?></td>
+								<td class="td-read"><?php echo $data['eoq']; ?></td>
+								<td class="td-read"><?php echo $data['frekuensi']; ?></td>
+								<td class="td-read"><?php echo $data['safety_stock']; ?></td>
+								<td class="td-read"><?php echo $data['rop']; ?></td>
+							</tr>
+						<?php $no++; } ?>
+					</table>
 				</div>
 			</div>
+		</div>
 
 		<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
 		<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
@@ -156,17 +150,6 @@ if($_SESSION['status'] !="login admin"){
 		<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
 		<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
 		<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
-<!-- <script>
-	window.onload = function () {
-		var chart1 = document.getElementById("line-chart").getContext("2d");
-		window.myLine = new Chart(chart1).Line(lineChartData, {
-			responsive: true,
-			scaleLineColor: "rgba(0,0,0,.2)",
-			scaleGridLineColor: "rgba(0,0,0,.05)",
-			scaleFontColor: "#c5c7cc"
-		});
-	};
-</script> -->
 
 </body>
 </html>

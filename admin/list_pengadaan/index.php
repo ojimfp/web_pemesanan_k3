@@ -41,85 +41,6 @@ if($_SESSION['status'] !="login admin"){
 					<span class="icon-bar"></span></button>
 					<a class="navbar-brand" href="<?php echo $base; ?>admin"><span>PG Kebon Agung</span></a>
 					<ul class="nav navbar-top-links navbar-right">
-						<li class="dropdown">
-							<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-								<em class="fa fa-envelope"></em><span class="label label-danger">15</span>
-							</a>
-							<ul class="dropdown-menu dropdown-messages">
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left">
-											<img alt="image" class="img-circle" src="http://placehold.it/40/30a5ff/fff">
-										</a>
-										<div class="message-body"><small class="pull-right">3 mins ago</small>
-											<a href="#">
-												<strong>John Doe</strong> commented on <strong>your photo</strong>.
-											</a>
-											<br /><small class="text-muted">1:24 pm - 25/03/2015</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left">
-											<img alt="image" class="img-circle" src="http://placehold.it/40/30a5ff/fff">
-										</a>
-										<div class="message-body"><small class="pull-right">1 hour ago</small>
-											<a href="#">New message from <strong>Jane Doe</strong>.
-											</a>
-											<br /><small class="text-muted">12:27 pm - 25/03/2015</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="all-button">
-										<a href="#">
-											<em class="fa fa-inbox"></em> <strong>All Messages</strong>
-										</a>
-									</div>
-								</li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-								<em class="fa fa-bell"></em><span class="label label-info">5</span>
-							</a>
-							<ul class="dropdown-menu dropdown-alerts">
-								<li>
-									<a href="#">
-										<div>
-											<em class="fa fa-envelope"></em> 1 New Message
-											<span class="pull-right text-muted small">3 mins ago</span>
-										</div>
-									</a>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<a href="#">
-										<div>
-											<em class="fa fa-heart"></em> 12 New Likes
-											<span class="pull-right text-muted small">4 mins ago</span>
-										</div>
-									</a>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<a href="#">
-										<div>
-											<em class="fa fa-user"></em> 5 New Followers
-											<span class="pull-right text-muted small">4 mins ago</span>
-										</div>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a class="dropdown-toggle count-info" href="<?php echo $base; ?>logout">
-								<p onMouseOver="this.style.color='#30a5ff'" onMouseOut="this.style.color='#FFF'" style="font-size: 15px; color: #FFF"><i class="fa fa-sign-out fa-fw"></i></p>
-							</a>
-						</li>
 					</ul>
 				</div>
 			</div><!-- /.container-fluid -->
@@ -147,9 +68,44 @@ if($_SESSION['status'] !="login admin"){
 			<li><a href="../list_pekerja"><em class="fa fa-users">&nbsp;</em> List Pekerja</a></li>
 			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Jenis APD</a></li>
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
-			<li><a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> List Permintaan APD</a></li>
+			<li>
+				<?php 
+				$notif_minta_apd = mysqli_query($conn, "SELECT status_permintaan FROM permintaan WHERE status_permintaan='Belum Disetujui'") or die(mysqli_error());
+				$not_apd = mysqli_fetch_array($notif_minta_apd);
+
+				if ($not_apd['status_permintaan'] == 'Belum Disetujui') { ?>
+					<a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> Permintaan APD&nbsp;<span class="label label-danger">!</span></a>
+				<?php } else {?>
+					<a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> Permintaan APD</a>
+				<?php } ?>
+			</li>
+			<li>
+				<?php 
+				$notif_minta_apd = mysqli_query($conn, "SELECT status_peminjaman FROM peminjaman WHERE status_peminjaman='Belum Disetujui'") or die(mysqli_error());
+				$not_apd = mysqli_fetch_array($notif_minta_apd);
+
+				if ($not_apd['status_peminjaman'] == 'Belum Disetujui') { ?>
+					<a href="../peminjaman"><em class="fa fa-envelope-open">&nbsp;</em> Peminjaman APD&nbsp;<span class="label label-danger">!</span></a>
+				<?php } else {?>
+					<a href="../peminjaman"><em class="fa fa-envelope-open">&nbsp;</em> Peminjaman APD</a>
+				<?php } ?>
+			</li>
 			<li class="active"><a href="../list_pengadaan"><em class="fa fa-plus">&nbsp;</em> Pengadaan APD</a></li>
 			<li><a href="../ganti_password"><em class="fa fa-plus">&nbsp;</em> Ganti Password</a></li>
+			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-item-1">
+					<em class="fa fa-navicon">&nbsp;</em> Kalkulator <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
+				</a>
+				<ul class="children collapse" id="sub-item-1">
+					<li><a class="" href="../kalkulator/hitung.php">
+						<span class="fa fa-arrow-right">&nbsp;</span> Hitung
+					</a></li>
+					<li><a class="" href="../kalkulator/hasil.php">
+						<span class="fa fa-arrow-right">&nbsp;</span> Data
+					</a></li>
+				</ul>
+			</li>
+			<li><a href="<?php echo $base; ?>logout"><em class="fa fa-sign-out">&nbsp;</em> Logout</a></li>
 			<!-- <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span></a>
 				<ul class="children collapse" id="sub-item-1">
@@ -204,10 +160,10 @@ if($_SESSION['status'] !="login admin"){
                     $i = 0;
                     while ($data = mysqli_fetch_array($read_data)) { ?>
                       <td style="text-align: center; vertical-align: middle;">
-                        <div>
-                          <img style="width: 140px; margin: 70px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
+                        <div style="margin-bottom: 40px;">
+                          <img style="width: 100px; margin: 10px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
                           <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
-                          <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah pengadaan" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
+                          <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah pengadaan" id="<?php echo $data['id_apd'].'num'; ?>" min="1" onkeypress="return isNumberKey(event)" style="display:none">
                           <input class="form-control" type="checkbox" name="id_apd[]" value="<?php echo $data['id_apd']; ?>" id="<?php echo $data['id_apd'].'id'; ?>" onclick="<?php echo $data['id_apd'].'()'; ?>">
                         </div> 
                         <script> 
@@ -218,6 +174,7 @@ if($_SESSION['status'] !="login admin"){
 
                             if (checkBox.checked == true){
                               input.style.display = "block";
+
                             } else {
                               input.value = "";
                               input.style.display = "none";
@@ -228,7 +185,7 @@ if($_SESSION['status'] !="login admin"){
 
                         <?php 
                         $i++;
-                        if ($i%4 == 0) {
+                        if ($i%5 == 0) {
                           echo '</td></tr></div><div class="row">';
                         }
                       } ?>
@@ -263,7 +220,7 @@ if($_SESSION['status'] !="login admin"){
   		<div class="modal-dialog" role="document">
   			<div class="modal-content">
   				<div class="modal-header">
-  					<h4 class="modal-title alert alert-success">GAGAL!</h4>
+  					<h4 class="modal-title alert alert-danger">GAGAL!</h4>
   				</div>
   				<div class="modal-body">
   					<p>Pengadaan APD gagal disimpan, periksa dan ulangi lagi..</p>
@@ -324,33 +281,99 @@ if (isset($_POST['submit'])) {
 		$i = 0;
 	}
 
-	$sum_jml = array_sum($jumlah);
-	
-	$insert_pengadaan = mysqli_query($conn, "INSERT INTO pengadaan(jumlah_pengadaan, tanggal_pengadaan) VALUES ('$sum_jml','$tgl')") or die(mysqli_error());
-
-	if ($insert_pengadaan) {
-		$qry_id_pengadaan = mysqli_query($conn, "SELECT id_pengadaan FROM pengadaan ORDER BY id_pengadaan DESC LIMIT 1") or die(mysqli_error());
-		$id_pengadaan = mysqli_fetch_array($qry_id_pengadaan);
-		$id_p = $id_pengadaan['id_pengadaan'];
-
-		$idmin1 = $id_p - 1;
-
-		$qry_total_stock = mysqli_query($conn, "SELECT id_apd,total_stock FROM stock WHERE id_pengadaan = '$idmin1'") or die(mysqli_error());
-			while($row = mysqli_fetch_array($qry_total_stock)){
-				$apd_id[] = $row['id_apd'];
-				$total_stock[] = $row['total_stock'];
-			}
-
-			$merge_id = array_merge($apd_id, $id);
-			$merge_jml = array_merge($total_stock, $jumlah);
-
 		if ($j == $i && $i > 0 && $j > 0) {
-			for ($a=0; $a < count($merge_id); $a++) { 
-				$jumlah_pengadaan = $merge_jml[$a];
-				$id_apd = $merge_id[$a];
+			$sum_jml = array_sum($jumlah);
+			$insert_pengadaan = mysqli_query($conn, "INSERT INTO pengadaan(jumlah_pengadaan, tanggal_pengadaan) VALUES ('$sum_jml','$tgl')") or die(mysqli_error());
+
+			if ($insert_pengadaan) {
+				$qry_id_pengadaan = mysqli_query($conn, "SELECT id_pengadaan FROM pengadaan ORDER BY id_pengadaan DESC LIMIT 1") or die(mysqli_error());
+				$id_pengadaan = mysqli_fetch_array($qry_id_pengadaan);
+				$id_p = $id_pengadaan['id_pengadaan'];
+
+				//ini untuk mengambil id apd dan jumlah stock dari pengadaan sebelumnya
+				$idmin1 = $id_p - 1;
+				$qry_jumlah_stock = mysqli_query($conn, "SELECT id_apd,jumlah_stock FROM stock WHERE id_pengadaan = '$idmin1'") or die(mysqli_error());
+				while($row = mysqli_fetch_array($qry_jumlah_stock)){
+					$apd_id[] = $row['id_apd'];
+					$jumlah_stock[] = $row['jumlah_stock'];
+				}
+
+				$c_apd_id = count($apd_id);
+				$c_jumlah_stock = count($jumlah_stock);
+
+				// for ($a=0; $a < $j; $a++) { 
+				// 	$new = array($jumlah[$a] => $id[$a]);
+				// 	print_r($new).'<br>';
+				// }
+
+				// for ($l=0; $l < $c_apd_id; $l++) { 
+				// 	$old = array($total_stock[$l] => $apd_id[$l]);
+				// 	print_r($old).'<br>';
+				// }
 				
-			mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_apd', '$jumlah_pengadaan', '$jumlah_pengadaan', '$id_p')") or die(mysqli_error());
+				// print_r(array_merge(array_diff($new, $old), array_diff($old, $new)));
+
+			// ini untuk memasukkan satu satu data ke stock (data yang kita adakan)
+			for ($a=0; $a < $j; $a++) { 
+				$jumlah_pengadaan = $jumlah[$a];
+				$id_apd = $id[$a];
+				
+				for ($l=0; $l < $c_apd_id; $l++) { 
+					$id_data_lama = $apd_id[$l];
+					$jumlah_stock_lama = $jumlah_stock[$l];
+
+					mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,id_pengadaan) VALUES ('$id_data_lama','$jumlah_stock_lama','$id_p')") or die(mysqli_error());
+
+					if ($id_apd == $id_data_lama) {
+						$tot = $jumlah_stock_lama + $jumlah_pengadaan;
+						echo "Id nya sama";
+						
+						mysqli_query($conn, "UPDATE stock SET jumlah_stock='$tot' WHERE id_apd='$id_apd' AND id_pengadaan = '$id_p'") or die(mysqli_error());
+					// } else {
+						// echo "id nya gak sama";
+						// query untuk memasukkan data yang lama, yg gak ketambah
+						// mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_data_lama', 0,'$total_stock_lama' '$', '$id_p')") or die(mysqli_error());
+						// query untuk memasukkan data baru
+						// mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_apd', '$jumlah_pengadaan', '$jumlah_pengadaan', '$id_p')") or die(mysqli_error());
+					} //end if
+
+				}
+			
 			}
+
+			// for ($a=0; $a < $j; $a++) { 
+			// 	$jumlah_pengadaan = $jumlah[$a];
+			// 	$id_apd = $id[$a];
+				
+			// 	for ($l=0; $l < $c_apd_id; $l++) { 
+			// 		$id_data_lama = $apd_id[$l];
+			// 		$total_stock_lama = $total_stock[$l];
+
+			// 		if($id_apd != $id_data_lama) {
+			// 			echo "id nya gak sama";
+			// 			// query untuk memasukkan data yang lama, yg gak ketambah
+			// 			mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_data_lama', 0,'$total_stock_lama' '$', '$id_p')") or die(mysqli_error());
+			// 			// query untuk memasukkan data baru
+			// 			// mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_apd', '$jumlah_pengadaan', '$jumlah_pengadaan', '$id_p')") or die(mysqli_error());
+			// 		}
+			// 	}
+			// }
+
+			// $diff_id1 = array_diff($apd_id, $id);
+			// $diff_id2 = array_diff($id, $apd_id);
+			// $id_apd_tidak_sama = array_merge($diff_id1, $diff_id2);
+
+			// print_r($apd_id);
+			// print_r($id);
+			// print_r($id_apd_tidak_sama);
+
+			// for ($b=0; $b < count($id_apd_tidak_sama); $b++) {
+			// 	$id_apd_beda = $id_apd_tidak_sama[$b];
+
+			// 	mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_apd_beda', 999, 999, '$id_p')") or die(mysqli_error());
+
+			// }
+
 			echo "<script type='text/javascript'>
 			$(window).on('load',function(){
 				$('#success').modal('show');
@@ -363,9 +386,23 @@ if (isset($_POST['submit'])) {
 				});
 				</script>";
 		}
-	}	
+	} else {
+		echo "<script type='text/javascript'>
+			$(window).on('load',function(){
+				$('#failed').modal('show');
+				});
+				</script>";
+	}
 }
 ?>
+<script type="text/javascript">
+	function isNumberKey(evt){
+		var charCode = (evt.which) ? evt.which : event.keyCode
+		if(charCode > 31 && (charCode < 48 || charCode > 57))
+			return false;
+		return true;
+	}
+</script>
 
 </body>
 </html>

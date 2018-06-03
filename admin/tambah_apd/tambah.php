@@ -27,7 +27,11 @@ if (isset($_POST['submit'])) {
 		$basename = $gambar . $increment . '.' . $extension;
 
 		if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target.$basename)) {
+			$qry_id_pengadaan = mysqli_query($conn, "SELECT id_pengadaan FROM pengadaan ORDER BY id_pengadaan DESC LIMIT 1") or die(mysqli_error());
+			$id_pengadaan = mysqli_fetch_array($qry_id_pengadaan);
+			$id_p = $id_pengadaan['id_pengadaan'];
 			$tambah = mysqli_query($conn, "INSERT INTO apd (id_apd, nama_apd, gambar_apd) VALUES ('$id', '$nama', '$basename')");
+			mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,id_pengadaan) VALUES ('$id',0,'$id_p')");
 			echo "<script>alert('Data berhasil ditambah.')</script>";
 			echo "<script>location.href='../tambah_apd';</script>";
 			// echo "File is an image - " . $check["mime"] . ".";

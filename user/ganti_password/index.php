@@ -93,7 +93,7 @@ if($_SESSION['status'] !="login".$nip.""){
               <div class="col-lg-12">
                 <div class="form-group">
                   <label>Password Lama</label>
-                  <input class="form-control" type="password" name="pass_lama" required="">
+                  <input class="form-control" type="password" name="pass_lama" required="" autofocus="">
                 </div>
                 <div class="form-group">
                   <label>Password Baru</label>

@@ -99,8 +99,8 @@ if($_SESSION['status'] !="login".$nip.""){
                     $i = 0;
                     while ($data = mysqli_fetch_array($read_data)) { ?>
                       <td style="text-align: center; vertical-align: middle;">
-                        <div>
-                          <img style="width: 140px; margin: 70px 50px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
+                        <div style="margin: 5px">
+                          <img style="width: 90px; margin: 20px 40px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
                           <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
                           <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah permintaan" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
                           <input class="form-control" type="checkbox" name="id_apd[]" value="<?php echo $data['id_apd']; ?>" id="<?php echo $data['id_apd'].'id'; ?>" onclick="<?php echo $data['id_apd'].'()'; ?>">
@@ -123,7 +123,7 @@ if($_SESSION['status'] !="login".$nip.""){
 
                         <?php 
                         $i++;
-                        if ($i%3 == 0) {
+                        if ($i%4 == 0) {
                           echo '</td></tr></div><div class="row">';
                         }
                       } ?>
@@ -170,16 +170,16 @@ if($_SESSION['status'] !="login".$nip.""){
                 <div style="text-align: center; vertical-align: middle; margin: 40px auto 30px;">
 
                   <?php 
-                    $status_belum_disetujui = mysqli_query($conn, "SELECT status_permintaan FROM permintaan WHERE nip_karyawan='$nip' and status_permintaan='Belum Disetujui'") or die(mysqli_error()); 
-                    $notif = mysqli_query($conn, "SELECT notif FROM permintaan WHERE nip_karyawan='$nip' ORDER BY tanggal_permintaan ASC LIMIT 1") or die(mysqli_error()); 
-                    $bs = mysqli_fetch_array($status_belum_disetujui);
-                    $t = mysqli_fetch_array($notif);
+                  $status_belum_disetujui = mysqli_query($conn, "SELECT status_permintaan FROM permintaan WHERE nip_karyawan='$nip' and status_permintaan='Belum Disetujui'") or die(mysqli_error()); 
+                  $notif = mysqli_query($conn, "SELECT notif FROM permintaan WHERE nip_karyawan='$nip' ORDER BY tanggal_permintaan ASC LIMIT 1") or die(mysqli_error()); 
+                  $bs = mysqli_fetch_array($status_belum_disetujui);
+                  $t = mysqli_fetch_array($notif);
 
-                    if ($bs['status_permintaan'] == 'Belum Disetujui') { ?>
-                      <input class="btn btn-md btn-primary" type="button" data-toggle="modal" data-target="#waiting" value="Ajukan Permintaan">
-                    <?php } else {?>
-                      <input class="btn btn-md btn-primary" type="submit" name="submit" value="Ajukan Permintaan">
-                    <?php } ?>
+                  if ($bs['status_permintaan'] == 'Belum Disetujui') { ?>
+                    <input class="btn btn-md btn-primary" type="button" data-toggle="modal" data-target="#waiting" value="Ajukan Permintaan">
+                  <?php } else {?>
+                    <input class="btn btn-md btn-primary" type="submit" name="submit" value="Ajukan Permintaan">
+                  <?php } ?>
                 </div>
               </form>
             </div>
@@ -233,7 +233,7 @@ if($_SESSION['status'] !="login".$nip.""){
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title alert alert-success">GAGAL!</h4>
+          <h4 class="modal-title alert alert-danger">GAGAL!</h4>
         </div>
         <div class="modal-body">
           <p>Permintaan APD gagal dikirim, periksa kembali permintaan anda..</p>

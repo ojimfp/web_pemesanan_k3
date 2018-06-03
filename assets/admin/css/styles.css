@@ -925,6 +925,12 @@ h1.page-header {
 #easypiechart-red .percent {
   color: #ef4040; }
 
+#easypiechart-green .percent {
+  color: #1dd12f; }
+
+#easypiechart-purple .percent {
+  color: #6a35dd; }
+
 #calendar, .datepicker-inline {
   width: 100%; }
 

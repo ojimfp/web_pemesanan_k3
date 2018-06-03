@@ -10,7 +10,6 @@ if($_SESSION['status'] !="login admin"){
 	header("location:". $base."login");
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +20,7 @@ if($_SESSION['status'] !="login admin"){
 	<link href="<?php echo $base; ?>assets/admin/css/font-awesome.min.css" rel="stylesheet">
 	<link href="<?php echo $base; ?>assets/admin/css/datepicker3.css" rel="stylesheet">
 	<link href="<?php echo $base; ?>assets/admin/css/styles.css" rel="stylesheet">
-
+	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -38,7 +37,7 @@ if($_SESSION['status'] !="login admin"){
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
 					<a class="navbar-brand" href="<?php echo $base; ?>admin"><span>PG Kebon Agung</span></a>
-					<ul class="nav navbar-top-links navbar-right">						
+					<ul class="nav navbar-top-links navbar-right">
 					</ul>
 				</div>
 			</div><!-- /.container-fluid -->
@@ -63,7 +62,7 @@ if($_SESSION['status'] !="login admin"){
 		<ul class="nav menu">
 			<li><a href="../../admin"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			<li><a href="../tambah_pekerja"><em class="fa fa-user-plus">&nbsp;</em> Tambah Pekerja</a></li>
-			<li class="active"><a href="../list_pekerja"><em class="fa fa-users">&nbsp;</em> List Pekerja</a></li>
+			<li><a href="../list_pekerja"><em class="fa fa-users">&nbsp;</em> List Pekerja</a></li>
 			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Jenis APD</a></li>
 			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li>
@@ -77,7 +76,7 @@ if($_SESSION['status'] !="login admin"){
 					<a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> Permintaan APD</a>
 				<?php } ?>
 			</li>
-			<li>
+			<li class="active">
 				<?php 
 				$notif_minta_apd = mysqli_query($conn, "SELECT status_peminjaman FROM peminjaman WHERE status_peminjaman='Belum Disetujui'") or die(mysqli_error());
 				$not_apd = mysqli_fetch_array($notif_minta_apd);
@@ -128,78 +127,84 @@ if($_SESSION['status'] !="login admin"){
 				<li><a href="#">
 					<em class="fa fa-home"></em>
 				</a></li>
-				<li class="active">List Pekerja</li>
+				<li class="active">Peminjaman Alat Pelindung Diri</li>
 			</ol>
 		</div><!--/.row-->
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">List Pekerja</h1>
+				<h1 class="page-header">Peminjaman APD</h1>
 			</div>
 		</div><!--/.row-->
 
 		<div class="row">
 			<div class="col-lg-12">
+				<p>Tanggal : <?php echo date("d-m-Y"); ?></p>
 				<table class="table-read" border="2">
 					<tr>
-						<th>NIP</th>
-						<th>Nama</th>
-						<th>Jenis Kelamin</th>
-						<th>Tanggal Lahir</th>
-						<th>Alamat</th>
-						<th>E-mail</th>
-						<th>Jabatan</th>
-						<th>Opsi</th>
+						<th>Tanggal Peminjaman</th>
+						<th>Tanggal Pengembalian</th>
+						<th>Nama Karyawan</th>
+						<th>Keterangan</th>
 					</tr>
-					<?php
-					$read_data = mysqli_query($conn, "SELECT nip, nama_karyawan, jabatan, email, jenis_kelamin, tgl_lahir, alamat FROM karyawan WHERE jabatan='karyawan'") or die(mysqli_error());
-					while ($data = mysqli_fetch_array($read_data)) {
-					?>
-					<tr>
-						<td class="td-read"><?php echo $data['nip']; ?></td>
-						<td class="td-read"><?php echo $data['nama_karyawan']; ?></td>
-						<td class="td-read"><?php echo $data['jenis_kelamin']; ?></td>
-						<td class="td-read"><?php echo $data['tgl_lahir']; ?></td>
-						<td class="td-read"><?php echo $data['alamat']; ?></td>
-						<td class="td-read"><?php echo $data['email']; ?></td>
-						<td class="td-read"><?php echo $data['jabatan']; ?></td>
-						<td>
-							<form method="POST" action="edit.php">
-								<input type="hidden" name="nip" value="<?php echo $data['nip']; ?>">
-								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Edit</button></a>
-							</form>
-							<form method="POST" action="delete.php">
-								<input type="hidden" name="nip" value="<?php echo $data['nip']; ?>">
-								<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Hapus</button></a>
-							</form>						
-						</td>
 
+					<?php
+					$peminjaman = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, peminjaman.tgl_pinjam, peminjaman.tgl_kembali, peminjaman.status_peminjaman FROM karyawan JOIN peminjaman WHERE karyawan.nip = peminjaman.nip_karyawan group by peminjaman.tgl_pinjam asc, peminjaman.nip_karyawan ORDER BY peminjaman.status_peminjaman");
+
+					while($row = mysqli_fetch_array($peminjaman)){ ?>					
+
+					<tr>
+						<form method="POST" action="detail.php">
+							<td class="td-read"><?php echo $row['tgl_pinjam']; ?></td>
+							<td class="td-read"><?php echo $row['tgl_kembali']; ?></td>
+							<td class="td-read"><?php echo $row['nama_karyawan']; ?></td>
+							<td class="td-read">
+								<input type="hidden" name="nip" value="<?php echo $row['nip']; ?>">
+								<input type="hidden" name="tgl_pinjam" value="<?php echo $row['tgl_pinjam']; ?>">
+								<input type="hidden" name="tgl_kembali" value="<?php echo $row['tgl_kembali']; ?>">
+								<input type="hidden" name="status_peminjaman" value="<?php echo $row['status_peminjaman']; ?>">
+								<input type="hidden" name="nama" value="<?php echo $row['nama_karyawan']; ?>">
+
+								<?php if ($row['status_peminjaman'] == 'Belum Disetujui') { ?>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Belum Disetujui</button></a>
+								<?php } elseif ($row['status_peminjaman'] == 'Belum Dikembalikan') { ?>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Belum Dikembalikan</button></a>
+								<?php } elseif ($row['status_peminjaman'] == 'Ditolak') { ?>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Ditolak</button></a>
+								<?php } elseif ($row['status_peminjaman'] == 'Sudah Dikembalikan') { ?>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-success">Sudah Dikembalikan</button></a>
+								<?php } ?>
+
+								
+								
+							</td>
+						</form>
 					</tr>
 					<?php } ?>
 				</table>
 			</div>
 		</div>
-	</div><!--/.row-->
+	</div>
 
-<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/chart-data.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/easypiechart.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
-<script>
-	window.onload = function () {
-		var chart1 = document.getElementById("line-chart").getContext("2d");
-		window.myLine = new Chart(chart1).Line(lineChartData, {
-			responsive: true,
-			scaleLineColor: "rgba(0,0,0,.2)",
-			scaleGridLineColor: "rgba(0,0,0,.05)",
-			scaleFontColor: "#c5c7cc"
-		});
-	};
-</script>
+	<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/chart-data.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/easypiechart.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
+	<script>
+		window.onload = function () {
+			var chart1 = document.getElementById("line-chart").getContext("2d");
+			window.myLine = new Chart(chart1).Line(lineChartData, {
+				responsive: true,
+				scaleLineColor: "rgba(0,0,0,.2)",
+				scaleGridLineColor: "rgba(0,0,0,.05)",
+				scaleFontColor: "#c5c7cc"
+			});
+		};
+	</script>
 
 </body>
 </html>
