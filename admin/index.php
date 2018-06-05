@@ -119,10 +119,18 @@ if($_SESSION['status'] !="login admin"){
 												<div class="easypiechart-panel" style="background-color: #f5f5f5; margin: 15px;">
 
 													<h4><?php echo $data['id_apd']; ?></h4>
-													<!-- <div class="easypiechart" id="" data-percent="92" ><span class="percent"><?php echo $data['jumlah_stock']; ?></span></div> -->
 													<img style="width: 40px; margin: 10px 60px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
-													<strong><p style="text-align: center; margin-bottom: 50px; font-size: 30px;"><?php echo $data['jumlah_stock']; ?></p></strong>
-													<!-- <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah pengadaan" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none"> -->
+													<strong>
+														<p style="text-align: center; margin-bottom: 50px; font-size: 30px;
+														<?php if($data['id_apd']=='H001' && $data['jumlah_stock'] < 36){ ?>
+															color: #FF0000;
+														<?php } ?>
+
+
+
+														"><?php echo $data['jumlah_stock']; ?>
+														</p>
+													</strong>
 												</div> 
 												<?php 
 												$i++;

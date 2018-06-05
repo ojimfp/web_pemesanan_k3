@@ -145,7 +145,7 @@ if($_SESSION['status'] !="login admin"){
 
 											<?php
 
-											$data = mysqli_query($conn, "SELECT stock.jumlah_stock,apd.id_apd,apd.nama_apd,permintaan.jumlah_permintaan,permintaan.status_permintaan FROM apd JOIN permintaan on permintaan.id_apd = apd.id_apd JOIN stock on stock.id_apd =  permintaan.id_apd WHERE permintaan.nip_karyawan = '$nip' && permintaan.tanggal_permintaan = '$tanggal'");
+											$data = mysqli_query($conn, "SELECT stock.jumlah_stock, apd.id_apd, apd.nama_apd, permintaan.jumlah_permintaan, permintaan.status_permintaan FROM apd JOIN permintaan on permintaan.id_apd = apd.id_apd JOIN stock on permintaan.id_apd = stock.id_apd WHERE permintaan.nip_karyawan = '$nip' && permintaan.tanggal_permintaan = '$tanggal' && stock.id_pengadaan= (SELECT id_pengadaan FROM stock ORDER BY id_pengadaan DESC LIMIT 1)");
 
 											while ($row = mysqli_fetch_array($data)) { ?>				
 												<?php $stts = $row['status_permintaan']; ?>

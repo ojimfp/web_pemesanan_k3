@@ -283,116 +283,107 @@ if (isset($_POST['submit'])) {
 
 		if ($j == $i && $i > 0 && $j > 0) {
 			$sum_jml = array_sum($jumlah);
+			// ini memasukkan ke tabel pengadaan
 			$insert_pengadaan = mysqli_query($conn, "INSERT INTO pengadaan(jumlah_pengadaan, tanggal_pengadaan) VALUES ('$sum_jml','$tgl')") or die(mysqli_error());
 
 			if ($insert_pengadaan) {
+				// mengambil id pengadaan dari pengadaan yang baru dimasukkan
 				$qry_id_pengadaan = mysqli_query($conn, "SELECT id_pengadaan FROM pengadaan ORDER BY id_pengadaan DESC LIMIT 1") or die(mysqli_error());
 				$id_pengadaan = mysqli_fetch_array($qry_id_pengadaan);
 				$id_p = $id_pengadaan['id_pengadaan'];
 
 				//ini untuk mengambil id apd dan jumlah stock dari pengadaan sebelumnya
-				$idmin1 = $id_p - 1;
-				$qry_jumlah_stock = mysqli_query($conn, "SELECT id_apd,jumlah_stock FROM stock WHERE id_pengadaan = '$idmin1'") or die(mysqli_error());
-				while($row = mysqli_fetch_array($qry_jumlah_stock)){
-					$apd_id[] = $row['id_apd'];
-					$jumlah_stock[] = $row['jumlah_stock'];
+				if ($id_p == 1) {
+
+					echo "masuk p1";
+					$data_id_apd = mysqli_query($conn, "SELECT id_apd FROM apd") or die(mysqli_error());
+					while($row = mysqli_fetch_array($data_id_apd)){
+						$data_apd_id[] = $row['id_apd'];
+					}
+
+						// apd yang disimpan di database
+						for ($r=0; $r < count($data_apd_id); $r++) { 
+							$data_apd = $data_apd_id[$r];
+
+							mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,id_pengadaan) VALUES ('$data_apd',0,1)") or die(mysqli_error());
+
+
+							// data yang diinputkan
+							for ($a=0; $a < $j; $a++) { 
+								$jumlah_pengadaan = $jumlah[$a];
+								$idapd = $id[$a];
+
+								if ($idapd == $data_apd) {
+									$tot = $jumlah_pengadaan;
+
+								// // ini untuk memasukkan data yang diadakan
+									mysqli_query($conn, "UPDATE stock SET jumlah_stock='$tot' WHERE id_apd='$idapd' AND id_pengadaan =1") or die(mysqli_error());
+								} //end if
+
+							}
+						}
+					echo "<script type='text/javascript'>
+						$(window).on('load',function(){
+						$('#success').modal('show');
+						});
+						</script>";
+				} else {
+					echo "masuk p > 1";
+					$idmin1 = $id_p - 1;
+
+					// ini untuk ambil data dengan id sebelumnya, yang mau dimasukin ke tabel stock 
+					$qry_jumlah_stock = mysqli_query($conn, "SELECT id_apd,jumlah_stock FROM stock WHERE id_pengadaan = '$idmin1'") or die(mysqli_error());
+					while($row = mysqli_fetch_array($qry_jumlah_stock)){
+						$apd_id[] = $row['id_apd'];
+						$jumlah_stock[] = $row['jumlah_stock'];
+					}
+
+					$c_apd_id = count($apd_id);
+					$c_jumlah_stock = count($jumlah_stock);
+
+					for ($l=0; $l < $c_apd_id; $l++) {
+						$id_data_lama = $apd_id[$l];
+						$jumlah_stock_lama = $jumlah_stock[$l];
+
+						// ini untuk memasukkan data lama ke database
+						mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,id_pengadaan) VALUES ('$id_data_lama','$jumlah_stock_lama','$id_p')") or die(mysqli_error());
+
+						// data yang diinput
+						for ($a=0; $a < $j; $a++) {
+							$jml_pengadaan = $jumlah[$a];
+							$id_apd = $id[$a];
+
+							if ($id_apd == $id_data_lama) {
+								$tot = $jumlah_stock_lama + $jml_pengadaan;
+								echo "Id nya sama";
+
+								// ini untuk memasukkan data yang diadakan
+								mysqli_query($conn, "UPDATE stock SET jumlah_stock='$tot' WHERE id_apd='$id_apd' AND id_pengadaan = '$id_p'") or die(mysqli_error());
+							} //end if
+						}
+					}
+
+				echo "<script type='text/javascript'>
+				$(window).on('load',function(){
+					$('#success').modal('show');
+					});
+					</script>";
+
 				}
-
-				$c_apd_id = count($apd_id);
-				$c_jumlah_stock = count($jumlah_stock);
-
-				// for ($a=0; $a < $j; $a++) { 
-				// 	$new = array($jumlah[$a] => $id[$a]);
-				// 	print_r($new).'<br>';
-				// }
-
-				// for ($l=0; $l < $c_apd_id; $l++) { 
-				// 	$old = array($total_stock[$l] => $apd_id[$l]);
-				// 	print_r($old).'<br>';
-				// }
-				
-				// print_r(array_merge(array_diff($new, $old), array_diff($old, $new)));
-
-			// ini untuk memasukkan satu satu data ke stock (data yang kita adakan)
-			for ($a=0; $a < $j; $a++) { 
-				$jumlah_pengadaan = $jumlah[$a];
-				$id_apd = $id[$a];
-				
-				for ($l=0; $l < $c_apd_id; $l++) { 
-					$id_data_lama = $apd_id[$l];
-					$jumlah_stock_lama = $jumlah_stock[$l];
-
-					mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,id_pengadaan) VALUES ('$id_data_lama','$jumlah_stock_lama','$id_p')") or die(mysqli_error());
-
-					if ($id_apd == $id_data_lama) {
-						$tot = $jumlah_stock_lama + $jumlah_pengadaan;
-						echo "Id nya sama";
-						
-						mysqli_query($conn, "UPDATE stock SET jumlah_stock='$tot' WHERE id_apd='$id_apd' AND id_pengadaan = '$id_p'") or die(mysqli_error());
-					// } else {
-						// echo "id nya gak sama";
-						// query untuk memasukkan data yang lama, yg gak ketambah
-						// mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_data_lama', 0,'$total_stock_lama' '$', '$id_p')") or die(mysqli_error());
-						// query untuk memasukkan data baru
-						// mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_apd', '$jumlah_pengadaan', '$jumlah_pengadaan', '$id_p')") or die(mysqli_error());
-					} //end if
-
-				}
-			
+			} else {
+				echo "<script type='text/javascript'>
+				$(window).on('load',function(){
+					$('#failed').modal('show');
+					});
+					</script>";
 			}
-
-			// for ($a=0; $a < $j; $a++) { 
-			// 	$jumlah_pengadaan = $jumlah[$a];
-			// 	$id_apd = $id[$a];
-				
-			// 	for ($l=0; $l < $c_apd_id; $l++) { 
-			// 		$id_data_lama = $apd_id[$l];
-			// 		$total_stock_lama = $total_stock[$l];
-
-			// 		if($id_apd != $id_data_lama) {
-			// 			echo "id nya gak sama";
-			// 			// query untuk memasukkan data yang lama, yg gak ketambah
-			// 			mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_data_lama', 0,'$total_stock_lama' '$', '$id_p')") or die(mysqli_error());
-			// 			// query untuk memasukkan data baru
-			// 			// mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_apd', '$jumlah_pengadaan', '$jumlah_pengadaan', '$id_p')") or die(mysqli_error());
-			// 		}
-			// 	}
-			// }
-
-			// $diff_id1 = array_diff($apd_id, $id);
-			// $diff_id2 = array_diff($id, $apd_id);
-			// $id_apd_tidak_sama = array_merge($diff_id1, $diff_id2);
-
-			// print_r($apd_id);
-			// print_r($id);
-			// print_r($id_apd_tidak_sama);
-
-			// for ($b=0; $b < count($id_apd_tidak_sama); $b++) {
-			// 	$id_apd_beda = $id_apd_tidak_sama[$b];
-
-			// 	mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,total_stock,id_pengadaan) VALUES ('$id_apd_beda', 999, 999, '$id_p')") or die(mysqli_error());
-
-			// }
-
-			echo "<script type='text/javascript'>
-			$(window).on('load',function(){
-				$('#success').modal('show');
-				});
-				</script>";
 		} else {
 			echo "<script type='text/javascript'>
-			$(window).on('load',function(){
-				$('#failed').modal('show');
-				});
-				</script>";
+				$(window).on('load',function(){
+					$('#failed').modal('show');
+					});
+					</script>";
 		}
-	} else {
-		echo "<script type='text/javascript'>
-			$(window).on('load',function(){
-				$('#failed').modal('show');
-				});
-				</script>";
-	}
 }
 ?>
 <script type="text/javascript">
