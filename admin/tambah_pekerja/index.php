@@ -164,8 +164,6 @@ if($_SESSION['status'] !="login admin"){
 				</div>
 			</div>
 
-			
-
 			<div class="modal fade" tabindex="-1" role="dialog" id="failed">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -207,7 +205,7 @@ if($_SESSION['status'] !="login admin"){
 if (isset($_POST['submit'])) {
 $nama = $_POST['nama'];
 $jeniskelamin = substr($_POST['jenis_kelamin'], 0, 1);
-$tgllahir = $_POST['tgllahir'];
+$tgllahir = date("d-m-Y", strtotime($_POST['tgllahir']));
 $alamat = $_POST['alamat'];
 $email = $_POST['email'];
 $jabatan = substr($_POST['jabatan'], 0, 8);
@@ -296,7 +294,7 @@ if ($j == "Karyawan Umum") {
 			</div>
 			<div class="modal-body">
 				<p>Data karyawan berhasil disimpan..</p>
-				<p>NIP : <?php echo $nip_password; ?></p>
+				<p>Kode User : <?php echo $nip_password; ?></p>
 				<p>Password : <?php echo $nip_password; ?></p>
 			</div>
 			<div class="modal-footer">

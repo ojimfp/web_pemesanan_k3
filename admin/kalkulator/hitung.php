@@ -285,7 +285,7 @@ if($_SESSION['status'] !="login admin"){
 		var keb = document.getElementById('kebutuhan').value;
 		var rata = keb / 12;
 
-		var rop = (document.getElementById('lead_time').value * rata) + parseFloat(0.1 * keb);
+		var rop = (document.getElementById('lead_time').value * rata) + Math.ceil(parseFloat(0.1 * keb));
 		document.getElementById('rop').value = Math.ceil(rop);
 	}
 </script>

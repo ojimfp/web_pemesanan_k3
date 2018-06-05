@@ -7,12 +7,17 @@ session_start();
 
 $nip = $_POST['nip'];
 $tgl_pinjam = $_POST['tgl_pinjam'];
-$tgl_kembali = $_POST['tgl_kembali'];
+$tgl_kembali = date("d-m-Y", strtotime($_POST['tgl_kembali']));
 $status_peminjaman = $_POST['status_peminjaman'];
 	if (isset($_POST['nama'])) {
 		$nama = $_POST['nama'];
 	} else {
 		$nama = ' ';
+	}
+	if (isset($_POST['tgl_aktual'])) {
+		$tgl_aktual = $_POST['tgl_aktual'];
+	} else {
+		$tgl_aktual = ' ';
 	}
 // cek apakah user telah login, jika belum login maka di alihkan ke halaman login
 if($_SESSION['status'] !="login admin"){
@@ -141,38 +146,36 @@ if($_SESSION['status'] !="login admin"){
 												<label>Tanggal Pengembalian</label>
 												<input class="form-control" type="text" name="tgl_kembali" disabled="" value="<?php echo $tgl_kembali; ?>">
 											</div>
+											<?php 
 
-											<?php if ($status_peminjaman == 'Belum Dikembalikan') { ?>
-												<div class="form-group">
-													<label>Tanggal Aktual Pengembalian</label>
-													<?php 
-													$newDate = date('Y-m-d', strtotime($tgl_kembali));
-													?>
-													<input class="form-control" type="date" name="tgl_aktual_kembali" value="<?php echo $newDate; ?>" placeholder="">
-												</div>
-											<?php } ?>
+												// $data = mysqli_query($conn, "SELECT tgl_aktual_kembali FROM peminjaman WHERE tgl_pinjam='$tgl_pinjam' AND $tgl");
 
-										</form>
-
-										<table class="table-read" border="2">
-											<tr>
-												<th>Jenis APD</th>
-												<th>Jumlah</th>
-											</tr>
-
-											<?php
-
-											$data = mysqli_query($conn, "SELECT peminjaman.id_apd, peminjaman.jumlah, apd.nama_apd FROM peminjaman JOIN apd on peminjaman.id_apd = apd.id_apd WHERE peminjaman.nip_karyawan = '$nip' && peminjaman.tgl_pinjam = '$tgl_pinjam' && peminjaman.tgl_kembali = '$tgl_kembali' && peminjaman.status_peminjaman = '$status_peminjaman'");
-
-											while ($row = mysqli_fetch_array($data)) { ?>				
+												if ($status_peminjaman == 'Sudah Dikembalikan') { ?>
+													<div class="form-group" style="text-align: left;">
+														<label>Tanggal Aktual Pengembalian</label>
+														<input class="form-control" type="text" disabled="" value="<?php echo  $tgl_aktual;?>">
+													</div>
+												<?php } ?>
+											<table class="table-read" border="2">
 												<tr>
-													<form>
-														<td class="td-read"><?php echo $row['nama_apd'].' - '.$row['id_apd']; ?></td>
-														<td class="td-read"><?php echo $row['jumlah']; ?></td>
-													</form>
+													<th>Jenis APD</th>
+													<th>Jumlah</th>
 												</tr>
-											<?php } ?>
-										</table>
+
+												<?php
+
+												$data = mysqli_query($conn, "SELECT peminjaman.id_apd, peminjaman.jumlah, apd.nama_apd FROM peminjaman JOIN apd on peminjaman.id_apd = apd.id_apd WHERE peminjaman.nip_karyawan = '$nip' && peminjaman.tgl_pinjam = '$tgl_pinjam' && peminjaman.tgl_kembali = '$tgl_kembali' && peminjaman.status_peminjaman = '$status_peminjaman'");
+
+												while ($row = mysqli_fetch_array($data)) { ?>				
+													<tr>
+														<form>
+															<td class="td-read"><?php echo $row['nama_apd'].' - '.$row['id_apd']; ?></td>
+															<td class="td-read"><?php echo $row['jumlah']; ?></td>
+														</form>
+													</tr>
+												<?php } ?>
+											</table>
+										</form>
 									</div>
 									<?php if ($status_peminjaman == 'Belum Disetujui') { ?>
 									<form class="col-lg-6" method="POST" action="detail.php" style="text-align: left;">
@@ -193,6 +196,10 @@ if($_SESSION['status'] !="login admin"){
 									</form>
 									<?php } elseif ($status_peminjaman == 'Belum Dikembalikan') { ?>
 										<form class="col-lg-12" method="POST" action="detail.php" style="text-align: right;">
+												<div class="form-group" style="text-align: left;">
+													<label>Tanggal Aktual Pengembalian</label>
+													<input class="form-control" type="date" name="tgl_aktual_kembali" required="">
+												</div>
 											<input type="hidden" name="nip" value="<?php echo $nip; ?>">
 											<input type="hidden" name="tgl_pinjam" value="<?php echo $tgl_pinjam; ?>">
 											<input type="hidden" name="tgl_kembali" value="<?php echo $tgl_kembali; ?>">
@@ -256,12 +263,12 @@ if($_SESSION['status'] !="login admin"){
 		echo "<script>location.href='index.php';</script>";
 
 	} elseif (isset($_POST['dikembalikan'])) {
-		$t_act_kmbl = date('d-m-Y', strtotime($_POST['tgl_aktual_kembali']));
+		$t = $_POST['tgl_aktual_kembali'];
+		$t_act_kmbl = date("d-m-Y", strtotime($t));
 		mysqli_query($conn, "UPDATE peminjaman SET tgl_aktual_kembali='$t_act_kmbl', status_peminjaman='Sudah Dikembalikan', notif='Sudah Dikembalikan' WHERE nip_karyawan='$nip' && tgl_pinjam='$tgl_pinjam' && tgl_kembali='$tgl_kembali' && status_peminjaman='$status_peminjaman'") or die(mysqli_error());
 		echo "<script>location.href='index.php';</script>";
 	}
 
 	?>
-
 </body>
 </html>

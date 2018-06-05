@@ -148,7 +148,7 @@ if($_SESSION['status'] !="login admin"){
 					</tr>
 
 					<?php
-					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, permintaan.tanggal_permintaan, permintaan.status_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by permintaan.tanggal_permintaan asc, permintaan.nip_karyawan ORDER BY permintaan.status_permintaan");
+					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, permintaan.tanggal_permintaan, permintaan.status_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by permintaan.nip_karyawan, permintaan.tanggal_permintaan desc");
 
 					$storeArrayTanggal = Array();
 					$storeArrayNama = Array();

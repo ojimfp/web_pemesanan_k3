@@ -142,7 +142,7 @@ if($_SESSION['status'] !="login admin"){
 			<div class="col-lg-12">
 				<table class="table-read" border="2">
 					<tr>
-						<th>NIP</th>
+						<th>Kode User</th>
 						<th>Nama</th>
 						<th>Jenis Kelamin</th>
 						<th>Tanggal Lahir</th>

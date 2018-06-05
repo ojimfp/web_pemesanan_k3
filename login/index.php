@@ -21,7 +21,7 @@
 <form action="login.php" method="POST">
   <div class="group">
     <input name="nip" type="text" required=""><span class="highlight"></span><span class="bar"></span>
-    <label>NIP</label>
+    <label>Kode User</label>
   </div>
   <div class="group"> 
     <input name="password" type="password" required=""><span class="highlight"></span><span class="bar"></span>

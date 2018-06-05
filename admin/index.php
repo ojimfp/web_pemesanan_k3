@@ -2,6 +2,7 @@
 $base = "http://localhost/inventorymanagement/";
 
 include '../config.php';
+include '../calc_conf.php';
 
 session_start();
 
@@ -101,6 +102,46 @@ if($_SESSION['status'] !="login admin"){
 
 		<div class="row">
 			<div class="col-lg-12">
+
+				<?php
+					// $rop = mysqli_query($connn, "SELECT jenis_apd, rop FROM hasil ORDER BY tgl_hitung asc");
+
+					$warning = mysqli_query($conn, "SELECT apd.id_apd, apd.nama_apd, apd.gambar_apd, stock.jumlah_stock FROM apd LEFT JOIN stock ON apd.id_apd=stock.id_apd WHERE apd.id_apd = stock.jumlah_stock IS NULL OR stock.id_pengadaan = (SELECT id_pengadaan FROM stock ORDER BY id_pengadaan DESC LIMIT 1)") or die(mysqli_error());
+
+					while ($wr = mysqli_fetch_array($warning)) {
+						if (substr($wr['nama_apd'],0,10) == "Baju Kerja") {
+							$jumlah_baju_kerja[] = $wr['jumlah_stock'];
+						} elseif (substr($wr['nama_apd'],0,16) == "Pelindung Tangan") {
+							$jumlah_pelindung_tangan[] = $wr['jumlah_stock'];
+						} elseif (substr($wr['nama_apd'],0,13) == "Safety Helmet") {
+							$jumlah_safety_helmet[] = $wr['jumlah_stock'];
+						} elseif (substr($wr['nama_apd'],0,6) == "Masker") {
+							$jumlah_masker[] = $wr['jumlah_stock'];
+						} elseif (substr($wr['nama_apd'],0,12) == "Safety Shoes") {
+							$jumlah_safety_shoes[] = $wr['jumlah_stock'];
+						} elseif (substr($wr['nama_apd'],0,17) == "Pelindung Telinga") {
+							$jumlah_pelindung_telinga[] = $wr['jumlah_stock'];
+						}
+					}
+
+					if (array_sum($jumlah_baju_kerja) < 59) { ?>
+						<div class="alert bg-warning" role="alert"><em class="fa fa-lg fa-warning">&nbsp;</em> Jumlah stock untuk baju kerja mulai menipis.</div>
+					<?php } if (array_sum($jumlah_pelindung_tangan) < 59) { ?>
+						<div class="alert bg-warning" role="alert"><em class="fa fa-lg fa-warning">&nbsp;</em> Jumlah stock untuk safety gloves/ pelindung tangan mulai menipis.</div>
+					<?php } if (array_sum($jumlah_safety_helmet) < 36) { ?>
+						<div class="alert bg-warning" role="alert"><em class="fa fa-lg fa-warning">&nbsp;</em> Jumlah stock untuk safety helmet mulai menipis.</div>
+					<?php } if (array_sum($jumlah_masker) < 59) { ?>
+						<div class="alert bg-warning" role="alert"><em class="fa fa-lg fa-warning">&nbsp;</em> Jumlah stock untuk masker mulai menipis.</div>
+					<?php } if (array_sum($jumlah_safety_shoes) < 138) { ?>
+						<div class="alert bg-warning" role="alert"><em class="fa fa-lg fa-warning">&nbsp;</em> Jumlah stock untuk safety shoes mulai menipis.</div>
+					<?php } if (array_sum($jumlah_pelindung_telinga) < 39) { ?>
+						<div class="alert bg-warning" role="alert"><em class="fa fa-lg fa-warning">&nbsp;</em> Jumlah stock untuk pelindung telinga mulai menipis.</div>
+					<?php } ?>
+			</div>
+		</div><!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
 				<div class="panel panel-info chat">
 					<div class="panel-heading">
 						Data APD
@@ -118,17 +159,10 @@ if($_SESSION['status'] !="login admin"){
 											<td style="text-align: center; vertical-align: middle;">
 												<div class="easypiechart-panel" style="background-color: #f5f5f5; margin: 15px;">
 
-													<h4><?php echo $data['id_apd']; ?></h4>
+													<h5><?php echo $data['nama_apd']; ?></h5>
 													<img style="width: 40px; margin: 10px 60px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
 													<strong>
-														<p style="text-align: center; margin-bottom: 50px; font-size: 30px;
-														<?php if($data['id_apd']=='H001' && $data['jumlah_stock'] < 36){ ?>
-															color: #FF0000;
-														<?php } ?>
-
-
-
-														"><?php echo $data['jumlah_stock']; ?>
+														<p style="text-align: center; margin-bottom: 50px; font-size: 30px;"><?php echo $data['jumlah_stock']; ?>
 														</p>
 													</strong>
 												</div> 

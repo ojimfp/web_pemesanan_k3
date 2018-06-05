@@ -149,7 +149,7 @@ if($_SESSION['status'] !="login admin"){
 					</tr>
 
 					<?php
-					$peminjaman = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, peminjaman.tgl_pinjam, peminjaman.tgl_kembali, peminjaman.status_peminjaman FROM karyawan JOIN peminjaman WHERE karyawan.nip = peminjaman.nip_karyawan group by peminjaman.tgl_pinjam asc, peminjaman.nip_karyawan ORDER BY peminjaman.status_peminjaman");
+					$peminjaman = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, peminjaman.tgl_pinjam, peminjaman.tgl_kembali, peminjaman.status_peminjaman, peminjaman.tgl_aktual_kembali FROM karyawan JOIN peminjaman WHERE karyawan.nip = peminjaman.nip_karyawan group by peminjaman.nip_karyawan, peminjaman.tgl_pinjam desc");
 
 					while($row = mysqli_fetch_array($peminjaman)){ ?>					
 
@@ -164,6 +164,7 @@ if($_SESSION['status'] !="login admin"){
 								<input type="hidden" name="tgl_kembali" value="<?php echo $row['tgl_kembali']; ?>">
 								<input type="hidden" name="status_peminjaman" value="<?php echo $row['status_peminjaman']; ?>">
 								<input type="hidden" name="nama" value="<?php echo $row['nama_karyawan']; ?>">
+								<input type="hidden" name="tgl_aktual" value="<?php echo $row['tgl_aktual_kembali']; ?>">
 
 								<?php if ($row['status_peminjaman'] == 'Belum Disetujui') { ?>
 									<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Belum Disetujui</button></a>

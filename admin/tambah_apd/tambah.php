@@ -31,9 +31,17 @@ if (isset($_POST['submit'])) {
 			$id_pengadaan = mysqli_fetch_array($qry_id_pengadaan);
 			$id_p = $id_pengadaan['id_pengadaan'];
 			$tambah = mysqli_query($conn, "INSERT INTO apd (id_apd, nama_apd, gambar_apd) VALUES ('$id', '$nama', '$basename')");
-			mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,id_pengadaan) VALUES ('$id',0,'$id_p')");
-			echo "<script>alert('Data berhasil ditambah.')</script>";
-			echo "<script>location.href='../tambah_apd';</script>";
+
+				if ($tambah) {
+					mysqli_query($conn, "INSERT INTO stock(id_apd,jumlah_stock,id_pengadaan) VALUES ('$id',0,'$id_p')");
+					echo "<script>alert('Data berhasil ditambah.')</script>";
+					echo "<script>location.href='../tambah_apd';</script>";
+				} else{
+					echo "<script>alert('Data gagal ditambah. ID apd sudah ada dalam database.')</script>";
+					echo "<script>location.href='../tambah_apd';</script>";
+				}
+
+			
 			// echo "File is an image - " . $check["mime"] . ".";
 		} else {
 			echo "<script>alert('Data gagal ditambah, ulangi lagi.')</script>";

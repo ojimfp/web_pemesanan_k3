@@ -120,7 +120,7 @@ if($_SESSION['status'] !="login admin"){
       ?>
       <form method="POST" action="doupdate.php">
         <div class="form-group">
-          <label>NIP Karyawan</label>
+          <label>Kode User</label>
           <input class="form-control" type="text" name="nip" value="<?php echo $data['nip']; ?>" readonly='readonly'>
         </div>
         <div class="form-group">

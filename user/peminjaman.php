@@ -101,8 +101,8 @@ if($_SESSION['status'] !="login".$nip.""){
                         <div style="margin: 5px;">
                           <img style="width: 90px; margin: 20px 40px 10px;" src="<?php echo $base.'assets/img/'.$data['gambar_apd']; ?>">
                           <strong><p style="text-align: center;"><?php echo $data['nama_apd'].' - '. $data['id_apd']; ?></p></strong>
-                          <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah peminjaman" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
                           <input class="form-control" type="checkbox" name="id_apd[]" value="<?php echo $data['id_apd']; ?>" id="<?php echo $data['id_apd'].'id'; ?>" onclick="<?php echo $data['id_apd'].'()'; ?>">
+                          <input class="form-control" type="number" name="jumlah[]" placeholder="jumlah peminjaman" id="<?php echo $data['id_apd'].'num'; ?>" min="1" style="display:none">
                         </div> 
                         <script> 
                           function <?php echo $data['id_apd'].'()'; ?> {

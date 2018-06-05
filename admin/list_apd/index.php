@@ -145,7 +145,7 @@ if($_SESSION['status'] !="login admin"){
 						<th>Nama</th>
 						<th>Gambar</th>
 						<th>Stok</th>
-						<!-- <th>Opsi</th> -->
+						<th>Opsi</th>
 					</tr>
 					<?php
 					$read_data = mysqli_query($conn, "SELECT apd.id_apd, apd.nama_apd, apd.gambar_apd, stock.jumlah_stock FROM apd LEFT JOIN stock ON apd.id_apd=stock.id_apd WHERE apd.id_apd = stock.jumlah_stock IS NULL OR stock.id_pengadaan = (SELECT id_pengadaan FROM stock ORDER BY id_pengadaan DESC LIMIT 1)") or die(mysqli_error());
@@ -157,12 +157,12 @@ if($_SESSION['status'] !="login admin"){
 						<td class="td-read"><?php echo "<img src='../../assets/img/".$data['gambar_apd']."'
 						height='auto' width='100px'>";?></td>
 						<td class="td-read"><?php echo $data['jumlah_stock']; ?></td>
-						<!-- <td>
-							<form method="POST" action="edit.php">
+						<td>
+							<form method="POST" action="index.php">
 								<input type="hidden" name="nip" value="<?php echo $data['id_apd']; ?>">
-								<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Edit</button></a>
+								<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Hapus APD</button></a>
 							</form>
-						</td> -->
+						</td>
 					</tr>
 					<?php } ?>
 				</table>
@@ -190,6 +190,15 @@ if($_SESSION['status'] !="login admin"){
 		});
 	};
 </script>
+
+<?php 
+	if (isset($_POST['nip'])) {
+		$idhapus = $_POST['nip'];
+		mysqli_query($conn, "DELETE FROM stock WHERE id_apd='$idhapus'");
+		mysqli_query($conn, "DELETE FROM apd WHERE id_apd='$idhapus'");
+		echo "<script>location.href='index.php';</script>";
+	}
+?>
 
 </body>
 </html>

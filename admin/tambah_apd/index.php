@@ -151,7 +151,7 @@ if($_SESSION['status'] !="login admin"){
 								<form method="post" action="tambah.php" enctype="multipart/form-data">
 									<div class="form-group">
 										<label>ID APD</label>
-										<input class="form-control" type="text" name="id" required="">
+										<input class="form-control" type="text" name="id" required="" placeholder="ex: H001 untuk Helmet">
 									</div>
 									<div class="form-group">
 										<label>Nama APD</label>
