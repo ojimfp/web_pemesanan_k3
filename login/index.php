@@ -28,9 +28,6 @@
     <label>Password</label>
   </div>
   <input type="submit" name="" class="button buttonBlue" value="Login">
-  <!-- <button type="submit" class="button buttonBlue">Login
-    <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
-  </button> -->
 </form>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 

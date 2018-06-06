@@ -8,8 +8,6 @@ $email = $_POST['email'];
 $tgl_lahir = $_POST['tgl_lahir'];
 $alamat = $_POST['alamat'];
 
-// var_dump($nip);
-
 $update = "UPDATE karyawan
 	SET nama_karyawan = '$nama',
 	email = '$email',

@@ -188,18 +188,6 @@ if($_SESSION['status'] !="login admin"){
 		<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
 		<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
 		<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
-<!-- <script>
-	window.onload = function () {
-		var chart1 = document.getElementById("line-chart").getContext("2d");
-		window.myLine = new Chart(chart1).Line(lineChartData, {
-			responsive: true,
-			scaleLineColor: "rgba(0,0,0,.2)",
-			scaleGridLineColor: "rgba(0,0,0,.05)",
-			scaleFontColor: "#c5c7cc"
-		});
-	};
-</script> -->
-
 <?php
 
 if (isset($_POST['submit'])) {
@@ -223,20 +211,12 @@ if ($j == "Karyawan Umum") {
 		if (mysqli_query($conn, "INSERT INTO karyawan (nip, password, nama_karyawan, jenis_kelamin, tgl_lahir, alamat, email, jabatan)
 			VALUES ('$nip_password', '$nip_password' ,'$nama', '$jeniskelamin', '$tgllahir', '$alamat', '$email', '$jabatan')")) 
 		{
-			// echo "
-			// <script>alert('Data berhasil ditambahkan.. \\n\\nNIP : $nip_password \\nPassword : $nip_password')
-			// </script>";
-			// echo "<script>location.href='../tambah_pekerja';</script>";
-
 			echo "<script type='text/javascript'>
 			$(window).on('load',function(){
 				$('#success').modal('show');
 				});
 				</script>";
-
 		} else {
-			// echo "<script>alert('Data gagal ditambah..')</script>";
-			// echo "<script>location.href='../tambah_pekerja';</script>";
 			echo "<script type='text/javascript'>
 			$(window).on('load',function(){
 				$('#failed').modal('show');
@@ -258,10 +238,6 @@ if ($j == "Karyawan Umum") {
 		if (mysqli_query($conn, "INSERT INTO karyawan (nip, password, nama_karyawan, jenis_kelamin, tgl_lahir, alamat, email, jabatan)
 			VALUES ('$nip_password', '$nip_password' ,'$nama', '$jeniskelamin', '$tgllahir', '$alamat', '$email', '$jabatan')")) 
 		{
-			// echo "
-			// <script>alert('Data berhasil ditambahkan.. \\n\\nNIP : $nip_password \\nPassword : $nip_password')
-			// </script>";
-			// echo "<script>location.href='../tambah_pekerja';</script>";
 
 			echo "<script type='text/javascript'>
 			$(window).on('load',function(){
@@ -269,9 +245,6 @@ if ($j == "Karyawan Umum") {
 				});
 				</script>";
 		} else {
-			// echo "<script>alert('Data gagal ditambah..')</script>";
-			// echo "<script>location.href='../tambah_pekerja';</script>";
-
 			echo "<script type='text/javascript'>
 			$(window).on('load',function(){
 				$('#failed').modal('show');
@@ -280,7 +253,6 @@ if ($j == "Karyawan Umum") {
 		}
 
 	}
-
 }
 }
 

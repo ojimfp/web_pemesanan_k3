@@ -141,13 +141,6 @@ if($_SESSION['status'] !="login admin"){
 											<label>Lead Time (bulan)</label>
 											<input class="form-control" type="text" name="lead_time" id="lead_time" onkeyup="rop()" required="" onkeypress="return isNumberKey(event)">
 										</div>
-										<!-- <br>
-										<br>
-										<div class="button-submit">
-											<input style="width: 100%; " class="btn btn-md btn-primary" type="submit" name="hitung" value="HITUNG">
-										</div>
-										<br>
-										<br> -->
 									</div>
 								</div>
 							</div>
@@ -226,17 +219,7 @@ if($_SESSION['status'] !="login admin"){
 		<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
 		<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
 		<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
-<!-- <script>
-	window.onload = function () {
-		var chart1 = document.getElementById("line-chart").getContext("2d");
-		window.myLine = new Chart(chart1).Line(lineChartData, {
-			responsive: true,
-			scaleLineColor: "rgba(0,0,0,.2)",
-			scaleGridLineColor: "rgba(0,0,0,.05)",
-			scaleFontColor: "#c5c7cc"
-		});
-	};
-</script> -->
+
 <script type="text/javascript">
 	function isNumberKey(evt){
 		var charCode = (evt.which) ? evt.which : event.keyCode

@@ -147,9 +147,6 @@ if($_SESSION['status'] !="login admin"){
 												<input class="form-control" type="text" name="tgl_kembali" disabled="" value="<?php echo $tgl_kembali; ?>">
 											</div>
 											<?php 
-
-												// $data = mysqli_query($conn, "SELECT tgl_aktual_kembali FROM peminjaman WHERE tgl_pinjam='$tgl_pinjam' AND $tgl");
-
 												if ($status_peminjaman == 'Sudah Dikembalikan') { ?>
 													<div class="form-group" style="text-align: left;">
 														<label>Tanggal Aktual Pengembalian</label>

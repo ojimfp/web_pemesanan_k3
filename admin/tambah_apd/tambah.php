@@ -8,10 +8,6 @@ $nama = $_POST['nama'];
 $target = "../../assets/img/";
 $gambar = pathinfo($_FILES['gambar']['name'], PATHINFO_FILENAME);
 $extension = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
-
-// var_dump($gambar);
-// var_dump($extension);
-
 if (isset($_POST['submit'])) {
 	
 	$check = getimagesize($_FILES["gambar"]["tmp_name"]);
@@ -40,9 +36,6 @@ if (isset($_POST['submit'])) {
 					echo "<script>alert('Data gagal ditambah. ID apd sudah ada dalam database.')</script>";
 					echo "<script>location.href='../tambah_apd';</script>";
 				}
-
-			
-			// echo "File is an image - " . $check["mime"] . ".";
 		} else {
 			echo "<script>alert('Data gagal ditambah, ulangi lagi.')</script>";
 			echo "<script>location.href='../tambah_apd';</script>";

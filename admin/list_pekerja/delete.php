@@ -4,8 +4,6 @@ include '../../config.php';
 
 $nip = $_POST['nip'];
 
-// var_dump($nip);
-
 $delete = "DELETE FROM karyawan WHERE nip='$nip'";
 
 if (mysqli_query($conn, $delete)) {

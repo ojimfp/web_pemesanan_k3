@@ -104,8 +104,6 @@ if($_SESSION['status'] !="login admin"){
 			<div class="col-lg-12">
 
 				<?php
-					// $rop = mysqli_query($connn, "SELECT jenis_apd, rop FROM hasil ORDER BY tgl_hitung asc");
-
 					$warning = mysqli_query($conn, "SELECT apd.id_apd, apd.nama_apd, apd.gambar_apd, stock.jumlah_stock FROM apd LEFT JOIN stock ON apd.id_apd=stock.id_apd WHERE apd.id_apd = stock.jumlah_stock IS NULL OR stock.id_pengadaan = (SELECT id_pengadaan FROM stock ORDER BY id_pengadaan DESC LIMIT 1)") or die(mysqli_error());
 
 					while ($wr = mysqli_fetch_array($warning)) {
