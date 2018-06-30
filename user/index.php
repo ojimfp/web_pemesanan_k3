@@ -171,7 +171,7 @@ if($_SESSION['status'] !="login".$nip.""){
 
                   <?php 
                   $status_belum_disetujui = mysqli_query($conn, "SELECT status_permintaan FROM permintaan WHERE nip_karyawan='$nip' and status_permintaan='Belum Disetujui'") or die(mysqli_error()); 
-                  $notif = mysqli_query($conn, "SELECT notif FROM permintaan WHERE nip_karyawan='$nip' ORDER BY tanggal_permintaan ASC LIMIT 1") or die(mysqli_error()); 
+                  $notif = mysqli_query($conn, "SELECT notif FROM permintaan WHERE nip_karyawan='$nip' ORDER BY tanggal_permintaan DESC LIMIT 1") or die(mysqli_error()); 
                   $bs = mysqli_fetch_array($status_belum_disetujui);
                   $t = mysqli_fetch_array($notif);
 
