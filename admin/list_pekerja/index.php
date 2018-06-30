@@ -37,7 +37,7 @@ if($_SESSION['status'] !="login admin"){
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-					<a class="navbar-brand" href="<?php echo $base; ?>admin"><span>PG Kebon Agung</span></a>
+					<a class="navbar-brand" href="<?php echo $base; ?>admin"><span>Perusahaan Gula</span></a>
 					<ul class="nav navbar-top-links navbar-right">						
 					</ul>
 				</div>
