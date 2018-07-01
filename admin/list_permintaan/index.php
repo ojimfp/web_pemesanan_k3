@@ -151,12 +151,12 @@ if($_SESSION['status'] !="login admin"){
 								<?php if ($row['status_permintaan'] == 'Belum Disetujui') { ?>
 									<a><button style="margin: 7px;" class="btn btn-sm btn-primary">Detail</button></a>
 								<?php }elseif ($row['status_permintaan'] == 'Disetujui') { ?>
-									<a><button style="margin: 7px;" class="btn btn-sm btn-success">Sudah Disetujui</button></a>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-warning">APD Belum Diberikan</button></a>
 								<?php } elseif ($row['status_permintaan'] == 'Ditolak') { ?>
 									<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Ditolak</button></a>
- 									
+								<?php } elseif ($row['status_permintaan'] == 'Sudah Diterima') { ?>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-success" disabled="">APD Telah Diterima</button></a>
 								<?php } ?>
-
 								
 								
 							</td>

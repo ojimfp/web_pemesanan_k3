@@ -171,8 +171,12 @@ if($_SESSION['status'] !="login admin"){
 										<input type="hidden" name="tanggal" value="<?php echo $tanggal ?>">
 										<a><button type="submit" name="setujui" style="margin: 7px; width: 200px;" class="btn btn-md btn-success">Setujui</button></a>
 									</form>
-									<?php } else { ?>
-
+									<?php } elseif($stts == 'Disetujui') { ?>
+										<form class="col-lg-12" method="POST" action="detail.php" style="text-align: right;">
+											<input type="hidden" name="nip" value="<?php echo $nip ?>">
+											<input type="hidden" name="tanggal" value="<?php echo $tanggal ?>">
+											<a><button type="submit" name="berikan" style="margin: 7px; width: 200px;" class="btn btn-md btn-warning">Berikan APD</button></a>
+										</form>
 									<?php } ?>
 									
 
@@ -233,14 +237,29 @@ if($_SESSION['status'] !="login admin"){
 					});
 					</script>";
 			} else {
-				mysqli_query($conn, "UPDATE stock SET jumlah_stock='$stock_update[$i]' WHERE id_apd='$id_apd[$i]'");
+				// mysqli_query($conn, "UPDATE stock SET jumlah_stock='$stock_update[$i]' WHERE id_apd='$id_apd[$i]'");
 				mysqli_query($conn, "UPDATE permintaan SET status_permintaan='Disetujui', notif='Disetujui' WHERE nip_karyawan = '$nip' and tanggal_permintaan='$tanggal'");
 				echo "<script>location.href='index.php';</script>";
-			}	
+			}
 		}
 	} elseif (isset($_POST['tolak'])) {
 		mysqli_query($conn, "UPDATE permintaan SET status_permintaan='Ditolak', notif='Ditolak' WHERE nip_karyawan = '$nip' and tanggal_permintaan='$tanggal'");
 		echo "<script>location.href='index.php';</script>";
+	} elseif (isset($_POST['berikan'])) {
+		for ($i=0; $i < count($stock_update); $i++) { 
+
+			// if ($stock_update[$i] < 0) {
+			// 	echo "<script type='text/javascript'>
+			// 	$(window).on('load',function(){
+			// 		$('#gagal').modal('show');
+			// 		});
+			// 		</script>";
+			// } else {
+				mysqli_query($conn, "UPDATE stock SET jumlah_stock='$stock_update[$i]' WHERE id_apd='$id_apd[$i]'"); }
+				mysqli_query($conn, "UPDATE permintaan SET status_permintaan='Sudah Diterima', notif='Sudah Diterima' WHERE nip_karyawan = '$nip' and tanggal_permintaan='$tanggal'");
+				echo "<script>location.href='index.php';</script>";
+			// }
+		// }
 	}
 
 	?>
