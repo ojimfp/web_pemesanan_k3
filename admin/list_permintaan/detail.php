@@ -214,17 +214,6 @@ if($_SESSION['status'] !="login admin"){
 	<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
 	<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
 	<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
-	<script>
-		window.onload = function () {
-			var chart1 = document.getElementById("line-chart").getContext("2d");
-			window.myLine = new Chart(chart1).Line(lineChartData, {
-				responsive: true,
-				scaleLineColor: "rgba(0,0,0,.2)",
-				scaleGridLineColor: "rgba(0,0,0,.05)",
-				scaleFontColor: "#c5c7cc"
-			});
-		};
-	</script>
 
 	<?php 
 	$date = date('d-m-Y');

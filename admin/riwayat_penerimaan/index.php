@@ -106,6 +106,33 @@ if($_SESSION['status'] !="login admin"){
 				<h1 class="page-header">Penerimaan APD</h1>
 			</div>
 		</div><!--/.row-->
+		<div class="row" style="text-align: center;">
+			<form method="POST" action="index.php">
+			<div class="col-lg-12">
+				<h4>Beri notifikasi kepada karyawan untuk melakukan penerimaan:</h4>				
+			</div>
+			<div class="col-lg-2">
+				<a><button type="submit" name="safetyShoes" class="btn btn-md btn-info">Safety Shoes</button></a>
+			</div>
+			<div class="col-lg-2">
+				<a><button type="submit" name="bajuKerja" class="btn btn-md btn-info">Baju Kerja</button></a>
+			</div>
+			<div class="col-lg-2">
+				<a><button type="submit" name="pelindungTangan" class="btn btn-md btn-info">Pelindung Tangan</button></a>
+			</div>
+			<div class="col-lg-2">
+				
+					<a><button type="submit" name="safetyHelmet" class="btn btn-md btn-info">Safety Helmet</button></a>
+				
+			</div>
+			<div class="col-lg-2">
+				<a><button type="submit" name="masker" class="btn btn-md btn-info">Masker</button></a>
+			</div>
+			<div class="col-lg-2">
+				<a><button type="submit" name="pelindungTelinga" class="btn btn-md btn-info">Pelindung Telinga</button></a>
+			</div>
+			</form>
+		</div><br><br>
 
 		<div class="row">
 			<div class="col-lg-12">
@@ -142,6 +169,22 @@ if($_SESSION['status'] !="login admin"){
 		</div>
 	</div>
 
+	<div class="modal fade" tabindex="-1" role="dialog" id="success">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title alert alert-success">INFORMASI!</h4>
+				</div>
+				<div class="modal-body">
+					<p>Pemberitahuan terkirim kepada karyawan.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 	<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
 	<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
 	<script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
@@ -150,6 +193,54 @@ if($_SESSION['status'] !="login admin"){
 	<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
 	<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
 	<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
+
+<?php
+
+	if (isset($_POST['safetyHelmet'])) {
+		mysqli_query($conn, "UPDATE karyawan SET status_penerimaan='Safety Helmet'");
+		echo "<script type='text/javascript'>
+				$(window).on('load',function(){
+					$('#success').modal('show');
+					});
+					</script>";
+	} elseif (isset($_POST['safetyShoes'])) {
+		mysqli_query($conn, "UPDATE karyawan SET status_penerimaan='Safety Shoes'");
+		echo "<script type='text/javascript'>
+				$(window).on('load',function(){
+					$('#success').modal('show');
+					});
+					</script>";
+	} elseif (isset($_POST['bajuKerja'])) {
+		mysqli_query($conn, "UPDATE karyawan SET status_penerimaan='Baju Kerja' WHERE SUBSTRING(nip,1,2)=52");
+		echo "<script type='text/javascript'>
+				$(window).on('load',function(){
+					$('#success').modal('show');
+					});
+					</script>";
+	} elseif (isset($_POST['pelindungTelinga'])) {
+		mysqli_query($conn, "UPDATE karyawan SET status_penerimaan='Pelindung Telinga' WHERE SUBSTRING(nip,1,2)=52");
+		echo "<script type='text/javascript'>
+				$(window).on('load',function(){
+					$('#success').modal('show');
+					});
+					</script>";
+	} elseif (isset($_POST['pelindungTangan'])) {
+		mysqli_query($conn, "UPDATE karyawan SET status_penerimaan='Pelindung Tangan' WHERE SUBSTRING(nip,1,2)=52");
+		echo "<script type='text/javascript'>
+				$(window).on('load',function(){
+					$('#success').modal('show');
+					});
+					</script>";
+	} elseif (isset($_POST['masker'])) {
+		mysqli_query($conn, "UPDATE karyawan SET status_penerimaan='Masker' WHERE SUBSTRING(nip,1,2)=52");
+		echo "<script type='text/javascript'>
+				$(window).on('load',function(){
+					$('#success').modal('show');
+					});
+					</script>";
+	}
+
+?>
 
 </body>
 </html>

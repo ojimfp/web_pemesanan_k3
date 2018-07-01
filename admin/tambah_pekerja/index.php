@@ -209,8 +209,8 @@ if ($j == "Karyawan Umum") {
 
 		$nip_password = $data['MAX(nip)'] + 1;
 
-		if (mysqli_query($conn, "INSERT INTO karyawan (nip, password, nama_karyawan, jenis_kelamin, tgl_lahir, alamat, email, jabatan)
-			VALUES ('$nip_password', '$nip_password' ,'$nama', '$jeniskelamin', '$tgllahir', '$alamat', '$email', '$jabatan')")) 
+		if (mysqli_query($conn, "INSERT INTO karyawan (nip, password, nama_karyawan, jenis_kelamin, tgl_lahir, alamat, email, jabatan, status_penerimaan)
+			VALUES ('$nip_password', '$nip_password' ,'$nama', '$jeniskelamin', '$tgllahir', '$alamat', '$email', '$jabatan', '-')")) 
 		{
 			echo "<script type='text/javascript'>
 			$(window).on('load',function(){
@@ -236,8 +236,8 @@ if ($j == "Karyawan Umum") {
 
 		$nip_password = $data['MAX(nip)'] + 1;
 
-		if (mysqli_query($conn, "INSERT INTO karyawan (nip, password, nama_karyawan, jenis_kelamin, tgl_lahir, alamat, email, jabatan)
-			VALUES ('$nip_password', '$nip_password' ,'$nama', '$jeniskelamin', '$tgllahir', '$alamat', '$email', '$jabatan')")) 
+		if (mysqli_query($conn, "INSERT INTO karyawan (nip, password, nama_karyawan, jenis_kelamin, tgl_lahir, alamat, email, jabatan, status_penerimaan)
+			VALUES ('$nip_password', '$nip_password' ,'$nama', '$jeniskelamin', '$tgllahir', '$alamat', '$email', '$jabatan', '-')")) 
 		{
 
 			echo "<script type='text/javascript'>

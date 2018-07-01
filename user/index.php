@@ -171,7 +171,9 @@ if($_SESSION['status'] !="login".$nip.""){
 
                   <?php 
                   $status_belum_disetujui = mysqli_query($conn, "SELECT status_permintaan FROM permintaan WHERE nip_karyawan='$nip' and status_permintaan='Belum Disetujui'") or die(mysqli_error()); 
-                  $notif = mysqli_query($conn, "SELECT notif FROM permintaan WHERE nip_karyawan='$nip' ORDER BY tanggal_permintaan DESC LIMIT 1") or die(mysqli_error()); 
+                  $notif = mysqli_query($conn, "SELECT notif FROM permintaan WHERE nip_karyawan='$nip' ORDER BY tanggal_permintaan DESC LIMIT 1") or die(mysqli_error());
+                  $stp = mysqli_query($conn, "SELECT status_penerimaan FROM karyawan WHERE nip='$nip'") or die(mysqli_error());
+                  $np = mysqli_fetch_array($stp);
                   $bs = mysqli_fetch_array($status_belum_disetujui);
                   $t = mysqli_fetch_array($notif);
 
@@ -293,6 +295,22 @@ if($_SESSION['status'] !="login".$nip.""){
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
+  <div class="modal fade" tabindex="-1" role="dialog" id="penerimaan">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title alert alert-info">INFORMASI!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Silakan melakukan permintaan <?php echo $np['status_penerimaan']; ?> melalui website, kemudian datang ke gudang untuk mengambil APD.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
   <script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
   <script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
   <script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
@@ -391,6 +409,17 @@ if ($t['notif'] == 'Disetujui') {
 
   mysqli_query($conn, "UPDATE permintaan SET notif= '-' WHERE nip_karyawan='$nip'") or die(mysqli_error());
 }
+
+if ($np['status_penerimaan'] != '-') {
+  echo "<script type='text/javascript'>
+  $(window).on('load',function(){
+    $('#penerimaan').modal('show');
+    });
+    </script>";
+
+  mysqli_query($conn, "UPDATE karyawan SET status_penerimaan= '-' WHERE nip='$nip'") or die(mysqli_error());
+}
+
 ?>
 
 </body>
