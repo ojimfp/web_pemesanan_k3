@@ -61,6 +61,7 @@ if($_SESSION['status'] !="login admin"){
 					<a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> Permintaan APD</a>
 				<?php } ?>
 			</li>
+			<li><a href="../riwayat_penerimaan"><em class="fa fa-envelope-open">&nbsp;</em> Penerimaan</a></li>
 			<li>
 				<?php 
 				$notif_minta_apd = mysqli_query($conn, "SELECT status_peminjaman FROM peminjaman WHERE status_peminjaman='Belum Disetujui'") or die(mysqli_error());

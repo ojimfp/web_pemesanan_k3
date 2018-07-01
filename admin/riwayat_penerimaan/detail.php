@@ -5,6 +5,13 @@ include '../../config.php';
 
 session_start();
 
+$nip = $_POST['nip'];
+$tanggal = $_POST['tanggal'];
+	if (isset($_POST['nama'])) {
+		$nama = $_POST['nama'];
+	} else {
+		$nama = ' ';
+	}
 // cek apakah user telah login, jika belum login maka di alihkan ke halaman login
 if($_SESSION['status'] !="login admin"){
 	header("location:". $base."login");
@@ -20,7 +27,7 @@ if($_SESSION['status'] !="login admin"){
 	<link href="<?php echo $base; ?>assets/admin/css/font-awesome.min.css" rel="stylesheet">
 	<link href="<?php echo $base; ?>assets/admin/css/datepicker3.css" rel="stylesheet">
 	<link href="<?php echo $base; ?>assets/admin/css/styles.css" rel="stylesheet">
-
+	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -37,7 +44,7 @@ if($_SESSION['status'] !="login admin"){
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
 					<a class="navbar-brand" href="<?php echo $base; ?>admin"><span>Perusahaan Gula</span></a>
-					<ul class="nav navbar-top-links navbar-right">							
+					<ul class="nav navbar-top-links navbar-right">
 					</ul>
 				</div>
 			</div><!-- /.container-fluid -->
@@ -48,7 +55,7 @@ if($_SESSION['status'] !="login admin"){
 			<li><a href="../tambah_pekerja"><em class="fa fa-user-plus">&nbsp;</em> Tambah Pekerja</a></li>
 			<li><a href="../list_pekerja"><em class="fa fa-users">&nbsp;</em> List Pekerja</a></li>
 			<li><a href="../tambah_apd"><em class="fa fa-clone">&nbsp;</em> Tambah Jenis APD</a></li>
-			<li class="active"><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
+			<li><a href="../list_apd"><em class="fa fa-database">&nbsp;</em> List Data APD</a></li>
 			<li>
 				<?php 
 				$notif_minta_apd = mysqli_query($conn, "SELECT status_permintaan FROM permintaan WHERE status_permintaan='Belum Disetujui'") or die(mysqli_error());
@@ -60,7 +67,7 @@ if($_SESSION['status'] !="login admin"){
 					<a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> Permintaan APD</a>
 				<?php } ?>
 			</li>
-			<li><a href="../riwayat_penerimaan"><em class="fa fa-envelope-open">&nbsp;</em> Penerimaan</a></li>
+			<li class="active"><a href="../riwayat_penerimaan"><em class="fa fa-envelope-open">&nbsp;</em> Penerimaan</a></li>
 			<li>
 				<?php 
 				$notif_minta_apd = mysqli_query($conn, "SELECT status_peminjaman FROM peminjaman WHERE status_peminjaman='Belum Disetujui'") or die(mysqli_error());
@@ -97,78 +104,91 @@ if($_SESSION['status'] !="login admin"){
 				<li><a href="#">
 					<em class="fa fa-home"></em>
 				</a></li>
-				<li class="active">Data Alat Pelindung Diri</li>
+				<li class="active">Permintaan Alat Pelindung Diri</li>
 			</ol>
 		</div><!--/.row-->
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Data Alat Pelindung Diri</h1>
+				<h1 class="page-header">Permintaan APD</h1>
 			</div>
 		</div><!--/.row-->
 
 		<div class="row">
 			<div class="col-lg-12">
-				<table class="table-read" border="2">
-					<tr>
-						<th>ID</th>
-						<th>Nama</th>
-						<th>Gambar</th>
-						<th>Stok</th>
-						<th>Opsi</th>
-					</tr>
-					<?php
-					$read_data = mysqli_query($conn, "SELECT apd.id_apd, apd.nama_apd, apd.gambar_apd, stock.jumlah_stock FROM apd LEFT JOIN stock ON apd.id_apd=stock.id_apd WHERE apd.id_apd = stock.jumlah_stock IS NULL OR stock.id_pengadaan = (SELECT id_pengadaan FROM stock ORDER BY id_pengadaan DESC LIMIT 1)") or die(mysqli_error());
-					while ($data = mysqli_fetch_array($read_data)) {
-					?>
-					<tr>
-						<td class="td-read"><?php echo $data['id_apd']; ?></td>
-						<td class="td-read"><?php echo $data['nama_apd']; ?></td>
-						<td class="td-read"><?php echo "<img src='../../assets/img/".$data['gambar_apd']."'
-						height='auto' width='100px'>";?></td>
-						<td class="td-read"><?php echo $data['jumlah_stock']; ?></td>
-						<td>
-							<form method="POST" action="index.php">
-								<input type="hidden" name="nip" value="<?php echo $data['id_apd']; ?>">
-								<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Hapus APD</button></a>
-							</form>
-						</td>
-					</tr>
-					<?php } ?>
-				</table>
+				<div class="container col-lg-12">
+					<div class="list-group">
+						<div class="row">
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<strong>
+										Detail Permintaan
+									</strong>
+								</div>
+								<div class="panel-body">
+									<div class="col-lg-12">
+										<form method="post" action="" enctype="multipart/form-data">
+											<div class="form-group">
+												<label>Nama Karyawan</label>
+												<input class="form-control" type="text" name="id" disabled="" value="<?php echo $nama; ?>">
+											</div>
+											<div class="form-group">
+												<label>Tanggal Penerimaan</label>
+												<input class="form-control" type="text" name="nama" disabled="" value="<?php echo $tanggal; ?>">
+											</div>
+										</form>
+
+										<table class="table-read" border="2">
+											<tr>
+												<th>Jenis APD</th>
+												<th>Jumlah</th>
+											</tr>
+
+											<?php
+
+											$data = mysqli_query($conn, "SELECT nama_apd, penerimaan.id_apd, total_penerimaan FROM penerimaan JOIN apd ON penerimaan.id_apd = apd.id_apd WHERE nip_karyawan='$nip' AND tanggal_penerimaan='$tanggal'");
+
+											while ($row = mysqli_fetch_array($data)) { ?>
+												<tr>
+													<form>
+														<td class="td-read"><?php echo $row['nama_apd'].' - '.$row['id_apd']; ?></td>
+														<td class="td-read"><?php echo $row['total_penerimaan']; ?></td>
+													</form>
+												</tr>
+											<?php } ?>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
-	</div><!--/.row-->
+		<div class="modal fade" tabindex="-1" role="dialog" id="gagal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title alert alert-danger">GAGAL!</h4>
+					</div>
+					<div class="modal-body">
+						<p>Stok tidak mencukupi..</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 
-<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/chart-data.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/easypiechart.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
-<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
-<script>
-	window.onload = function () {
-		var chart1 = document.getElementById("line-chart").getContext("2d");
-		window.myLine = new Chart(chart1).Line(lineChartData, {
-			responsive: true,
-			scaleLineColor: "rgba(0,0,0,.2)",
-			scaleGridLineColor: "rgba(0,0,0,.05)",
-			scaleFontColor: "#c5c7cc"
-		});
-	};
-</script>
-
-<?php 
-	if (isset($_POST['nip'])) {
-		$idhapus = $_POST['nip'];
-		mysqli_query($conn, "DELETE FROM stock WHERE id_apd='$idhapus'");
-		mysqli_query($conn, "DELETE FROM apd WHERE id_apd='$idhapus'");
-		echo "<script>location.href='index.php';</script>";
-	}
-?>
-
+	<script src="<?php echo $base; ?>assets/admin/js/jquery-1.11.1.min.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/bootstrap.min.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/chart.min.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/chart-data.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/easypiechart.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/easypiechart-data.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/bootstrap-datepicker.js"></script>
+	<script src="<?php echo $base; ?>assets/admin/js/custom.js"></script>
 </body>
 </html>

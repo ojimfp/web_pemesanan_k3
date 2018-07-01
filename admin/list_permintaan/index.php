@@ -60,6 +60,7 @@ if($_SESSION['status'] !="login admin"){
 					<a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> Permintaan APD</a>
 				<?php } ?>
 			</li>
+			<li><a href="../riwayat_penerimaan"><em class="fa fa-envelope-open">&nbsp;</em> Penerimaan</a></li>
 			<li>
 				<?php 
 				$notif_minta_apd = mysqli_query($conn, "SELECT status_peminjaman FROM peminjaman WHERE status_peminjaman='Belum Disetujui'") or die(mysqli_error());
@@ -132,7 +133,7 @@ if($_SESSION['status'] !="login admin"){
 					</tr>
 
 					<?php
-					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, permintaan.tanggal_permintaan, permintaan.status_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by permintaan.nip_karyawan, permintaan.tanggal_permintaan desc");
+					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, permintaan.tanggal_permintaan, permintaan.status_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by permintaan.tanggal_permintaan desc, permintaan.nip_karyawan");
 
 					$storeArrayTanggal = Array();
 					$storeArrayNama = Array();
@@ -155,7 +156,7 @@ if($_SESSION['status'] !="login admin"){
 								<?php } elseif ($row['status_permintaan'] == 'Ditolak') { ?>
 									<a><button style="margin: 7px;" class="btn btn-sm btn-danger">Ditolak</button></a>
 								<?php } elseif ($row['status_permintaan'] == 'Sudah Diterima') { ?>
-									<a><button style="margin: 7px;" class="btn btn-sm btn-success" disabled="">APD Telah Diterima</button></a>
+									<a><button style="margin: 7px;" class="btn btn-sm btn-success" disabled="">APD Telah Diberikan</button></a>
 								<?php } ?>
 								
 								

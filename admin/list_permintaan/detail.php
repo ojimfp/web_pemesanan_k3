@@ -67,6 +67,7 @@ if($_SESSION['status'] !="login admin"){
 					<a href="../list_permintaan"><em class="fa fa-envelope-open">&nbsp;</em> Permintaan APD</a>
 				<?php } ?>
 			</li>
+			<li><a href="../riwayat_penerimaan"><em class="fa fa-envelope-open">&nbsp;</em> Penerimaan</a></li>
 			<li>
 				<?php 
 				$notif_minta_apd = mysqli_query($conn, "SELECT status_peminjaman FROM peminjaman WHERE status_peminjaman='Belum Disetujui'") or die(mysqli_error());
@@ -150,6 +151,7 @@ if($_SESSION['status'] !="login admin"){
 											while ($row = mysqli_fetch_array($data)) { ?>				
 												<?php $stts = $row['status_permintaan']; ?>
 												<?php $stock_update[] = $row['jumlah_stock'] - $row['jumlah_permintaan']; ?>
+												<?php $jmlPermintaan[] = $row['jumlah_permintaan']; ?>
 												<?php $id_apd[] = $row['id_apd']; ?>
 												<tr>
 													<form>
@@ -225,7 +227,7 @@ if($_SESSION['status'] !="login admin"){
 	</script>
 
 	<?php 
-
+	$date = date('d-m-Y');
 	if (isset($_POST['setujui'])) {
 
 		for ($i=0; $i < count($stock_update); $i++) { 
@@ -246,7 +248,7 @@ if($_SESSION['status'] !="login admin"){
 		mysqli_query($conn, "UPDATE permintaan SET status_permintaan='Ditolak', notif='Ditolak' WHERE nip_karyawan = '$nip' and tanggal_permintaan='$tanggal'");
 		echo "<script>location.href='index.php';</script>";
 	} elseif (isset($_POST['berikan'])) {
-		for ($i=0; $i < count($stock_update); $i++) { 
+		for ($i=0; $i < count($stock_update); $i++) {
 
 			// if ($stock_update[$i] < 0) {
 			// 	echo "<script type='text/javascript'>
@@ -255,9 +257,11 @@ if($_SESSION['status'] !="login admin"){
 			// 		});
 			// 		</script>";
 			// } else {
-				mysqli_query($conn, "UPDATE stock SET jumlah_stock='$stock_update[$i]' WHERE id_apd='$id_apd[$i]'"); }
-				mysqli_query($conn, "UPDATE permintaan SET status_permintaan='Sudah Diterima', notif='Sudah Diterima' WHERE nip_karyawan = '$nip' and tanggal_permintaan='$tanggal'");
-				echo "<script>location.href='index.php';</script>";
+			mysqli_query($conn, "UPDATE stock SET jumlah_stock='$stock_update[$i]' WHERE id_apd='$id_apd[$i]'"); 
+			mysqli_query($conn, "INSERT INTO penerimaan(id_apd, nip_karyawan, tanggal_penerimaan, total_penerimaan) VALUES ('$id_apd[$i]', '$nip', '$date', '$jmlPermintaan[$i]')");
+		}
+			mysqli_query($conn, "UPDATE permintaan SET status_permintaan='Sudah Diterima', notif='Sudah Diterima' WHERE nip_karyawan = '$nip' and tanggal_permintaan='$tanggal'");
+			echo "<script>location.href='index.php';</script>";
 			// }
 		// }
 	}
