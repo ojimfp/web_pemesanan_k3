@@ -88,21 +88,6 @@ if($_SESSION['status'] !="login admin"){
 				</ul>
 			</li>
 			<li><a href="<?php echo $base; ?>logout"><em class="fa fa-sign-out">&nbsp;</em> Logout</a></li>
-			<!-- <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
-				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span></a>
-				<ul class="children collapse" id="sub-item-1">
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 1
-					</a></li>
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 2
-					</a></li>
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 3
-					</a></li>
-				</ul>
-			</li> -->
-			<!-- <li><a href="login.html"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li> -->
 		</ul>
 	</div>
 
@@ -133,7 +118,7 @@ if($_SESSION['status'] !="login admin"){
 					</tr>
 
 					<?php
-					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, permintaan.tanggal_permintaan, permintaan.status_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by permintaan.tanggal_permintaan desc, permintaan.nip_karyawan");
+					$nama_tanggal = mysqli_query($conn, "SELECT karyawan.nip, karyawan.nama_karyawan, permintaan.tanggal_permintaan, permintaan.status_permintaan FROM karyawan JOIN permintaan WHERE karyawan.nip = permintaan.nip_karyawan group by karyawan.nama_karyawan ASC, SUBSTRING(permintaan.tanggal_permintaan,7,10) DESC, SUBSTRING(permintaan.tanggal_permintaan,4,5) DESC, SUBSTRING(permintaan.tanggal_permintaan,1,2) DESC");
 
 					$storeArrayTanggal = Array();
 					$storeArrayNama = Array();
